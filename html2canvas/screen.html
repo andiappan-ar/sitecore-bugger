@@ -1,0 +1,698 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!--<link href="Scripts/sc_bugger/bootstrap.min.css" rel="stylesheet" />
+    <script src="Scripts/sc_bugger/jquery-3.3.1.slim.min.js"></script>
+    <script src="Scripts/sc_bugger/popper.min.js"></script>
+    <script src="Scripts/sc_bugger/bootstrap.min.js"></script>
+    <script src="Scripts/sc_bugger/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <!--<script>
+        var oldelement = null;
+
+        var _errorGlobal = [];
+
+        function BaseFunctions() {
+
+
+            $("#bugger-img-icon").click(function () {
+                //$('.main-modal').modal('show');
+                initBugger();
+            });
+
+            //Get unique selector extension
+            $.fn.extend({
+                getPath: function () {
+                    var path, node = this;
+                    while (node.length) {
+                        var realNode = node[0], name = realNode.localName;
+                        if (!name) break;
+                        name = name.toLowerCase();
+
+                        var parent = node.parent();
+
+                        var sameTagSiblings = parent.children(name);
+                        if (sameTagSiblings.length > 1) {
+                            allSiblings = parent.children();
+                            var index = allSiblings.index(realNode) + 1;
+                            if (index > 1) {
+                                name += ':nth-child(' + index + ')';
+                            }
+                        }
+
+                        path = name + (path ? '>' + path : '');
+                        node = parent;
+                    }
+
+                    return path;
+                }
+            });
+        }
+
+        //GEt browser details
+        function initBrowserdetails() {
+
+            (function (factory) {
+                if (typeof define === 'function' && define.amd) {
+                    // AMD. Register as an anonymous module.
+                    define(['jquery'], function ($) {
+                        return factory($);
+                    });
+                } else if (typeof module === 'object' && typeof module.exports === 'object') {
+                    // Node-like environment
+                    module.exports = factory(require('jquery'));
+                } else {
+                    // Browser globals
+                    factory(window.jQuery);
+                }
+            }(function (jQuery) {
+                "use strict";
+
+                function uaMatch(ua) {
+                    // If an UA is not provided, default to the current browser UA.
+                    if (ua === undefined) {
+                        ua = window.navigator.userAgent;
+                    }
+                    ua = ua.toLowerCase();
+
+                    var match = /(edge)\/([\w.]+)/.exec(ua) ||
+                        /(opr)[\/]([\w.]+)/.exec(ua) ||
+                        /(chrome)[ \/]([\w.]+)/.exec(ua) ||
+                        /(version)(applewebkit)[ \/]([\w.]+).*(safari)[ \/]([\w.]+)/.exec(ua) ||
+                        /(webkit)[ \/]([\w.]+).*(version)[ \/]([\w.]+).*(safari)[ \/]([\w.]+)/.exec(ua) ||
+                        /(webkit)[ \/]([\w.]+)/.exec(ua) ||
+                        /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
+                        /(msie) ([\w.]+)/.exec(ua) ||
+                        ua.indexOf("trident") >= 0 && /(rv)(?::| )([\w.]+)/.exec(ua) ||
+                        ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua) ||
+                        [];
+
+                    var platform_match = /(ipad)/.exec(ua) ||
+                        /(ipod)/.exec(ua) ||
+                        /(iphone)/.exec(ua) ||
+                        /(kindle)/.exec(ua) ||
+                        /(silk)/.exec(ua) ||
+                        /(android)/.exec(ua) ||
+                        /(windows phone)/.exec(ua) ||
+                        /(win)/.exec(ua) ||
+                        /(mac)/.exec(ua) ||
+                        /(linux)/.exec(ua) ||
+                        /(cros)/.exec(ua) ||
+                        /(playbook)/.exec(ua) ||
+                        /(bb)/.exec(ua) ||
+                        /(blackberry)/.exec(ua) ||
+                        [];
+
+                    var browser = {},
+                        matched = {
+                            browser: match[5] || match[3] || match[1] || "",
+                            version: match[2] || match[4] || "0",
+                            versionNumber: match[4] || match[2] || "0",
+                            platform: platform_match[0] || ""
+                        };
+
+                    if (matched.browser) {
+                        browser[matched.browser] = true;
+                        browser.version = matched.version;
+                        browser.versionNumber = parseInt(matched.versionNumber, 10);
+                    }
+
+                    if (matched.platform) {
+                        browser[matched.platform] = true;
+                    }
+
+                    // These are all considered mobile platforms, meaning they run a mobile browser
+                    if (browser.android || browser.bb || browser.blackberry || browser.ipad || browser.iphone ||
+                        browser.ipod || browser.kindle || browser.playbook || browser.silk || browser["windows phone"]) {
+                        browser.mobile = true;
+                    }
+
+                    // These are all considered desktop platforms, meaning they run a desktop browser
+                    if (browser.cros || browser.mac || browser.linux || browser.win) {
+                        browser.desktop = true;
+                    }
+
+                    // Chrome, Opera 15+ and Safari are webkit based browsers
+                    if (browser.chrome || browser.opr || browser.safari) {
+                        browser.webkit = true;
+                    }
+
+                    // IE11 has a new token so we will assign it msie to avoid breaking changes
+                    // IE12 disguises itself as Chrome, but adds a new Edge token.
+                    if (browser.rv || browser.edge) {
+                        var ie = "msie";
+
+                        matched.browser = ie;
+                        browser[ie] = true;
+                    }
+
+                    // Blackberry browsers are marked as Safari on BlackBerry
+                    if (browser.safari && browser.blackberry) {
+                        var blackberry = "blackberry";
+
+                        matched.browser = blackberry;
+                        browser[blackberry] = true;
+                    }
+
+                    // Playbook browsers are marked as Safari on Playbook
+                    if (browser.safari && browser.playbook) {
+                        var playbook = "playbook";
+
+                        matched.browser = playbook;
+                        browser[playbook] = true;
+                    }
+
+                    // BB10 is a newer OS version of BlackBerry
+                    if (browser.bb) {
+                        var bb = "blackberry";
+
+                        matched.browser = bb;
+                        browser[bb] = true;
+                    }
+
+                    // Opera 15+ are identified as opr
+                    if (browser.opr) {
+                        var opera = "opera";
+
+                        matched.browser = opera;
+                        browser[opera] = true;
+                    }
+
+                    // Stock Android browsers are marked as Safari on Android.
+                    if (browser.safari && browser.android) {
+                        var android = "android";
+
+                        matched.browser = android;
+                        browser[android] = true;
+                    }
+
+                    // Kindle browsers are marked as Safari on Kindle
+                    if (browser.safari && browser.kindle) {
+                        var kindle = "kindle";
+
+                        matched.browser = kindle;
+                        browser[kindle] = true;
+                    }
+
+                    // Kindle Silk browsers are marked as Safari on Kindle
+                    if (browser.safari && browser.silk) {
+                        var silk = "silk";
+
+                        matched.browser = silk;
+                        browser[silk] = true;
+                    }
+
+                    // Assign the name and platform variable
+                    browser.name = matched.browser;
+                    browser.platform = matched.platform;
+                    return browser;
+                }
+
+                // Run the matching process, also assign the function to the returned object
+                // for manual, jQuery-free use if desired
+                window.jQBrowser = uaMatch(window.navigator.userAgent);
+                window.jQBrowser.uaMatch = uaMatch;
+
+                // Only assign to jQuery.browser if jQuery is loaded
+                if (jQuery) {
+                    jQuery.browser = window.jQBrowser;
+                }
+
+                return window.jQBrowser;
+            }));
+
+            var browserDetails = [];
+
+            jQuery.each(window.jQBrowser, function (name, value) {
+                if (name != "uaMatch") {
+
+                    browserDetails.push($("<p></p>").text(name + ": " + value + "\n"));
+
+                    //browserDetails+= (name + ": " + value +"\n");
+                }
+            });
+
+            $("#browser-detail").append(browserDetails);
+        }
+
+        function initBugger() {
+
+            $('body').click(function (evt) {
+
+                if (!IsBuggerelement(evt.target)) {
+                    $('.error-detail-modal').modal('show');
+
+                    //Remove old element
+                    if (oldelement != null) {
+
+                        oldelement.removeClass("tt red-tooltip bgm-error")
+                            .removeAttr("data-toggle", "data-html", "data-placement", "title", "data-content")
+                            .popover('destroy');
+                    }
+                    $("#sc_bugger-save-error").unbind();
+
+                    var currentElement = $(evt.target);
+
+                    $("#sc_bugger-save-error").click(function () {
+                        //Get value from model
+                        var buggerErrorValue = {
+                            errorId: $("#errorTitle").val().replace(/ /gi, "_"),
+                            errorTitle: $("#errorTitle").val(),
+                            errorType: $("#errorType").val(),
+                            errorSeverity: $("#errorSeverity").val(),
+                            errorDetail: $("#errorDetail").val(),
+                            selector: currentElement.getPath(),
+                            url: window.location.href
+                        };
+
+                        // Initiate new element
+                        currentElement.addClass("tt red-tooltip bgm-error")
+                            .attr({
+                                "data-toggle": "popover",
+                                "data-html": "true",
+                                "data-placement": "bottom",
+                                "title": "<span class='glyphicon glyphicon-remove'> <strong>" + buggerErrorValue.errorTitle + "</strong></span>",
+                                "data-content": buggerErrorValue.errorDetail,
+                            });
+
+                        $('.error-detail-modal').modal('hide');
+
+                        initiateToolTip();
+
+                        //captureAndDisplay();
+                    });
+
+                    oldelement = currentElement;
+                }
+
+            });
+
+            $('body').mousemove(function (evt) {
+                if (!IsBuggerelement(evt.target)) {
+                    $(evt.target).addClass("bgm-re");
+                    console.log($(evt.target).getPath());
+                }
+
+            });
+
+            $('body').mouseout(function (evt) {
+                if (!IsBuggerelement(evt.target)) {
+                    $(evt.target).removeClass("bgm-re");
+                }
+            });
+
+        }
+
+        function IsBuggerelement(elementTarget) {
+            return $(elementTarget).parents('.buger-element').length;
+        }
+
+        function initiateToolTip() {
+            $(".tt").popover("show");
+            $(".tt").unbind();
+        }
+
+        $(document).ready(function () {
+            BaseFunctions();
+            initBrowserdetails();
+
+        });
+
+        function captureAndDisplay() {
+            window.scrollTo(0, 0);
+
+            var target_container = document.body;
+            var objJ = {
+                //allowTaint: true,
+                //useCORS: true,
+                proxy: "/home/DownloadItem",
+                logging: true //Enable log (use Web Console for get Errors and Warings)
+
+            };
+
+            html2canvas(target_container, objJ).then(function (canvas) {
+                var img = canvas.toDataURL();
+                var image = new Image();
+                image.src = img;
+                var w = window.open("");
+                w.document.write(image.outerHTML);
+
+            });
+
+
+            window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+        }
+
+
+    </script>-->
+    <style type="text/css">
+
+        #error-screen-shot {
+            border: blue solid 3px;
+        }
+
+
+
+        .sc_bugger-label {
+            color: blue;
+        }
+
+        .bgm-re {
+            border: aqua solid 3px;
+        }
+
+        .bgm-error {
+            border: red solid 3px;
+        }
+
+        .bs-popover-bottom > .arrow:after {
+            border-bottom-color: red;
+        }
+
+        .bs-popover-top > .arrow:after {
+            border-top-color: red;
+        }
+
+        .bs-popover-left > .arrow:after {
+            border-left-color: red;
+        }
+
+        .bs-popover-right > .arrow:after {
+            border-right-color: red;
+        }
+
+
+        .popover-header {
+            background-color: rgba(255, 0, 0, 0.9);
+            color: #FFF;
+        }
+
+        .popover-body {
+            background-color: rgba(255, 0, 0, 0.9);
+            color: #FFF;
+        }
+
+        .float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            color: #FFF;
+            text-align: center;
+        }
+
+        .my-float {
+            margin-top: 22px;
+        }
+
+        .icon-bar {
+            position: fixed;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+
+            .icon-bar a {
+                display: block;
+                text-align: center;
+                padding: 16px;
+                transition: all 0.3s ease;             
+                font-size: 20px;
+            }
+
+                .icon-bar a:hover {
+                    background-color: #000;
+                }
+
+
+
+
+
+        .sc_bugger-element-background-color {
+            background-color: #30b579;
+            color: white;
+        }
+
+        .sc_bugger-icon-bar-active {
+            background-color: #4CAF50;
+        }
+
+        .sc_bugger-hide {
+            display: none !important;
+        }
+
+        .sc_bugger-show {
+            display: block !important;
+        }
+
+        .main-icon i {
+            color: red;
+        }
+
+        .main-icon i {
+            animation: blink 1s linear infinite;
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: .5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .sc_bugger-disabled {
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        .sc_bugger-element.modal label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+
+        <div class="jumbotron">
+            <h1>Title here</h1>
+            <p>
+                Bootstrap is the most popular HTML, CSS, and JS framework for developing
+                responsive, mobile-first projects on the web.
+            </p>
+            <p>
+                Bootstrap is the most popular HTML, CSS, and JS framework for developing
+                responsive, mobile-first projects on the web.
+                <span>Spann</span>
+            </p>
+        </div>
+        <p>This is some text.</p>
+        <p>This is another text.</p>
+        <img src="https://www.pixelstalk.net/wp-content/uploads/2016/07/1080p-Wallpapers-Full-HD-Download-768x432.jpg" class="img-fluid" alt="Responsive image">
+
+
+    </div>
+
+    <div class="sc_bugger-element row">
+        <!--Error detail modal-->
+        <div class="sc_bugger-element modal error-detail-modal buger-element" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header sc_bugger-element-background-color">
+                        <h4 class="modal-title">Error details</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">                       
+                        <div class="form-group">
+                            <label class="" for="exampleFormControlInput1">Error title</label>
+                            <input type="text" class="form-control" id="errorTitle">
+                        </div>
+                        <div class="form-group">
+                            <label class="" for="exampleFormControlSelect1">Error type</label>
+                            <select class="form-control" id="errorType">
+                                <option value="Functional">Functional</option>
+                                <option value="Design">Design</option>
+                                <option value="Environmental">Environmental</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="" for="exampleFormControlSelect1">Error Severity</label>
+                            <select class="form-control" id="errorSeverity">
+                                <option value="Critical">Critical</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="" for="exampleFormControlTextarea1">Error detail (Html allowed)</label>
+                            <textarea class="form-control" id="errorDetail" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <p>
+                                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
+                                   aria-expanded="false" aria-controls="collapseExample">
+                                    Device details
+                                </a>
+
+                            </p>
+                            <div class="collapse" id="collapseExample">
+                                <div id="browser-detail" class="card card-body">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group sc_bugger-screen-shot-div sc_bugger-hide ">
+                            <label class="" for="exampleFormControlSelect1">Error screen shot</label>
+                           
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <span class="btn btn-default btn-file">
+                                        <label>Upload screen shot if needed</label>
+                                        <input type="file"  accept="image/*" id="sc_bugger-upload-screenshot">
+                                    </span>
+                                </span>                               
+                            </div>
+                            <img id="error-screen-shot" class="img-fluid" alt="Responsive image">
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="modal-footer sc_bugger-element-background-color">
+                        <button id="sc_bugger-submit-error" type="button" class="btn btn-primary sc_bugger-hide">Submit</button>
+                        <button id="sc_bugger-save-error" type="button" class="btn btn-primary ">Add detail</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Main modal-->
+        <div class="sc_bugger-element modal main-modal buger-element" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header sc_bugger-element-background-color">
+                        <h4 class="modal-title">Home</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">                   
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Projects</label>
+                            <select class="form-control" id="errorType">
+                                <option value="Sample.com">Sample.com</option>
+                                <option value="Design.com">Design.com</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Errors</label>
+                            <div class="row">
+
+                                <div class="col-4">
+                                    <div class="list-group" id="list-tab" role="tablist">
+                                        <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">
+                                            Home
+                                            <button class="btn btn-primary"><i class="fa fa-close"></i></button>
+                                        </a>
+                                        <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Profile</a>
+                                        <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Messages</a>
+                                        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div class="tab-content" id="nav-tabContent">
+                                        <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">...</div>
+                                        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
+                                        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
+                                        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer sc_bugger-element-background-color">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Bug icon-->
+        <div class="sc_bugger-element float">
+            <div id="sc_bugger-icon-bar" class="icon-bar my-float">
+                <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-main"><i class="fa fa-home"></i></a>
+                <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-error-detail"><i class="fa fa-pencil-square-o"></i></a>
+                <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color sc_bugger-disabled" id="sc_bugger-save-error-confirm"><i class="fa fa-floppy-o"></i></a>
+                <a href="#" class="main-icon"><i id="sc_bugger-bug-icon-b" class="fa fa-bug"></i></a>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <script src="sc-bugger-main.js"></script>
+</body>
+
+</html>
