@@ -5,3 +5,5 @@
 /html2canvas/bin
 /.vs/
 /html2canvas/obj
+/SitecoreBugger/bin
+/SitecoreBugger/obj/Debug
