@@ -1,0 +1,266 @@
+﻿
+@{
+    ViewBag.Title = "T1";
+    Layout = "~/Views/Layout/_Account.cshtml";
+}
+<link href="~/Content/Styles/style.css" rel="stylesheet" />
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3><i id="sc_bugger-bug-icon-b" class="fa fa-bug"></i> Sitecore Bugger</h3>
+
+            <strong><i id="sc_bugger-bug-icon-b" class="fa fa-bug"></i></strong>
+        </div>
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <i class="fa fa-home"></i>
+                    Home
+                </a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li>
+                        <a href="#">Home 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Home 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Home 3</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-briefcase"></i>
+                    About
+                </a>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <i class="fa fa-copy"></i>
+                    Pages
+                </a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li>
+                        <a href="#">Page 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Page 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Page 3</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-address-card"></i>
+                    Portfolio
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-question"></i>
+                    FAQ
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-paper-plane"></i>
+                    Contact
+                </a>
+            </li>
+        </ul>
+        <ul class="list-unstyled CTAs">
+            <li>
+                <a href="https://github.com/andiappan-ar/sitecore-bugger" class="download">Go to source</a>
+            </li>
+            <li>
+                <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+            </li>
+        </ul>
+
+
+    </nav>
+    <!-- Page Content  -->
+    <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fa fa-arrows-h"></i>
+
+                </button>
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-align-justify"></i>
+                </button>
+
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">
+                                <i class="fa fa-user-circle">
+                                    Jessica Jones
+                                </i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
+            </div>
+        </nav>
+        <h2>Dashboard</h2>
+
+        <h2>Filter view</h2>
+        <div class="card-columns">
+            <div class="card">
+                <img class="card-img-top" src="~/Content/Images/AccountBgm.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title that wraps to a new line</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                </div>
+            </div>
+            <div class="card p-3">
+                <blockquote class="blockquote mb-0 card-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                    <footer class="blockquote-footer">
+                        <small class="text-muted">
+                            Someone famous in <cite title="Source Title">Source Title</cite>
+                        </small>
+                    </footer>
+                </blockquote>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="~/Content/Images/AccountBgm.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+            <div class="card bg-primary text-white text-center p-3">
+                <blockquote class="blockquote mb-0">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat.</p>
+                    <footer class="blockquote-footer">
+                        <small>
+                            Someone famous in <cite title="Source Title">Source Title</cite>
+                        </small>
+                    </footer>
+                </blockquote>
+            </div>
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img" src="~/Content/Images/AccountBgm.png" alt="Card image">
+            </div>
+            <div class="card p-3 text-right">
+                <blockquote class="blockquote mb-0">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                    <footer class="blockquote-footer">
+                        <small class="text-muted">
+                            Someone famous in <cite title="Source Title">Source Title</cite>
+                        </small>
+                    </footer>
+                </blockquote>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+        <h2>Detailed list view</h2>
+        <div class="card mb-3">
+            <img class="card-img-top" src="~/Content/Images/AccountBgm.png" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+            <img class="card-img-bottom" src="~/Content/Images/AccountBgm.png" alt="Card image cap">
+        </div>
+        <h2>Color List view</h2>
+        <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <h5 class="card-title">Primary card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+        <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <h5 class="card-title">Secondary card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+        <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <h5 class="card-title">Success card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+        <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <h5 class="card-title">Danger card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+        <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <h5 class="card-title">Warning card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+        <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <h5 class="card-title">Info card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+        <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <h5 class="card-title">Light card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <h5 class="card-title">Dark card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+</script>
+

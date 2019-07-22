@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "Tools";
+    Layout = null;
+}
+
+<!--handle conflict styles and scripts-->
+<link href="~/Content/Styles/site.css" rel="stylesheet" />
+
+<div class="sc_bugger-element row">
+    <!--Error detail modal-->
+    <div class="sc_bugger-element-modal sc_bugger-element modal error-detail-modal buger-element" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header sc_bugger-element-background-color">
+                    <h4 class="modal-title">Error details</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body sc_bugger-element-background-color-light">
+                    <div class="form-group">
+                        <label class="" for="exampleFormControlInput1">Error title</label>
+                        <input type="text" class="form-control" id="errorTitle">
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="exampleFormControlSelect1">Error type</label>
+                        <select class="form-control" id="errorType">
+                            <option value="Functional">Functional</option>
+                            <option value="Design">Design</option>
+                            <option value="Environmental">Environmental</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="exampleFormControlSelect1">Error Severity</label>
+                        <select class="form-control" id="errorSeverity">
+                            <option value="Critical">Critical</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="exampleFormControlTextarea1">Error detail (Html allowed)</label>
+                        <textarea class="form-control" id="errorDetail" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <p>
+                            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
+                               aria-expanded="false" aria-controls="collapseExample">
+                                Device details
+                            </a>
+
+                        </p>
+                        <div class="collapse" id="collapseExample">
+                            <div id="browser-detail" class="card card-body">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group sc_bugger-screen-shot-div sc_bugger-hide ">
+
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class="btn btn-default btn-file">
+                                    <label>Upload your own screen shot</label>
+                                    <input type="file" accept="image/*" id="sc_bugger-upload-screenshot">
+                                </span>
+                            </span>
+                        </div>
+
+                        <figure class="figure">
+                            <img id="error-screen-shot" class="figure-img img-fluid rounded">
+                            <figcaption class="figure-caption text-right">Screen shot of an issue.</figcaption>
+                        </figure>
+                    </div>
+
+                </div>
+
+
+
+                <div class="modal-footer sc_bugger-element-background-color">
+                    <button id="sc_bugger-submit-error" type="button" class="btn btn-primary sc_bugger-hide">Submit</button>
+                    <button id="sc_bugger-save-error" type="button" class="btn btn-primary ">Add detail</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Main modal-->
+    <div class="sc_bugger-element-modal modal main-modal buger-element" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header sc_bugger-element-background-color">
+                    <h4 class="modal-title">Home</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body sc_bugger-element-background-color-light">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Projects</label>
+                        <select class="form-control" id="errorType">
+                            <option value="Sample.com">Sample.com</option>
+                            <option value="Design.com">Design.com</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Errors</label>
+                        <div class="row">
+
+                            <div class="col-4">
+                                <div class="list-group" id="list-tab" role="tablist">
+                                    <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">
+                                        Home
+                                        <button class="btn btn-primary"><i class="fa fa-close"></i></button>
+                                    </a>
+                                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Profile</a>
+                                    <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Messages</a>
+                                    <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">...</div>
+                                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
+                                    <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
+                                    <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer sc_bugger-element-background-color">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Bug icon-->
+    <div class="sc_bugger-element sc_bugger-float">
+        <div id="sc_bugger-icon-bar" class="icon-bar sc_bugger-my-float">
+            <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-main"><i class="fa fa-home"></i></a>
+            <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-error-detail"><i class="fa fa-pencil-square-o"></i></a>
+            <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color sc_bugger-disabled" id="sc_bugger-save-error-confirm"><i class="fa fa-floppy-o"></i></a>
+            <a href="#" class="main-icon"><i id="sc_bugger-bug-icon-b" class="fa fa-bug"></i></a>
+        </div>
+
+
+    </div>
+</div>
+
+<script src="~/Scripts/sc-bugger-main.js"></script>
+

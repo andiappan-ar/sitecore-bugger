@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace html2canvas
+namespace SitecoreBugger.Site
 {
     public class FilterConfig
     {

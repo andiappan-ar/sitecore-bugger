@@ -201,6 +201,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/roslyn/VBCSCompiler.exe.config">
       <publishTime>04/14/2017 05:17:48</publishTime>
     </File>
+    <File Include="bin/SitecoreBugger.Site.dll">
+      <publishTime>07/22/2019 23:08:29</publishTime>
+    </File>
+    <File Include="bin/SitecoreBugger.Site.pdb">
+      <publishTime>07/22/2019 23:08:29</publishTime>
+    </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>01/28/2015 17:34:30</publishTime>
     </File>
@@ -231,11 +237,23 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/bootstrap.min.css">
       <publishTime>07/20/2019 00:58:50</publishTime>
     </File>
+    <File Include="Content/Images/AccountBgm.png">
+      <publishTime>07/22/2019 16:29:51</publishTime>
+    </File>
     <File Include="Content/ladybird-walking-320.gif">
       <publishTime>07/20/2019 13:40:55</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>07/20/2019 00:58:44</publishTime>
+    </File>
+    <File Include="Content/Styles/Login.css">
+      <publishTime>07/22/2019 16:36:30</publishTime>
+    </File>
+    <File Include="Content/Styles/site.css">
+      <publishTime>07/22/2019 16:06:02</publishTime>
+    </File>
+    <File Include="Content/Styles/style.css">
+      <publishTime>07/23/2019 00:22:51</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>07/20/2019 00:58:44</publishTime>
@@ -253,16 +271,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/20/2019 00:58:50</publishTime>
     </File>
     <File Include="Global.asax">
-      <publishTime>07/20/2019 00:58:44</publishTime>
+      <publishTime>07/22/2019 14:12:32</publishTime>
     </File>
     <File Include="MockedError.json">
       <publishTime>07/21/2019 17:11:20</publishTime>
     </File>
     <File Include="sc-bugger-main.js">
-      <publishTime>07/21/2019 18:10:02</publishTime>
+      <publishTime>07/22/2019 14:53:06</publishTime>
     </File>
     <File Include="screen.html">
-      <publishTime>07/21/2019 16:32:40</publishTime>
+      <publishTime>07/22/2019 14:42:05</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>07/20/2019 00:58:50</publishTime>
@@ -300,6 +318,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/respond.min.js">
       <publishTime>07/20/2019 00:58:56</publishTime>
     </File>
+    <File Include="Scripts/sc-bugger-main.js">
+      <publishTime>07/22/2019 16:02:19</publishTime>
+    </File>
     <File Include="Scripts/sc_bugger/bootstrap.min.css">
       <publishTime>07/21/2019 11:42:46</publishTime>
     </File>
@@ -324,6 +345,24 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="tooltip.html">
       <publishTime>07/20/2019 23:06:03</publishTime>
     </File>
+    <File Include="Views/Account/Login.cshtml">
+      <publishTime>07/22/2019 19:51:00</publishTime>
+    </File>
+    <File Include="Views/Bugger/TestPage.cshtml">
+      <publishTime>07/22/2019 15:09:39</publishTime>
+    </File>
+    <File Include="Views/Bugger/Tools.cshtml">
+      <publishTime>07/22/2019 15:57:47</publishTime>
+    </File>
+    <File Include="Views/DashBoard/Index.cshtml">
+      <publishTime>07/22/2019 19:58:14</publishTime>
+    </File>
+    <File Include="Views/DashBoard/T1.cshtml">
+      <publishTime>07/22/2019 23:05:56</publishTime>
+    </File>
+    <File Include="Views/DashBoard/template1.cshtml">
+      <publishTime>07/23/2019 00:16:28</publishTime>
+    </File>
     <File Include="Views/Home/About.cshtml">
       <publishTime>07/20/2019 00:58:44</publishTime>
     </File>
@@ -333,6 +372,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Home/Index.cshtml">
       <publishTime>07/20/2019 00:58:44</publishTime>
     </File>
+    <File Include="Views/Layout/_Account.cshtml">
+      <publishTime>07/22/2019 16:11:03</publishTime>
+    </File>
+    <File Include="Views/Layout/_Main.cshtml">
+      <publishTime>07/22/2019 15:16:44</publishTime>
+    </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>07/20/2019 00:58:44</publishTime>
     </File>
@@ -340,7 +385,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/20/2019 00:58:44</publishTime>
     </File>
     <File Include="Views/Web.config">
-      <publishTime>07/20/2019 00:58:44</publishTime>
+      <publishTime>07/22/2019 14:13:07</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
       <publishTime>07/20/2019 00:58:44</publishTime>

@@ -357,9 +357,9 @@
     </script>-->
     <style type="text/css">
 
-        #error-screen-shot {
+        /*#error-screen-shot {
             border: blue solid 3px;
-        }
+        }*/
 
 
 
@@ -491,7 +491,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">Navbar</a>
@@ -550,7 +550,7 @@
 
     <div class="sc_bugger-element row">
         <!--Error detail modal-->
-        <div class="sc_bugger-element modal error-detail-modal buger-element" tabindex="-1" role="dialog">
+        <div class="sc_bugger-element-modal sc_bugger-element modal error-detail-modal buger-element" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header sc_bugger-element-background-color">
@@ -601,17 +601,20 @@
                         </div>
 
                         <div class="form-group sc_bugger-screen-shot-div sc_bugger-hide ">
-                            <label class="" for="exampleFormControlSelect1">Error screen shot</label>
                            
                             <div class="input-group">
                                 <span class="input-group-btn">
                                     <span class="btn btn-default btn-file">
-                                        <label>Upload screen shot if needed</label>
-                                        <input type="file"  accept="image/*" id="sc_bugger-upload-screenshot">
+                                        <label>Upload your own screen shot</label>
+                                        <input type="file" accept="image/*" id="sc_bugger-upload-screenshot">
                                     </span>
-                                </span>                               
+                                </span>
                             </div>
-                            <img id="error-screen-shot" class="img-fluid" alt="Responsive image">
+                           
+                            <figure class="figure">
+                                <img id="error-screen-shot"  class="figure-img img-fluid rounded" >
+                                <figcaption class="figure-caption text-right">Screen shot of an issue.</figcaption>
+                            </figure>
                         </div>
 
                     </div>
@@ -628,7 +631,7 @@
         </div>
 
         <!--Main modal-->
-        <div class="sc_bugger-element modal main-modal buger-element" tabindex="-1" role="dialog">
+        <div class="sc_bugger-element-modal modal main-modal buger-element" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header sc_bugger-element-background-color">
@@ -679,8 +682,8 @@
         </div>
 
         <!--Bug icon-->
-        <div class="sc_bugger-element float">
-            <div id="sc_bugger-icon-bar" class="icon-bar my-float">
+        <div class="sc_bugger-element sc_bugger-float">
+            <div id="sc_bugger-icon-bar" class="icon-bar sc_bugger-my-float">
                 <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-main"><i class="fa fa-home"></i></a>
                 <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-error-detail"><i class="fa fa-pencil-square-o"></i></a>
                 <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color sc_bugger-disabled" id="sc_bugger-save-error-confirm"><i class="fa fa-floppy-o"></i></a>

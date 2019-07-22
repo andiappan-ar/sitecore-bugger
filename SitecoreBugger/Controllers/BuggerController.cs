@@ -8,19 +8,27 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-namespace html2canvas.Controllers
+namespace SitecoreBugger.Site.Controllers
 {
 
-    public class HomeController : Controller
-    {     
+    public class BuggerController : BaseController
+    {
+        public ActionResult TestPage()
+        {
+            return View();
+        }
 
-        public ActionResult DownloadItem(string url)
+        public ActionResult ImageProxy(string url)
         {
             WebClient myWebClient = new WebClient();
             byte[] myDataBuffer = myWebClient.DownloadData(url);
             return File(myDataBuffer, "image/jpeg", "ImageName");
         }
 
-      
+        public ActionResult Tools()
+        {
+            return View();
+        }
+
     }
 }

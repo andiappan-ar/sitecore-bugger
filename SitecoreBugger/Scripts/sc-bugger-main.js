@@ -46,7 +46,7 @@ var SC_BUGGER = (function () {
                 });
             },
             ModalEvents: function () {
-                $(document).on('hide.bs.sc_bugger-element-modal', '.sc_bugger-element-modal.error-detail-modal', function () {
+                $(document).on('hide.bs.modal', '.sc_bugger-element-modal.error-detail-modal', function () {
                     $("#sc_bugger-save-error-confirm").addClass("sc_bugger-disabled");
                     $("#sc_bugger-icon-bar").removeClass("sc_bugger-hide");
                 });
@@ -113,12 +113,12 @@ var SC_BUGGER = (function () {
                             if (SC_BUGGER.GlobalVariables.Browser.OldBugElement != null) {
 
                                 SC_BUGGER.GlobalVariables.Browser.OldBugElement.popover('dispose');
-                                SC_BUGGER.GlobalVariables.Browser.OldBugElement.removeClass("sc_popover red-tooltip sc_bugger-bgm-error");
+                                SC_BUGGER.GlobalVariables.Browser.OldBugElement.removeClass("sc_bugger-popover red-tooltip sc_bugger-bgm-error");
                                 SC_BUGGER.GlobalVariables.Browser.OldBugElement.removeAttr("data-toggle", "data-html", "data-placement", "title", "data-content");
 
                             }
 
-                            $('.sc_bugger-element-modal.error-detail-modal').modal('show');
+                            $('.sc_bugger-element-modal.error-detail-modal').modal('show').css("z-index", $(".popover").css("z-index") + 1);;
 
                             SC_BUGGER.EventListeners.SaveErrorEvent();
 
@@ -161,7 +161,7 @@ var SC_BUGGER = (function () {
                 });
 
                 $("#sc_bugger-main").click(function () {
-                    $('.sc_bugger-element-modal.main-modal').modal('show');
+                    $('.sc_bugger-element-modal.main-modal').modal('show').css("z-index", $(".popover").css("z-index") + 1);;
                 });
 
                 $("#sc_bugger-save-error-confirm").click(function () {
@@ -183,10 +183,11 @@ var SC_BUGGER = (function () {
             BrowserInformationEvent: function () {
                 $(".sc_bugger-element-modal.error-detail-modal #browser-detail").append(SC_BUGGER.GlobalVariables.Browser.BasicDetailsHtml);
             },
-            //Selector : $(".sc_popover")
+            //Selector : $(".sc_bugger-popover")
             InitiateToolTip: function () {
-                $(".sc_popover").popover("show");
-                $(".sc_popover").unbind();
+                var tipElement = ($(".sc_bugger-popover").popover("show").data('bs.popover'));
+                $(tipElement).addClass("sc_bugger-error-popover");
+                $(".sc_bugger-popover").unbind();
             },
             File: {
                 UploadScreenshot: function () {
@@ -219,7 +220,7 @@ var SC_BUGGER = (function () {
                 return $(elementTarget).parents('.sc_bugger-element').length;
             },
             MarkErrorwithPopup: function (errorObj) {
-                $(errorObj.selector).addClass("sc_popover red-tooltip sc_bugger-bgm-error")
+                $(errorObj.selector).addClass("sc_bugger-popover red-tooltip sc_bugger-bgm-error")
                     .attr({
                         "data-toggle": "popover",
                         "data-html": "true",
@@ -518,39 +519,39 @@ function readTextFile(file, callback) {
     rawFile.send(null);
 }
 
-var mokedData = null;
+//var mokedData = null;
 
-//usage:
-readTextFile("/MockedError.json", function (text) {
-    mokedData = JSON.parse(text);
-    // console.log(data);
-    MarkError();
+////usage:
+//readTextFile("/MockedError.json", function (text) {
+//    mokedData = JSON.parse(text);
+//    // console.log(data);
+//    MarkError();
 
-});
+//});
 
-function getQueryStringValue(key) {
-    return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
-}
+//function getQueryStringValue(key) {
+//    return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+//}
 
-function getError(key) {
-    return mokedData.filter(
-        function (data) {
-            if (data.errorId == key) {
-                return data;
-            }
+//function getError(key) {
+//    return mokedData.filter(
+//        function (data) {
+//            if (data.errorId == key) {
+//                return data;
+//            }
 
-            return null;
-        }
-    );
-}
+//            return null;
+//        }
+//    );
+//}
 
-function MarkError() {
-    var errorObj = getError(getQueryStringValue("sc-b-e-id"))[0];
+//function MarkError() {
+//    var errorObj = getError(getQueryStringValue("sc-b-e-id"))[0];
 
-    SC_BUGGER.FunctionalMethods.MarkErrorwithPopup(errorObj);
+//    SC_BUGGER.FunctionalMethods.MarkErrorwithPopup(errorObj);
 
 
 
-}
+//}
 
 
