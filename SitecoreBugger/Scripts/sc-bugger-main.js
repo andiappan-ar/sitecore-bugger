@@ -5,6 +5,10 @@ var SC_BUGGER = (function () {
             ProjectName: "Bugger",
             Html2CanvasProxyUrl: "/sc-bugger/bugger/ImageProxy",
         },
+        Settings: {
+            IsCompressScreenshot: true,
+            Html2CanvasProxyUrl: "/sc-bugger/bugger/ImageProxy",
+        },
         GlobalVariables: {
             Element: {
                 CurrentBugElement: null,
@@ -50,6 +54,11 @@ var SC_BUGGER = (function () {
                     $("#sc_bugger-save-error-confirm").addClass("sc_bugger-disabled");
                     $("#sc_bugger-icon-bar").removeClass("sc_bugger-hide");
                 });
+
+                $("#sc_bugger-settings-iscompressimage").change(function () {                   
+                        SC_BUGGER.Settings.IsCompressScreenshot = $(this).is(":checked");                    
+                });
+                
             },
             //Selector : $("#sc_bugger-save-error")
             SaveErrorEvent: function () {
@@ -82,8 +91,10 @@ var SC_BUGGER = (function () {
 
                 InitBuggerBodyEvents: function () {
 
+                    $('body').css({ 'cursor': 'crosshair' });
+
                     //MOuse move event
-                    $("body").on("sc_bugger.body.mousemove", function (event, evt) {
+                    $("body").on("sc_bugger.body.mousemove", function (event, evt) {                       
                         if (!SC_BUGGER.FunctionalMethods.IsBuggerelement(evt.target)) {
                             $(evt.target).addClass("sc_bugger-bgm-re");
                             console.log($(evt.target).getPath());
@@ -132,6 +143,7 @@ var SC_BUGGER = (function () {
                     });
                 },
                 UnbindBuggerBodyEvents: function () {
+                    $('body').css({ 'cursor': '' });
                     $('body').unbind('sc_bugger.body.mousemove');
                     $('body').unbind('sc_bugger.body.mouseout');
                     $('body').unbind('sc_bugger.body.click');
@@ -155,8 +167,7 @@ var SC_BUGGER = (function () {
                 $("#sc_bugger-error-detail").click(function () {
                     // Show and hide action buttons
                     $("#sc_bugger-submit-error").addClass("sc_bugger-hide");
-                    $("#sc_bugger-save-error").removeClass("sc_bugger-hide");
-
+                    $("#sc_bugger-save-error").removeClass("sc_bugger-hide");                    
                     SC_BUGGER.EventListeners.Body.InitBuggerBodyEvents();
                 });
 
@@ -171,6 +182,10 @@ var SC_BUGGER = (function () {
                     $("#sc_bugger-save-error").addClass("sc_bugger-hide");
 
                     SC_BUGGER.UtilityMethods.GetScreenShot();
+                });
+
+                $("#sc_bugger-settings").click(function () {
+                    $('.sc_bugger-element-modal.settings-modal').modal('show');
                 });
 
                 $("#sc_bugger-icon-bar .main-icon").click(function () {
@@ -261,7 +276,38 @@ var SC_BUGGER = (function () {
 
                 html2canvas(target_container, objJ).then(function (canvas) {
                     var img = canvas.toDataURL();
+
+                    //var tempImage = $(".sc_bugger-element-modal.error-detail-modal #error-screen-shot")[0];
+
+                    //tempImage.onload = function () {
+                    //    alert(tempImage.width + ", " + tempImage.height);
+                    //    var canvas = document.createElement("canvas");
+                    //    var context = canvas.getContext("2d");
+                    //    canvas.width = tempImage.width / 4;
+                    //    canvas.height = tempImage.height / 4;
+                    //    context.drawImage(tempImage,
+                    //        0,
+                    //        0,
+                    //        tempImage.width,
+                    //        tempImage.height,
+                    //        0,
+                    //        0,
+                    //        canvas.width,
+                    //        canvas.height
+                    //    );
+
+                    //    source_img_obj.src = canvas.toDataURL();
+                    //};
+
+                    //$(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", img);
+                   
+
+                    //SC_BUGGER.GlobalVariables.Element.ErrorGlobal.screenhot = (SC_BUGGER.Settings.IsCompressScreenshot) ?
+                    //    SC_BUGGER.UtilityMethods.GetCompressedImage(tempImage, 50, 3000, "png") : img;
+
                     SC_BUGGER.GlobalVariables.Element.ErrorGlobal.screenhot = img;
+
+
                     $(".sc_bugger-screen-shot-div").removeClass("sc_bugger-hide");
                     $(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", SC_BUGGER.GlobalVariables.Element.ErrorGlobal.screenhot);
                     $('.sc_bugger-element-modal.error-detail-modal').modal('show');
@@ -275,6 +321,14 @@ var SC_BUGGER = (function () {
                 });
 
                 //  window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+            },
+            ///quality 1 to 100
+            GetCompressedImage: function (image, quality, maxWidth, output_format) {
+
+                var canvas = document.createElement("canvas");
+                var context = canvas.getContext("2d");
+                canvas.width = image.width / 4;
+               
             }
         },
         ExtenionMethods: {

@@ -140,10 +140,36 @@
         </div>
     </div>
 
+    <!--Settings modal-->
+    <div class="sc_bugger-element-modal modal settings-modal buger-element" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header sc_bugger-element-background-color">
+                    <h4 class="modal-title">Settings</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body sc_bugger-element-background-color-light">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Compress screenshot image</label>
+                        <input type="checkbox" checked="checked" id="sc_bugger-settings-iscompressimage" />
+                    </div>
+                 
+                </div>
+                <div class="modal-footer sc_bugger-element-background-color">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--Bug icon-->
     <div class="sc_bugger-element sc_bugger-float">
         <div id="sc_bugger-icon-bar" class="icon-bar sc_bugger-my-float">
+            <a href="/sc-bugger/dashboard/template1" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-dashboard"><i class="fa fa-bug"></i></a>
             <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-main"><i class="fa fa-home"></i></a>
+            <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-settings"><i class="fa fa-cog"></i></a>
             <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-error-detail"><i class="fa fa-pencil-square-o"></i></a>
             <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color sc_bugger-disabled" id="sc_bugger-save-error-confirm"><i class="fa fa-floppy-o"></i></a>
             <a href="#" class="main-icon"><i id="sc_bugger-bug-icon-b" class="fa fa-bug"></i></a>

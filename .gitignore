@@ -4,7 +4,15 @@
 
 /html2canvas/bin
 /.vs/
-/html2canvas/obj
-/SitecoreBugger/bin
-/SitecoreBugger/obj/Debug
-/HtmlTemplates/Dashboard sample
+/html2canvas/obj/
+/SitecoreBugger/bin/
+/SitecoreBugger/obj/
+/SitecoreBugger/obj/Debug/
+/SitecoreBugger/obj/Release/
+/HtmlTemplates/Dashboard sample/
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
