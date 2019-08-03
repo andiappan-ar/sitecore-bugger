@@ -1,4 +1,4 @@
-﻿
+
 var SC_BUGGER = (function () {
     return {
         Config: {
@@ -23,7 +23,7 @@ var SC_BUGGER = (function () {
                     selector: null,
                     browserDetail: null,
                     url: null,
-                    screenhot: null
+                    ScreenShot: null
                 }
             },
             Browser: {
@@ -273,7 +273,7 @@ var SC_BUGGER = (function () {
                                     //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
                                     //$("#error-screen-shot").css("background-image", "url(" + this.result + ")");
                                     $(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", this.result);
-                                    SC_BUGGER.GlobalVariables.Element.ErrorGlobal.screenhot = this.result;
+                                    SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = this.result;
                                 }
                             }
 
@@ -355,14 +355,14 @@ var SC_BUGGER = (function () {
                     //$(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", img);
                    
 
-                    //SC_BUGGER.GlobalVariables.Element.ErrorGlobal.screenhot = (SC_BUGGER.Settings.IsCompressScreenshot) ?
+                    //SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = (SC_BUGGER.Settings.IsCompressScreenshot) ?
                     //    SC_BUGGER.UtilityMethods.GetCompressedImage(tempImage, 50, 3000, "png") : img;
 
-                    SC_BUGGER.GlobalVariables.Element.ErrorGlobal.screenhot = img;
+                    SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = img;
 
 
                     $(".sc_bugger-screen-shot-div").removeClass("sc_bugger-hide");
-                    $(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", SC_BUGGER.GlobalVariables.Element.ErrorGlobal.screenhot);
+                    $(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot);
                     $('.sc_bugger-element-modal.error-detail-modal').modal('show');
                     $(".sc_bugger-element-modal.error-detail-modal").css("z-index", $(".popover").css("z-index") + 1);
 
