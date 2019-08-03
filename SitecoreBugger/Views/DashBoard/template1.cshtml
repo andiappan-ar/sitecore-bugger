@@ -5,7 +5,7 @@
 }
 <link href="~/Content/Styles/style.css" rel="stylesheet" />
 <div class="wrapper">
-    <!-- Sidebar  -->
+    <!-- Sidebar  http://notepad.pw/agatanu-bugger -->
     <nav id="sidebar">
         <div class="sidebar-header">
             <h3><i id="sc_bugger-bug-icon-b" class="fa fa-bug"></i> Sitecore Bugger</h3>
@@ -31,24 +31,9 @@
             </li>
             <li>
                 <a href="#">
-                    <i class="fa fa-briefcase"></i>
-                    About
+                    <i class="fa fa-bar-chart"></i>
+                    Report
                 </a>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <i class="fa fa-copy"></i>
-                    Pages
-                </a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="#">Page 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 3</a>
-                    </li>
-                </ul>
             </li>
             <li>
                 <a href="#">
@@ -77,11 +62,10 @@
                 <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
             </li>
         </ul>
-
     </nav>
     <!-- Page Content  -->
-    <div id="content">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div id="content" class="">
+        <nav class="navbar navbar-expand-lg sc_bugger-element-background-color">
             <div class="container-fluid">
                 <button type="button" id="sidebarCollapse" class="btn btn-info">
                     <i class="fa fa-arrows-h"></i>
@@ -89,7 +73,6 @@
                 <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-align-justify"></i>
                 </button>
-
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item active">
@@ -104,96 +87,110 @@
                         </li>
                     </ul>
                 </div>
-
             </div>
         </nav>
-
         <h2>Dashboard</h2>
-
-
 
         <div class="container-fluid">
             <p>
                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                    Filter <i class="fa fa-filter" aria-hidden="true"></i>
+                    Collapse Filter <i class="fa fa-filter" aria-hidden="true"></i>
                 </button>
+                <div class="collapse show sc_bugger-element-background-color" id="collapseExample">
+
+                    <form>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <label class="form-check-label" for="gridCheck">
+                                        Select project
+                                    </label>
+                                    <select id="filter-error-list" class="browser-default custom-select colorful-select">
+                                        <option value="">Select project</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="autocomplete">
+                                        <label class="form-check-label" for="gridCheck">
+                                            Search issue by Id
+                                        </label>
+                                        <select id="filter-error-list" class="browser-default custom-select colorful-select">
+                                            <option value="">Select issue</option>
+                                        </select>
+
+                                        @*<input id="filter-main-search-issue" type="text" name="myCountry" placeholder="Search issue" class="form-control">*@
+                                    </div>
+                                </div>
+                                <div class="col float-right">
+
+                                    <a href="#" id="filter-clear" class=" text-white">
+                                        <label class="form-check-label" for="gridCheck">
+                                            Clear filter
+                                        </label>
+                                        <i class="fa fa-undo fa-2x"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <input class="form-check-input" type="checkbox" id="filter-myitems">
+                                    <label class="form-check-label" for="gridCheck">
+                                        My items
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <label class="form-check-label" for="gridCheck">
+                                        Error type:
+                                    </label>
+                                    <select id="filter-error-type" class="browser-default custom-select colorful-select dropdown-success" multiple>
+                                        <option value="functional">Functional</option>
+                                        <option value="design">Design</option>
+                                        <option value="environmental">Environmental</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label class="form-check-label" for="gridCheck">
+                                        Error severity:
+                                    </label>
+                                    <select id="filter-error-severity" class="browser-default custom-select colorful-select dropdown-success" multiple>
+                                        <option value="critical">Critical</option>
+                                        <option value="high">High</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="low">Low</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label class="form-check-label" for="gridCheck">
+                                        Error status:
+                                    </label>
+                                    <select id="filter-error-status" class="browser-default custom-select colorful-select dropdown-success" multiple>
+                                        <option value="open">Open</option>
+                                        <option value="closed">Closed</option>
+                                        <option value="re-opened">Re opened</option>
+                                        <option value="not-reproduced">Not reproduced</option>
+                                        <option value="not-an-issue">Not an issue</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <button id="filter-search" type="button" class="btn btn-secondary" data-dismiss="modal">Search</button>
+                    <br />
+                </div>
             </p>
-            <div class="collapse bg-info" id="collapseExample">
-
-                <br />
-
-                <div class="row">
-                    <div class="col-11">
-                        <div class="autocomplete">
-                            <input id="filter-main-search-issue" type="text" name="myCountry" placeholder="Search issue" class="form-control-lg">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <a href="#" id="filter-clear" class="float-right text-white"><i class="fa fa-undo fa-2x"></i></a>
-                    </div>
-                </div>
-
-                <br />
-
-                <div class="row">
-
-                    <div class="col">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="filter-myitems">
-                            <label class="form-check-label" for="gridCheck">
-                                My items
-                            </label>
-                        </div>
-                    </div>
-
-                </div>
-
-                <br />
-
-                <div class="row">
-                    <div class="col">
-                        <label class="form-check-label" for="gridCheck">
-                            Error type:
-                        </label>
-                        <select id="filter-error-type" class="browser-default custom-select colorful-select dropdown-success" multiple>
-                            <option value="Functional">Functional</option>
-                            <option value="Design">Design</option>
-                            <option value="Environmental">Environmental</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label class="form-check-label" for="gridCheck">
-                            Error severity:
-                        </label>
-                        <select id="filter-error-severity" class="browser-default custom-select colorful-select dropdown-success" multiple>
-                            <option value="Critical">Critical</option>
-                            <option value="High">High</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Low">Low</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label class="form-check-label" for="gridCheck">
-                            Error status:
-                        </label>
-                        <select id="filter-error-status" class="browser-default custom-select colorful-select dropdown-success" multiple>
-                            <option value="open">Open</option>
-                            <option value="closed">Closed</option>
-                            <option value="re-opened">Re opened</option>
-                            <option value="not-reproduced">Not reproduced</option>
-                            <option value="not-an-issue">Not an issue</option>
-                        </select>
-                    </div>
-                </div>
-                <br />
-
-            </div>
+          
         </div>
-
-
-
+        <br />
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col">
                     <h4>Filter view</h4>
@@ -203,126 +200,134 @@
             <div class="row">
                 <div class="col">
                     <select id="filter-error-view" class="browser-default custom-select colorful-select dropdown-success">
-                        <option selected>Change View</option>
-                        <option value="card">Card view</option>
+                        <option value="card" selected>Card view</option>
                         <option value="detail">Detailed view</option>
                         <option value="mini">Mini view</option>
                     </select>
                 </div>
             </div>
 
-
             <div class="row">
                 <div class="col">
-                    <h2 id="issue-list-view-type-head"></h2>
+                    <h2 id="issue-list-view-type-head" style="display:none"></h2>
                 </div>
             </div>
-
+            <br />
             <div class="row">
-                <div class="col">
-                    <div class="card-">
-                        <div id="issue-list-card-details" class="card-columns">
-
-                        </div>
-                    </div>
+                <div id="issue-list-card-details" class="card-columns">
                 </div>
             </div>
-
         </div>
-
     </div>
 
     <!--Error detail modal-->
     <div class="sc_bugger-element-modal sc_bugger-element modal error-detail-modal buger-element" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header sc_bugger-element-background-color">
-                    <h4 class="modal-title">Error :  <span id="errorID"></span> </h4>
+                    <h4 class="modal-title">Error details</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body sc_bugger-element-background-color-light">
-                    <div class="form-group">
-                        <label class="" for="exampleFormControlInput1">Error title</label>
-                        <input type="text" class="form-control" id="errorTitle">
-                    </div>
-                    <div class="form-group">
-                        <label class="" for="exampleFormControlSelect1">Error type</label>
-                        <select class="form-control" id="errorType">
-                            <option value="Functional">Functional</option>
-                            <option value="Design">Design</option>
-                            <option value="Environmental">Environmental</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="" for="exampleFormControlSelect1">Error Severity</label>
-                        <select class="form-control" id="errorSeverity">
-                            <option value="Critical">Critical</option>
-                            <option value="High">High</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Low">Low</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="" for="exampleFormControlSelect1">Error Severity</label>
-                        <select class="form-control" id="errorStatus">
-                            <option value="open">Open</option>
-                            <option value="closed">Closed</option>
-                            <option value="re-opened">Re opened</option>
-                            <option value="not-reproduced">Not reproduced</option>
-                            <option value="not-an-issue">Not an issue</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="" for="exampleFormControlTextarea1">Error detail (Html allowed)</label>
-                        <textarea class="form-control" id="errorDetail" rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <p>
-                            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
-                               aria-expanded="false" aria-controls="collapseExample">
-                                Device details
-                            </a>
-                        </p>
-                        <div class="collapse" id="collapseExample">
-                            <div id="browser-detail" class="card card-body">
+
+                    <form ID="sc_bugger-form-mark-error" class="sc_bugger-form-validator" is-valid-form="false" novalidate>
+                        <!--Error title-->
+                        <div class="form-group">
+                            <label for="errorTitle">Error title</label>
+                            <input type="text" class="form-control" id="errorTitle" placeholder="Error title" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <!--Error type-->
+                        <div class="form-group">
+                            <label class="" for="exampleFormControlSelect1">Error type</label>
+                            <select class="form-control" id="errorType" required>
+                                <option value="functional">Functional</option>
+                                <option value="design">Design</option>
+                                <option value="environmental">Environmental</option>
+                            </select>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <!--Error Severity-->
+                        <div class="form-group">
+                            <label class="" for="errorSeverity">Error Severity</label>
+                            <select class="form-control" id="errorSeverity" required>
+                                <option value="critical">Critical</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <!--Error detail-->
+                        <div class="form-group">
+                            <label class="" for="errorDetail">Error description (Html allowed)</label>
+                            <textarea class="form-control" id="errorDetail" rows="3" required></textarea>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <!--Device detail-->
+                        <div class="form-group">
+                            <p>
+                                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
+                                   aria-expanded="false" aria-controls="collapseExample">
+                                    Device details -
+                                    <i class="fa fa-arrows-v" aria-hidden="true"></i>
+                                </a>
+                            </p>
+                            <div class="collapse" id="collapseExample">
+                                <div id="browser-detail" class="card card-body">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group sc_bugger-screen-shot-div sc_bugger-hide ">
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <span class="btn btn-default btn-file">
-                                    <label>Upload your own screen shot</label>
-                                    <input type="file" accept="image/*" id="sc_bugger-upload-screenshot">
-                                </span>
-                            </span>
-                        </div>
-                        <figure class="figure">
-                            <img id="error-screen-shot" class="figure-img img-fluid rounded">
-                            <figcaption class="figure-caption text-right">Screen shot of an issue.</figcaption>
-                        </figure>
-                    </div>
-                </div>
+                        <!--screen shot-->
 
+                        <div class="form-group sc_bugger-screen-shot-div sc_bugger-hide ">
+                            <div class="custom-file">
+                                <input id="sc_bugger-upload-screenshot" accept="image/*" type="file" class="custom-file-input" id="validatedCustomFile">
+                                <label class="custom-file-label" for="validatedCustomFile">Upload screen shot...</label>
+                                <div class="invalid-feedback">Example invalid custom file feedback</div>
+                            </div>
+                            <figure class="figure">
+                                <br />
+                                <img id="error-screen-shot" class="figure-img img-fluid rounded">
+                                <figcaption class="figure-caption text-right">Screen shot of an issue.</figcaption>
+                            </figure>
+                        </div>
+                        <button id="hidden-submit" class="sc_bugger-hide" type="submit">Submit form</button>
+                    </form>
+                </div>
                 <div class="modal-footer sc_bugger-element-background-color">
                     <button id="sc_bugger-submit-error" type="button" class="btn btn-primary sc_bugger-hide">Submit</button>
-                    <button id="sc_bugger-save-error" type="button" class="btn btn-primary ">Add detail</button>
+                    <button id="sc_bugger-save-error" type="button" class="btn btn-primary ">Mark error</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
+
+
 <script type="text/javascript">
 
     var SC_DASHBOARD = (function () {
         return {
             Config: {
                 ProjectName: "Bugger",
+                SaveErrorUrl: "/sc-bugger/ApiScBugger/GetError",
+                GetErrorIdsUrl:"/sc-bugger/ApiScBugger/GetErrorIds"
             },
             Settings: {
                 CSS: {
@@ -336,12 +341,12 @@
             },
             GlobalVariables: {
                 GlobalFilter: {
-                    Id: null,
-                    Type: null,
-                    Severity: null,
+                    ErrorId: null,
+                    ErrorType: null,
+                    ErrorSeverity: null,
                     IsMyItem: null,
-                    Status: null,
-                    DateRange: null,
+                    ErrorStatus: null,
+                    Date: null,
                     FilterView: null,
                     Meta: {
                         ViewTypeDisplayName: null
@@ -349,113 +354,8 @@
                 },
             },
             Issues: {
-                All: [
-                    {
-                        Id: "E001",
-                        Type: "Functional",
-                        Severity: "High",
-                        IsMyItem: null,
-                        Status: "open",
-                        Date: new Date(),
-
-                        Title: "Issue title here",
-                        Description: "Issue desc here",
-                        Image: "https://www.pixelstalk.net/wp-content/uploads/2016/07/1080p-Wallpapers-Full-HD-Download-768x432.jpg",
-
-                    },
-                    {
-                        Id: "E002",
-                        Type: "Functional",
-                        Severity: "Critical",
-                        IsMyItem: null,
-                        Status: "open",
-                        Date: new Date(),
-
-                        Title: "Issue title here",
-                        Description: "Issue desc Issue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc here",
-                        Image: "https://searchengineland.com/figz/wp-content/seloads/2015/12/google-amp-fast-speed-travel-ss-1920.jpg",
-
-                    },
-                    {
-                        Id: "E003",
-                        Type: "Functional",
-                        Severity: "Low",
-                        IsMyItem: null,
-                        Status: "open",
-                        Date: new Date(),
-
-                        Title: "Issue title 66666666666666666666 6    6666 6 6 6  6 66 6",
-                        Description: "Issue desc 55555555555555555555555555555555555555555e",
-                        Image: "https://www.pixelstalk.net/wp-content/uploads/2016/07/1080p-Wallpapers-Full-HD-Download-768x432.jpg",
-
-                    },
-                    {
-                        Id: "F001",
-                        Type: "Functional",
-                        Severity: "Medium",
-                        IsMyItem: null,
-                        Status: "open",
-                        Date: new Date(),
-
-                        Title: "Issue title here",
-                        Description: "Issue desc Issue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc hereIssue desc here",
-                        Image: "https://yt3.ggpht.com/a/AGF-l7-BBIcC888A2qYc3rB44rST01IEYDG3uzbU_A=s900-c-k-c0xffffffff-no-rj-mo",
-
-                    },
-                    {
-                        Id: "F002",
-                        Type: "Functional",
-                        Severity: "Critical",
-                        IsMyItem: null,
-                        Status: "open",
-                        Date: new Date(),
-
-                        Title: "Issue title here",
-                        Description: "Issue desc Issue ",
-                        Image: "https://www.pixelstalk.net/wp-content/uploads/2016/07/1080p-Wallpapers-Full-HD-Download-768x432.jpg",
-
-                    },
-                    {
-                        Id: "C002",
-                        Type: "Functional",
-                        Severity: "Critical",
-                        IsMyItem: null,
-                        Status: "open",
-                        Date: new Date(),
-
-                        Title: "Issue title here",
-                        Description: "Issue desc Issue ",
-                        Image: "https://www.pixelstalk.net/wp-content/uploads/2016/07/1080p-Wallpapers-Full-HD-Download-768x432.jpg",
-
-                    },
-                    {
-                        Id: "CC002",
-                        Type: "Functional",
-                        Severity: "Critical",
-                        IsMyItem: null,
-                        Status: "closed",
-                        Date: new Date(),
-
-                        Title: "Issue title here",
-                        Description: "Issue desc Issue ",
-                        Image: "https://www.pixelstalk.net/wp-content/uploads/2016/07/1080p-Wallpapers-Full-HD-Download-768x432.jpg",
-
-                    },
-                    {
-                        Id: "F002CCC",
-                        Type: "Functional",
-                        Severity: "Critical",
-                        IsMyItem: null,
-                        Status: "closed",
-                        Date: new Date(),
-
-                        Title: "Issue title here",
-                        Description: "Issue desc Issue ",
-                        Image: "https://www.pixelstalk.net/wp-content/uploads/2016/07/1080p-Wallpapers-Full-HD-Download-768x432.jpg",
-
-                    },
-
-                ],
+                All: null,
+                AllIds:null
             },
             Init: function () {
                 SC_DASHBOARD.EventListeners.Init();
@@ -471,7 +371,8 @@
                     $(document).ready(function () {
                         SC_DASHBOARD.EventListeners.DashBoardEvents.NavigationEvents();
                         SC_DASHBOARD.EventListeners.FilterEvents();
-                        SC_DASHBOARD.EventListeners.ListEvents();
+                        SC_DASHBOARD.EventListeners.ListEvents();  
+                        SC_DASHBOARD.ApiMethods.SubmitError();                        
                     });
                 },
                 DashBoardEvents: {
@@ -488,15 +389,15 @@
                     });
 
                     $('#filter-error-type').on('change', function () {
-                        SC_DASHBOARD.GlobalVariables.GlobalFilter.Type = this.value;
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorType = this.value;
                     });
 
                     $('#filter-error-severity').on('change', function () {
-                        SC_DASHBOARD.GlobalVariables.GlobalFilter.Severity = this.value;
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorSeverity = this.value;
                     });
 
                     $('#filter-error-status').on('change', function () {
-                        SC_DASHBOARD.GlobalVariables.GlobalFilter.Status = this.value;
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorStatus = this.value;
                     });
 
                     $('#filter-error-view').on('change', function () {
@@ -505,27 +406,33 @@
                         SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName = $("#filter-error-view option:selected").text();
 
                         SC_DASHBOARD.FunctionalMethods.IssueList.RefreshIssueList();
+                        
                     });
 
                     $('#filter-clear i').on('click', function () {
-                        $('#filter-error-type,#filter-error-severity,#filter-error-status').val("");
+                        $('#filter-error-type,#filter-error-severity,#filter-error-status,#filter-main-search-issue,#filter-error-list').val("");
                         $("#filter-myitems").prop("checked", false);
+                    });
+
+                    $('#filter-search').on('click', function () {
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorId =  $("#filter-main-search-issue").val();
+                        SC_DASHBOARD.ApiMethods.SubmitError();                        
                     });
 
                 },
                 ListEvents: function () {
-                    $(document).on("click", "#issue-list-card-details .card .card-header a", function () {
+                    $(document).on("click", "#issue-list-card-details .card .card-header #edit-error", function () {
                         $('.sc_bugger-element-modal.error-detail-modal').modal('show');
 
-                        var editableData = SC_DASHBOARD.Issues.All.filter(element => element.Id == $(this).closest(".card").attr("id"))[0];
+                        var editableData = SC_DASHBOARD.Issues.All.filter(element => element.ErrorId == $(this).closest(".card").attr("id"))[0];
 
-                        $("#errorID").text(editableData.Id);
-                        $("#errorTitle").val(editableData.Title);
-                        $("#errorDetail").val(editableData.Description);
-                        $("#errorType").val(editableData.Type);
-                        $("#errorSeverity").val(editableData.Severity);
-                        $("#errorStatus").val(editableData.Status);
-                        $("#error-screen-shot").attr("src", editableData.Image);
+                        $("#errorID").text(editableData.ErrorId);
+                        $("#errorTitle").val(editableData.ErrorTitle);
+                        $("#errorDetail").val(editableData.ErrorDetail);
+                        $("#errorType").val(editableData.ErrorType);
+                        $("#errorSeverity").val(editableData.ErrorSeverity);
+                        $("#errorStatus").val(editableData.ErrorStatus);
+                        $("#error-screen-shot").attr("src", editableData.ScreenShot);
                        
                     });
                    
@@ -534,7 +441,8 @@
             FunctionalMethods: {
                 ActivateAutoComplete: function () {
                     /*initiate the autocomplete function on the "filter-main-search-issue" element, and pass along the countries array as possible autocomplete values:*/
-                    SC_DASHBOARD.UtilityMethods.AutoCompleteEvents(document.getElementById("filter-main-search-issue"), SC_DASHBOARD.Issues.All);
+                    SC_DASHBOARD.ApiMethods.GetErrorIds();
+                    SC_DASHBOARD.UtilityMethods.AutoCompleteEvents(document.getElementById("filter-main-search-issue"), SC_DASHBOARD.Issues.AllIds);
                 },
                 IssueList: {
                     TempServerCall: function () {
@@ -551,23 +459,11 @@
                         // Refresh issue list
 
                     },
-                    RefreshIssueList: function () {
-
-
-
-                        //var _IssueModel = {
-
-                        //    Id: null,
-                        //    Type: null,
-                        //    Severity: null,
-                        //    IsMyItem: null,
-                        //    Date: null,
-
-                        //    Title: null,
-                        //    Description: null,
-                        //    Image: null,
-
-                        //};
+                    RefreshIssueList: function () {    
+                       
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView = $('#filter-error-view').val();
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName = $("#filter-error-view option:selected").text();
+                      
 
                         var currentIssueList = SC_DASHBOARD.Issues.All;
 
@@ -577,13 +473,13 @@
 
                             // Frame json
                             var cardViewTemplateFields = {
-                                id: _issue.Id,
-                                idFramed: " id='" + _issue.Id + "' ",
-                                Image: _issue.Image,
-                                Title: _issue.Title,
-                                Description: _issue.Description,
+                                id: _issue.ErrorId,
+                                idFramed: " id='" + _issue.ErrorId + "' ",
+                                ScreenShot: _issue.ScreenShot,
+                                ErrorTitle: _issue.ErrorTitle,
+                                ErrorDetail: _issue.ErrorDetail,
                                 Date: _issue.Date,
-                                SeverityColor: " " + SC_DASHBOARD.UtilityMethods.GetSeverityColor(_issue.Severity) + " ",
+                                SeverityColor: " " + SC_DASHBOARD.UtilityMethods.GetSeverityColor(_issue.ErrorSeverity) + " ",
                             };
 
                             var templateString = null;
@@ -594,37 +490,40 @@
                                 case "card":
                                     templateString = `<div` + cardViewTemplateFields.idFramed + `class="card` + cardViewTemplateFields.SeverityColor + `">
                                                         <div class="card-header">` + cardViewTemplateFields.id + `
-                                                    <a href="#" class="float-right text-primary" ><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                                                    <a id="edit-error" href="javascript:void(0)" class="float-right text-primary" ><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                                                    <a id="remove-error" href="javascript:void(0)" class="float-right text-primary  mr-2" ><i class="fa fa-trash fa-2x"></i></a>
                                                     </div>
-                                                            <img class="card-img-top" src="` + cardViewTemplateFields.Image + `">
+                                                            <img class="card-img-top" src="` + cardViewTemplateFields.ScreenShot + `">
                                                             <div class="card-body">
-                                                                <h5 class="card-title">` + cardViewTemplateFields.Title + `</h5>
-                                                                <p class="">` + cardViewTemplateFields.Description + `</p>
+                                                                <h5 class="card-title">` + cardViewTemplateFields.ErrorTitle + `</h5>
+                                                                <p class="">` + cardViewTemplateFields.ErrorDetail + `</p>
                                                                 <p class="card-text"><small class="text-muted">` + cardViewTemplateFields.Date + `</small></p>
                                                             </div>
                                                         </div>`;
                                     break;
                                 case "detail":
-                                    templateString = `<div ` + cardViewTemplateFields.idFramed + `class="card mb-3` + cardViewTemplateFields.SeverityColor + `">
+                                    templateString = `<div ` + cardViewTemplateFields.idFramed + `class="card` + cardViewTemplateFields.SeverityColor + `w-2000">
                                                     <div class="card-header">` + cardViewTemplateFields.id + `
-                                                    <a href="#" class="float-right text-primary" ><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                                                     <a id="edit-error" href="javascript:void(0)" class="float-right text-primary" ><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                                                    <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2" ><i class="fa fa-trash fa-2x"></i></a>
                                                     </div>
-                                                    <img class="card-img-top" src="` + cardViewTemplateFields.Image + `">
+                                                    <img class="card-img-top" src="` + cardViewTemplateFields.ScreenShot + `">
                                                     <div class="card-body">
-                                                        <h5 class="card-title">` + cardViewTemplateFields.Title + `</h5>
-                                                        <p class="card-text">` + cardViewTemplateFields.Description + `</p>
+                                                        <h5 class="card-title">` + cardViewTemplateFields.ErrorTitle + `</h5>
+                                                        <p class="card-text">` + cardViewTemplateFields.ErrorDetail + `</p>
                                                         <p class="card-text"><small class="text-muted">` + cardViewTemplateFields.Date + `</small></p>
                                                     </div>
                                                 </div>`;
                                     break;
                                 case "mini":
-                                    templateString = `<div ` + cardViewTemplateFields.idFramed + `class="card text-white ` + cardViewTemplateFields.SeverityColor + ` mb-3" style="max-width: 18rem;">
+                                    templateString = `<div ` + cardViewTemplateFields.idFramed + `class="card text-white ` + cardViewTemplateFields.SeverityColor + ` ">
                                                     <div class="card-header">` + cardViewTemplateFields.id + `
-                                                    <a href="#" class="float-right text-primary" ><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                                                     <a id="edit-error" href="javascript:void(0)" class="float-right text-primary" ><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                                                    <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2" ><i class="fa fa-trash fa-2x"></i></a>
                                                     </div>
                                                     <div class="card-body">
-                                                        <h5 class="card-title">` + cardViewTemplateFields.Title + `</h5>
-                                                        <p class="card-text">` + cardViewTemplateFields.Description + `</p>
+                                                        <h5 class="card-title">` + cardViewTemplateFields.ErrorTitle + `</h5>
+                                                        <p class="card-text">` + cardViewTemplateFields.ErrorDetail + `</p>
                                                     </div>
                                                 </div>`;
                                     break;
@@ -638,6 +537,16 @@
                         // List
                         $("#issue-list-card-details").html("");
                         $("#issue-list-card-details").append(listElement);
+
+                        // Detailed view class
+                        if (SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView == "detail") {
+                            $("#issue-list-card-details").addClass("list-group");
+                        }
+                        else {
+                            $("#issue-list-card-details").removeClass("list-group");
+                        }
+                       
+                       
                     }
                 }
 
@@ -664,14 +573,14 @@
                         for (i = 0; i < arr.length; i++) {
                             /*check if the item starts with the same letters as the text field value:*/
 
-                            if (arr[i].Id.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                            if (arr[i].ErrorId.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                                 /*create a DIV element for each matching element:*/
                                 b = document.createElement("DIV");
                                 /*make the matching letters bold:*/
-                                b.innerHTML = "<strong>" + arr[i].Id.substr(0, val.length) + "</strong>";
-                                b.innerHTML += arr[i].Id.substr(val.length);
+                                b.innerHTML = "<strong>" + arr[i].ErrorId.substr(0, val.length) + "</strong>";
+                                b.innerHTML += arr[i].ErrorId.substr(val.length);
                                 /*insert a input field that will hold the current array item's value:*/
-                                b.innerHTML += "<input type='hidden' value='" + arr[i].Id + "'>";
+                                b.innerHTML += "<input type='hidden' value='" + arr[i].ErrorId + "'>";
                                 /*execute a function when someone clicks on the item value (DIV element):*/
                                 b.addEventListener("click", function (e) {
                                     /*insert the value for the autocomplete text field:*/
@@ -743,16 +652,16 @@
                 ,
                 GetSeverityColor: function (severity) {
                     switch (severity) {
-                        case "Critical":
+                        case "critical":
                             return SC_DASHBOARD.Settings.CSS.SeverityColor.Critical;
                             break;
-                        case "High":
+                        case "high":
                             return SC_DASHBOARD.Settings.CSS.SeverityColor.High;
                             break;
-                        case "Medium":
+                        case "medium":
                             return SC_DASHBOARD.Settings.CSS.SeverityColor.Medium;
                             break;
-                        case "Low":
+                        case "low":
                             return SC_DASHBOARD.Settings.CSS.SeverityColor.Low;
                             break;
                         default:
@@ -762,7 +671,48 @@
 
                 }
             }
-
+            ,
+            ApiMethods: {
+                SubmitError: function () {
+                    $.ajax({
+                        url: SC_DASHBOARD.Config.SaveErrorUrl,
+                        type: "post",
+                        async: false,
+                        data: (SC_DASHBOARD.GlobalVariables.GlobalFilter),
+                        success: function (response) {
+                            SC_DASHBOARD.Issues.All = response;
+                            console.log(response);
+                            SC_DASHBOARD.FunctionalMethods.IssueList.RefreshIssueList();
+                        },
+                        error: function (response) {
+                            console.log(response);
+                        }
+                      
+                       
+                    });
+                },
+                GetErrorIds: function () {
+                    $.ajax({
+                        url: SC_DASHBOARD.Config.GetErrorIdsUrl,
+                        type: "post",     
+                        async:false,
+                        data: (SC_DASHBOARD.GlobalVariables.GlobalFilter),
+                        success: function (response) {
+                            SC_DASHBOARD.Issues.AllIds = response;
+                            $.each(SC_DASHBOARD.Issues.AllIds, function (key, value) {
+                                $('#filter-error-list')
+                                    .append($("<option></option>")
+                                        .attr("value", value.ErrorId)
+                                        .text(value.ErrorId));
+                            });
+                            console.log(response);
+                        },
+                        error: function (response) {
+                            console.log(response);
+                        }
+                    });
+                }
+            }
         };
     }());
 
@@ -818,6 +768,10 @@
         color: #ffffff;
     }
 
+    .sc_bugger-element-background-color {
+        background-color: #30b579;
+        color: white;
+    }
 
     /*model full screen*/
 /*@@media (min-width: 576px) {
