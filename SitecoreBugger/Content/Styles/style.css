@@ -64,7 +64,9 @@ span {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #7386D5;
+    /*background: #30b579;*/
+    background-image: url(https://s1.1zoom.me/big0/255/428779-Kycb.jpg);
+    
     color: #fff;
     transition: all 0.3s;
 }
@@ -116,7 +118,7 @@ span {
 
     #sidebar .sidebar-header {
         padding: 20px;
-        background: #6d7fcc;
+        background: #4CAF50;
     }
 
         #sidebar .sidebar-header strong {
@@ -136,7 +138,7 @@ span {
     }
 
         #sidebar ul li a:hover {
-            color: #7386D5;
+            color: #30b579;
             background: #fff;
         }
 
@@ -147,7 +149,7 @@ span {
     #sidebar ul li.active > a,
     a[aria-expanded="true"] {
         color: #fff;
-        background: #6d7fcc;
+        background: #4CAF50;
     }
 
 a[data-toggle="collapse"] {
@@ -165,7 +167,7 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: #4CAF50;
 }
 
 ul.CTAs {
@@ -182,12 +184,12 @@ ul.CTAs {
 
 a.download {
     background: #fff;
-    color: #7386D5;
+    color: #30b579;
 }
 
 a.article,
 a.article:hover {
-    background: #6d7fcc !important;
+    background: #4CAF50 !important;
     color: #fff !important;
 }
 
@@ -264,4 +266,11 @@ a.article:hover {
     #sidebarCollapse span {
         display: none;
     }
+}
+
+
+/*bgm custom*/
+
+.sc_bugger-element-background-color {
+    background-color: #30b579; 
 }
