@@ -6,6 +6,7 @@
 /.vs/
 /html2canvas/obj/
 /SitecoreBugger/bin/
+/SitecoreBugger/bin/roslyn/
 /SitecoreBugger/obj/
 /SitecoreBugger/obj/Debug/
 /SitecoreBugger/obj/Release/
