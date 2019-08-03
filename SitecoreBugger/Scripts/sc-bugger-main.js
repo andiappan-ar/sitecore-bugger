@@ -4,6 +4,7 @@ var SC_BUGGER = (function () {
         Config: {
             ProjectName: "Bugger",
             Html2CanvasProxyUrl: "/sc-bugger/bugger/ImageProxy",
+            SaveErrorUrl: "/sc-bugger/ApiScBugger/SaveError",
         },
         Settings: {
             IsCompressScreenshot: true,
@@ -46,8 +47,41 @@ var SC_BUGGER = (function () {
                     SC_BUGGER.EventListeners.BugIconBarEvents();
                     SC_BUGGER.EventListeners.ModalEvents();
                     SC_BUGGER.EventListeners.File.UploadScreenshot();
+                    SC_BUGGER.EventListeners.FormEvents.BootstrapSubmitFOrmValidationEvents();
                     //SC_BUGGER.UtilityMethods.StyleEvents.BuggerMainIconColorChangeInit();
                 });
+            },
+            FormEvents: {
+                BootstrapSubmitFOrmValidationEvents: function(){
+                    // Example starter JavaScript for disabling form submissions if there are invalid fields
+                    (function () {
+                        'use strict';
+                        window.addEventListener('load', function () {
+                            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                            var forms = document.getElementsByClassName('sc_bugger-form-validator');
+                            // Loop over them and prevent submission
+                            var validation = Array.prototype.filter.call(forms, function (form) {
+                                form.addEventListener('submit', function (event) {
+                                    if (form.checkValidity() === false) {
+                                        //event.preventDefault();
+                                        //event.stopPropagation();
+                                        $(this).attr("is-valid-form", false);
+                                    }
+                                    else {
+                                        $(this).attr("is-valid-form", true);
+                                    }
+                                    form.classList.add('was-validated');
+                                }, false);
+                            });
+                        }, false);
+                    })();
+
+                    // fiLEiNPUT BIND EVENTS
+                    $(".custom-file-input").on("change", function () {
+                        var fileName = $(this).val().split("\\").pop();
+                        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                    });
+                }
             },
             ModalEvents: function () {
                 $(document).on('hide.bs.modal', '.sc_bugger-element-modal.error-detail-modal', function () {
@@ -61,13 +95,13 @@ var SC_BUGGER = (function () {
                 
             },
             //Selector : $("#sc_bugger-save-error")
-            SaveErrorEvent: function () {
+            MarkErrorEvent: function () {
                 $("#sc_bugger-save-error").unbind();
 
                 $("#sc_bugger-save-error").click(function () {
+
                     //Get value from model
                     SC_BUGGER.GlobalVariables.Element.ErrorGlobal = {
-                        errorId: SC_BUGGER.Config.ProjectName + SC_BUGGER.UtilityMethods.GetTimeStamp(),
                         errorTitle: $(".sc_bugger-element-modal.error-detail-modal #errorTitle").val(),
                         errorType: $(".sc_bugger-element-modal.error-detail-modal #errorType").val(),
                         errorSeverity: $(".sc_bugger-element-modal.error-detail-modal #errorSeverity").val(),
@@ -77,13 +111,31 @@ var SC_BUGGER = (function () {
                         url: window.location.href
                     };
 
-                    SC_BUGGER.FunctionalMethods.MarkErrorwithPopup(SC_BUGGER.GlobalVariables.Element.ErrorGlobal);
+                    // Validation
+                    if (SC_BUGGER.ValidationEvents.ValidateMarkError() == "true") {
 
-                    $('.sc_bugger-element-modal.error-detail-modal').modal('hide');
+                        SC_BUGGER.FunctionalMethods.MarkErrorwithPopup(SC_BUGGER.GlobalVariables.Element.ErrorGlobal);
+
+                        $('.sc_bugger-element-modal.error-detail-modal').modal('hide');
+                        SC_BUGGER.EventListeners.Body.UnbindBuggerBodyEvents();
+                        $("#sc_bugger-save-error-confirm").removeClass("sc_bugger-disabled");
 
 
-                    SC_BUGGER.EventListeners.Body.UnbindBuggerBodyEvents();
-                    $("#sc_bugger-save-error-confirm").removeClass("sc_bugger-disabled");
+                    }
+
+                    $("#sc_bugger-submit-error").unbind();
+
+                    $("#sc_bugger-submit-error").click(function () {
+
+                        // Validation
+                        if (SC_BUGGER.ValidationEvents.ValidateMarkError() == "true") {
+
+                            SC_BUGGER.ApiMethods.SubmitError();
+                            $('.sc_bugger-element-modal.error-detail-modal').modal('hide');
+
+                        }
+                    });
+                   
                 });
             },
             //Selector : $("body")
@@ -97,22 +149,23 @@ var SC_BUGGER = (function () {
                     $("body").on("sc_bugger.body.mousemove", function (event, evt) {                       
                         if (!SC_BUGGER.FunctionalMethods.IsBuggerelement(evt.target)) {
                             $(evt.target).addClass("sc_bugger-bgm-re");
-                            console.log($(evt.target).getPath());
+                           // console.log($(evt.target).getPath());
                         }
                     });
-                    $('body').mousemove(function (evt) {
+                    $("body").on("mousemove touchstart", function (evt) {
                         $("body").trigger("sc_bugger.body.mousemove", evt);
                     });
-
+                    
                     //MOuse out event
                     $("body").on("sc_bugger.body.mouseout", function (event, evt) {
                         if (!SC_BUGGER.FunctionalMethods.IsBuggerelement(evt.target)) {
                             $(evt.target).removeClass("sc_bugger-bgm-re");
                         }
                     });
-                    $('body').mouseout(function (evt) {
+                    $("body").on("mouseout touchend", function (evt) {
                         $("body").trigger("sc_bugger.body.mouseout", evt);
                     });
+                   
 
                     //Click event
                     $("body").on("sc_bugger.body.click", function (event, evt) {
@@ -131,7 +184,7 @@ var SC_BUGGER = (function () {
 
                             $('.sc_bugger-element-modal.error-detail-modal').modal('show').css("z-index", $(".popover").css("z-index") + 1);;
 
-                            SC_BUGGER.EventListeners.SaveErrorEvent();
+                            SC_BUGGER.EventListeners.MarkErrorEvent();
 
                             SC_BUGGER.GlobalVariables.Browser.CurrentBugElement = $(evt.target);
 
@@ -554,6 +607,28 @@ var SC_BUGGER = (function () {
                         }
                     });
                 }
+            }
+        }
+        ,
+        ValidationEvents: {
+            ValidateMarkError: function () {
+
+                $('#sc_bugger-form-mark-error #hidden-submit').click();
+                return $('#sc_bugger-form-mark-error').attr("is-valid-form");
+            }
+        }
+        ,
+        ApiMethods: {
+            SubmitError: function () {
+
+               $.ajax({
+                   url:SC_BUGGER.Config.SaveErrorUrl ,
+                   type:"post",
+                   data: SC_BUGGER.GlobalVariables.Element.ErrorGlobal,
+                    success: function (result) {
+                        debugger;
+                    }
+                });
             }
         }
     };
