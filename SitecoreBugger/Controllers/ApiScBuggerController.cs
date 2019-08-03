@@ -1,4 +1,4 @@
-﻿using SitecoreBugger.Site.Model;
+using SitecoreBugger.Site.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +13,21 @@ namespace SitecoreBugger.Site.Controllers
         public ErrorStatus SaveError(Error error)
         {
             ErrorStatus result = new ErrorStatus();
-            return null;
+
+            return result;
         }
 
-        public ErrorStatus SaveError1(Error error)
-        {
-            ErrorStatus result = new ErrorStatus();
-            return null;
+        [HttpPost]
+        public JsonResult GetError(ErrorFilter error)
+        {          
+            return Json(MockedData.AllData);
         }
+
+        [HttpPost]
+        public JsonResult GetErrorIds(ErrorFilter error)
+        {
+            return Json(MockedData.AllData);
+        }
+
     }
 }
