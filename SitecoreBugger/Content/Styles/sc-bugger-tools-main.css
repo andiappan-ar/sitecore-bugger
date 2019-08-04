@@ -120,6 +120,7 @@
 .sc_bugger-disabled {
     pointer-events: none;
     cursor: not-allowed;
+    background-color:grey;
 }
 
 .sc_bugger-element.modal label {

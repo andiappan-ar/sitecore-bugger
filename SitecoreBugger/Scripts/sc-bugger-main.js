@@ -131,12 +131,23 @@ var SC_BUGGER = (function () {
                         if (SC_BUGGER.ValidationEvents.ValidateMarkError() == "true") {
 
                             SC_BUGGER.ApiMethods.SubmitError();
+                            SC_BUGGER.EventListeners.RemoveMarkErrorEvent();
                             $('.sc_bugger-element-modal.error-detail-modal').modal('hide');
 
                         }
                     });
                    
                 });
+            },
+            RemoveMarkErrorEvent: function () {
+                //Remove old element
+                if (SC_BUGGER.GlobalVariables.Browser.OldBugElement != null) {
+
+                    SC_BUGGER.GlobalVariables.Browser.OldBugElement.popover('dispose');
+                    SC_BUGGER.GlobalVariables.Browser.OldBugElement.removeClass("sc_bugger-popover red-tooltip sc_bugger-bgm-error");
+                    SC_BUGGER.GlobalVariables.Browser.OldBugElement.removeAttr("data-toggle", "data-html", "data-placement", "title", "data-content");
+
+                }
             },
             //Selector : $("body")
             Body: {
@@ -173,14 +184,7 @@ var SC_BUGGER = (function () {
 
                             $(".sc_bugger-screen-shot-div").addClass("sc_bugger-hide");
 
-                            //Remove old element
-                            if (SC_BUGGER.GlobalVariables.Browser.OldBugElement != null) {
-
-                                SC_BUGGER.GlobalVariables.Browser.OldBugElement.popover('dispose');
-                                SC_BUGGER.GlobalVariables.Browser.OldBugElement.removeClass("sc_bugger-popover red-tooltip sc_bugger-bgm-error");
-                                SC_BUGGER.GlobalVariables.Browser.OldBugElement.removeAttr("data-toggle", "data-html", "data-placement", "title", "data-content");
-
-                            }
+                            SC_BUGGER.EventListeners.RemoveMarkErrorEvent();
 
                             $('.sc_bugger-element-modal.error-detail-modal').modal('show').css("z-index", $(".popover").css("z-index") + 1);;
 
