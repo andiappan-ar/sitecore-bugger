@@ -198,7 +198,9 @@
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\sc-bugger-main.js" />
     <Content Include="tooltip.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -212,7 +214,9 @@
     <Content Include="Views\Bugger\Tools.cshtml" />
     <Content Include="Views\Layout\_Account.cshtml" />
     <Content Include="Views\DashBoard\Index.cshtml" />
-    <Content Include="Views\DashBoard\template1.cshtml" />
+    <Content Include="Views\DashBoard\report.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\signup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

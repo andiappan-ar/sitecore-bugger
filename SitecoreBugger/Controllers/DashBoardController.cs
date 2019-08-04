@@ -15,7 +15,7 @@ namespace SitecoreBugger.Site.Controllers
         }
 
         // GET: DashBoard
-        public ActionResult template1()
+        public ActionResult report()
         {
             return View();
         }

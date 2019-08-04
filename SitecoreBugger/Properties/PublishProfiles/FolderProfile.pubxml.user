@@ -229,10 +229,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/14/2017 05:17:48</publishTime>
     </File>
     <File Include="bin/SitecoreBugger.Site.dll">
-      <publishTime>08/04/2019 18:57:37</publishTime>
+      <publishTime>08/04/2019 19:32:49</publishTime>
     </File>
     <File Include="bin/SitecoreBugger.Site.pdb">
-      <publishTime>08/04/2019 18:57:37</publishTime>
+      <publishTime>08/04/2019 19:32:49</publishTime>
     </File>
     <File Include="bin/System.IO.FileSystem.Primitives.dll">
       <publishTime>11/05/2016 04:56:08</publishTime>
@@ -292,7 +292,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/22/2019 16:36:30</publishTime>
     </File>
     <File Include="Content/Styles/sc-bugger-dashboard.css">
-      <publishTime>08/04/2019 16:23:17</publishTime>
+      <publishTime>08/04/2019 19:38:30</publishTime>
     </File>
     <File Include="Content/Styles/sc-bugger-tools-main.css">
       <publishTime>08/04/2019 13:18:01</publishTime>
@@ -393,17 +393,26 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="tooltip.html">
       <publishTime>07/20/2019 23:06:03</publishTime>
     </File>
+    <File Include="Views/Account/ForgotPassword.cshtml">
+      <publishTime>08/04/2019 19:32:38</publishTime>
+    </File>
     <File Include="Views/Account/Login.cshtml">
-      <publishTime>08/03/2019 11:27:13</publishTime>
+      <publishTime>08/04/2019 19:33:39</publishTime>
+    </File>
+    <File Include="Views/Account/signup.cshtml">
+      <publishTime>08/04/2019 19:32:35</publishTime>
     </File>
     <File Include="Views/Bugger/TestPage.cshtml">
       <publishTime>07/22/2019 15:09:39</publishTime>
     </File>
     <File Include="Views/Bugger/Tools.cshtml">
-      <publishTime>08/04/2019 16:04:12</publishTime>
+      <publishTime>08/04/2019 19:20:00</publishTime>
     </File>
     <File Include="Views/DashBoard/Index.cshtml">
-      <publishTime>07/22/2019 19:58:14</publishTime>
+      <publishTime>08/04/2019 19:44:41</publishTime>
+    </File>
+    <File Include="Views/DashBoard/report.cshtml">
+      <publishTime>08/04/2019 19:23:42</publishTime>
     </File>
     <File Include="Views/DashBoard/T1.cshtml">
       <publishTime>07/22/2019 23:05:56</publishTime>

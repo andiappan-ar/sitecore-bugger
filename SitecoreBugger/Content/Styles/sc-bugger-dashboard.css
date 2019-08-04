@@ -274,5 +274,8 @@ a.article:hover {
     background-color: #30b579;
 }
 
+.sc_bugger-hide {
+    display: none !important;
+}
 
 /*Spinnig wheel css*/
