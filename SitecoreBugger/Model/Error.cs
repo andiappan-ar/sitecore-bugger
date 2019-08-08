@@ -22,16 +22,7 @@ namespace SitecoreBugger.Site.Model
 
     }
 
-    public class ErrorFilter
-    {
-        public string ErrorId { get; set; }       
-        public string ErrorSeverity { get; set; }
-        public string ErrorType { get; set; }
-        public string ErrorStatus { get; set; }        
-        public DateTime Date { get; set; }
-        public bool IsMyItem { get; set; }
 
-    }
 
     public class ErrorStatus
     {

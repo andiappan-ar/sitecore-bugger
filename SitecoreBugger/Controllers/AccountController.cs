@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SitecoreBugger.Site.Security.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace SitecoreBugger.Site.Controllers
         // GET: Account
         public ActionResult Login()
         {
+            Tester.Testmethod();
             return View();
         }
 

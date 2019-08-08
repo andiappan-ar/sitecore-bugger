@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using SitecoreBugger.Site.Model.Global;
 using System.Web.Mvc;
+
 
 namespace SitecoreBugger.Site.Controllers
 {
@@ -11,7 +9,15 @@ namespace SitecoreBugger.Site.Controllers
         // GET: DashBoard
         public ActionResult Index()
         {
-            return View();
+            var masterRecord = _BuggerBusiness.GetMasterRecords();
+            return View(masterRecord);
+        }
+
+        [HttpPost]
+        public ActionResult GetError(ErrorFilter errorFilter)
+        {
+            ViewBag.ErrorFilter = errorFilter;
+            return View(_BuggerBusiness.GetError(errorFilter));
         }
 
         // GET: DashBoard

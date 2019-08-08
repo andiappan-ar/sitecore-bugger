@@ -1,0 +1,119 @@
+﻿@using SitecoreBugger.Site.Model.Global;
+@model List<Error>
+@{
+    Layout = null;
+    ErrorFilter errFilter = ViewBag.ErrorFilter;
+}
+
+
+@if (Model.Count > 0)
+{
+    foreach (Error err in Model)
+    {
+        bool isImageFound = (err.ScreenShot != null);
+
+        switch (errFilter.FilterView)
+        {
+
+
+            case "card":
+                <div id="@err.ErrorId" class="card  @GetSeverityColor(err.ErrorSeverityId.ToString())">
+                    <div class="card-header">
+                        @err.ErrorId
+                        <a id="edit-error" href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                        <a id="remove-error" href="javascript:void(0)" class="float-right text-primary  mr-2"><i class="fa fa-trash fa-2x"></i></a>
+                    </div>
+
+                    @if (isImageFound)
+                    {
+                        <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(err.ScreenShot)">
+                    }
+
+                    <div class="card-body">
+                        <h5 class="card-title">@err.ErrorTitle</h5>
+                        <p class="">@err.ErrorDetail</p>
+                        <p class="card-text"><small class="text-muted">@err.DateRaised</small></p>
+                    </div>
+                </div>
+                break;
+            case "detail":
+                <div id="@err.ErrorId" class="card  w-2000 @GetSeverityColor(err.ErrorSeverityId.ToString())">
+                    <div class="card-header">
+                        @err.ErrorId
+                        <a id="edit-error" href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                        <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2"><i class="fa fa-trash fa-2x"></i></a>
+                    </div>
+
+                    @if (isImageFound)
+                    {
+                        <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(err.ScreenShot)">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@err.ErrorTitle</h5>
+                        <p class="card-text">@err.ErrorDetail</p>
+                        <p class="card-text"><small class="text-muted">@err.DateRaised</small></p>
+                    </div>
+                </div>
+                break;
+            case "mini":
+                <div id="@err.ErrorId" class="card text-white    @GetSeverityColor(err.ErrorSeverityId.ToString())">
+                    <div class="card-header">
+                        @err.ErrorId
+                        <a id="edit-error" href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                        <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2"><i class="fa fa-trash fa-2x"></i></a>
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">@err.ErrorTitle</h5>
+                        <p class="card-text">@err.ErrorDetail</p>
+                    </div>
+                </div>
+                break;
+            default:
+                <div id="@err.ErrorId" class="card text-white    @GetSeverityColor(err.ErrorSeverityId.ToString())">
+                    <div class="card-header">
+                        @err.ErrorId
+                        <a id="edit-error" href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                        <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2"><i class="fa fa-trash fa-2x"></i></a>
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">@err.ErrorTitle</h5>
+                        <p class="card-text">@err.ErrorDetail</p>
+                    </div>
+                </div>
+                break;
+        }
+    }
+
+}
+
+@functions{
+    public string GetSeverityColor(string severity)
+    {
+        string result = "";
+        switch (severity)
+        {
+            case "4":
+                result = "text-white bg-danger";
+                break;
+            case "3":
+                result = "text-white bg-dark";
+                break;
+            case "2":
+                result = "text-dark bg-warning";
+                break;
+            case "1":
+                result = "";
+                break;
+            default:
+                result = "";
+                break;
+        }
+        return result;
+    }
+}
+
+
+
+
