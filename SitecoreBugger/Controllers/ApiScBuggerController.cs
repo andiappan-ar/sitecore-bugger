@@ -14,13 +14,11 @@ namespace SitecoreBugger.Site.Controllers
 {
     public class ApiScBuggerController : BaseController
     {
-        //[HttpPost]
-        //public ErrorStatus SaveError(Error error)
-        //{
-        //    ErrorStatus result = new ErrorStatus();
-
-        //    return result;
-        //}
+        [HttpPost]
+        public JsonResult SaveError(Error error)
+        {          
+            return Json(_BuggerBusiness.SaveError(error));
+        }
 
         [HttpPost]
         public JsonResult GetError(ErrorFilter errorFilter)
@@ -28,124 +26,23 @@ namespace SitecoreBugger.Site.Controllers
             return Json(_BuggerBusiness.GetError(errorFilter));
         }
 
+
         [HttpPost]
         public JsonResult GetErrorIds(Project project)
         {       
           return Json(_BuggerBusiness.GetErrorIds(project));
         }
 
-        //[HttpPost]
-        //public FileResult GetExcelReport(ErrorFilter error)
-        //{
-        //    //(new SitecoreBugger.Site.Security.Account.Login()).Logined();
+        [HttpPost]
+        public FileResult GetExcelReport(ErrorFilter error)
+        {
 
-        //    var dataTable = ConvertToDataTable<Error>(MockedData.AllData);
-           
-        //    DataSet ds = new DataSet();
-        //    ds.Tables.Add(dataTable);           
+            return new FileStreamResult(_BuggerBusiness.GetExcelReport(error), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+          
+        }
 
-        //    MemoryStream memoryStream = new MemoryStream();
-
-        //    using (var workbook = SpreadsheetDocument.Create(memoryStream, DocumentFormat.OpenXml.SpreadsheetDocumentType.Workbook))
-        //    {
-        //        var workbookPart = workbook.AddWorkbookPart();
-
-        //        workbook.WorkbookPart.Workbook = new DocumentFormat.OpenXml.Spreadsheet.Workbook();
-
-        //        workbook.WorkbookPart.Workbook.Sheets = new DocumentFormat.OpenXml.Spreadsheet.Sheets();
-
-        //        foreach (System.Data.DataTable table in ds.Tables)
-        //        {
-
-        //            var sheetPart = workbook.WorkbookPart.AddNewPart<WorksheetPart>();
-        //            var sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
-        //            sheetPart.Worksheet = new DocumentFormat.OpenXml.Spreadsheet.Worksheet(sheetData);
-
-        //            DocumentFormat.OpenXml.Spreadsheet.Sheets sheets = workbook.WorkbookPart.Workbook.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.Sheets>();
-        //            string relationshipId = workbook.WorkbookPart.GetIdOfPart(sheetPart);
-
-        //            uint sheetId = 1;
-        //            if (sheets.Elements<DocumentFormat.OpenXml.Spreadsheet.Sheet>().Count() > 0)
-        //            {
-        //                sheetId =
-        //                    sheets.Elements<DocumentFormat.OpenXml.Spreadsheet.Sheet>().Select(s => s.SheetId.Value).Max() + 1;
-        //            }
-
-        //            DocumentFormat.OpenXml.Spreadsheet.Sheet sheet = new DocumentFormat.OpenXml.Spreadsheet.Sheet() { Id = relationshipId, SheetId = sheetId, Name = table.TableName };
-        //            sheets.Append(sheet);
-
-        //            DocumentFormat.OpenXml.Spreadsheet.Row headerRow = new DocumentFormat.OpenXml.Spreadsheet.Row();
-
-        //            List<String> columns = new List<string>();
-        //            foreach (System.Data.DataColumn column in table.Columns)
-        //            {
-        //                columns.Add(column.ColumnName);
-
-        //                DocumentFormat.OpenXml.Spreadsheet.Cell cell = new DocumentFormat.OpenXml.Spreadsheet.Cell();
-        //                cell.DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String;
-        //                cell.CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(column.ColumnName);
-        //                headerRow.AppendChild(cell);
-        //            }
+    
 
 
-        //            sheetData.AppendChild(headerRow);
-
-        //            foreach (System.Data.DataRow dsrow in table.Rows)
-        //            {
-        //                DocumentFormat.OpenXml.Spreadsheet.Row newRow = new DocumentFormat.OpenXml.Spreadsheet.Row();
-        //                foreach (String col in columns)
-        //                {
-        //                    DocumentFormat.OpenXml.Spreadsheet.Cell cell = new DocumentFormat.OpenXml.Spreadsheet.Cell();
-        //                    cell.DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String;
-        //                    cell.CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(dsrow[col].ToString()); //
-        //                    newRow.AppendChild(cell);
-        //                }
-
-        //                sheetData.AppendChild(newRow);
-        //            }
-
-        //        }
-        //    }
-
-        //        // reset the position to the start of the stream
-        //        memoryStream.Seek(0, SeekOrigin.Begin);
-
-        //    return new FileStreamResult(memoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-
-        //}
-
-        //public DataTable ConvertToDataTable<T>(IList<T> data)
-
-        //{
-
-        //    PropertyDescriptorCollection properties =
-
-        //    TypeDescriptor.GetProperties(typeof(T));
-
-        //    DataTable table = new DataTable();
-
-        //    foreach (PropertyDescriptor prop in properties)
-
-        //        table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
-
-        //    foreach (T item in data)
-
-        //    {
-
-        //        DataRow row = table.NewRow();
-
-        //        foreach (PropertyDescriptor prop in properties)
-
-        //            row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
-
-        //        table.Rows.Add(row);
-
-        //    }
-
-        //    return table;
-
-        //}
-
-       
     }
 }

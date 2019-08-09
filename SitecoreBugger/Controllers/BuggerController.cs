@@ -27,7 +27,8 @@ namespace SitecoreBugger.Site.Controllers
 
         public ActionResult Tools()
         {
-            return View();
+            var masterRecord = _BuggerBusiness.GetMasterRecords();
+            return View(masterRecord);
         }
 
     }

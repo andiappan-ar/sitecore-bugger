@@ -32,6 +32,7 @@ namespace SitecoreBugger.Site.Data.Repository
                             result.ErrorSeverity =  ds.Tables[1].ToListof<ValuePair>();
                             result.ErrorStatus =  ds.Tables[2].ToListof<ValuePair>();
                             result.ErrorType =  ds.Tables[3].ToListof<ValuePair>();                           
+                            result.UserList =  (ds.Tables[4].ToListof<User>());
                             result.user =  (ds.Tables[4].ToListof<User>()).FirstOrDefault();
                         }
                     }
@@ -105,6 +106,107 @@ namespace SitecoreBugger.Site.Data.Repository
             }
 
             return result;
+        }
+
+
+
+        public static ErrorStatus SaveError(Error error)
+        {
+            if (CheckDBNUll(error.ErrorId) == DBNull.Value)
+            {
+                return SaveErrorValues(error);
+            }
+            else
+            {
+                return UpdateErrorValues(error);
+            }
+        }
+
+
+        public static ErrorStatus SaveErrorValues(Error error)
+        {
+            List<ErrorStatus> result = new List<ErrorStatus>();
+
+            using (SqlConnection sqlcon = new SqlConnection(Connections.CS))
+            {
+                using (SqlCommand cmd = new SqlCommand("SP_SaveError", sqlcon))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@ErrorId", SqlDbType.Int).Value = DBNull.Value;
+                    cmd.Parameters.Add("@ErrorTitle", SqlDbType.NVarChar).Value = error.ErrorTitle;
+                    cmd.Parameters.Add("@ErrorDetail", SqlDbType.NVarChar).Value = error.ErrorDetail;
+                    cmd.Parameters.Add("@Selector", SqlDbType.NVarChar).Value = error.Selector;
+                    cmd.Parameters.Add("@Uri", SqlDbType.NVarChar).Value = error.Uri;
+                    cmd.Parameters.Add("@ErrorSeverityId", SqlDbType.Int).Value = error.ErrorSeverityId;
+                    cmd.Parameters.Add("@ErrorTypeId", SqlDbType.Int).Value = error.ErrorTypeId;
+                    cmd.Parameters.Add("@ErrorStatusId", SqlDbType.Int).Value = error.ErrorStatusId;                    
+                    cmd.Parameters.Add("@OwnerUserId", SqlDbType.Int).Value = error.OwnerUserId;
+                    cmd.Parameters.Add("@AssigneeUserId", SqlDbType.Int).Value = error.AssigneeUserId;
+                    cmd.Parameters.Add("@ProjectId", SqlDbType.Int).Value = error.ProjectId;
+                    cmd.Parameters.Add("@Screenshot", SqlDbType.VarBinary).Value = CheckDBObj(error.UpdateScreenshot, error.ScreenShot);
+                    cmd.Parameters.Add("@UpdateScreenshot", SqlDbType.Bit).Value = error.UpdateScreenshot;
+                    cmd.Parameters.Add("@DeviceDetails", SqlDbType.NVarChar).Value = error.DeviceDetails;
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        using (DataSet ds = new DataSet())
+                        {
+                            da.Fill(ds);
+
+                            result = ds.Tables[0].ToListof<ErrorStatus>();
+                        }
+                    }
+                }
+            }
+
+            return result.FirstOrDefault();
+        }
+
+        public static ErrorStatus UpdateErrorValues(Error error)
+        {
+            List<ErrorStatus> result = new List<ErrorStatus>();
+
+            using (SqlConnection sqlcon = new SqlConnection(Connections.CS))
+            {
+                using (SqlCommand cmd = new SqlCommand("SP_SaveError", sqlcon))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@ErrorId", SqlDbType.Int).Value = error.ErrorId;
+                    cmd.Parameters.Add("@ErrorTitle", SqlDbType.NVarChar).Value = error.ErrorTitle;
+                    cmd.Parameters.Add("@ErrorDetail", SqlDbType.NVarChar).Value = error.ErrorDetail;
+                    cmd.Parameters.Add("@Selector", SqlDbType.NVarChar).Value = DBNull.Value;
+                    cmd.Parameters.Add("@Uri", SqlDbType.NVarChar).Value = DBNull.Value;
+                    cmd.Parameters.Add("@ErrorSeverityId", SqlDbType.Int).Value = error.ErrorSeverityId;
+                    cmd.Parameters.Add("@ErrorTypeId", SqlDbType.Int).Value = error.ErrorTypeId;
+                    cmd.Parameters.Add("@ErrorStatusId", SqlDbType.Int).Value = error.ErrorStatusId;
+                    cmd.Parameters.Add("@OwnerUserId", SqlDbType.Int).Value = DBNull.Value;
+                    cmd.Parameters.Add("@AssigneeUserId", SqlDbType.Int).Value = DBNull.Value;
+                    cmd.Parameters.Add("@ProjectId", SqlDbType.Int).Value = DBNull.Value;
+                    cmd.Parameters.Add("@Screenshot", SqlDbType.VarBinary).Value = CheckDBObj(error.UpdateScreenshot, error.ScreenShot);
+                    cmd.Parameters.Add("@UpdateScreenshot", SqlDbType.Bit).Value = error.UpdateScreenshot;
+                    cmd.Parameters.Add("@DeviceDetails", SqlDbType.NVarChar).Value = DBNull.Value;
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        using (DataSet ds = new DataSet())
+                        {
+                            da.Fill(ds);
+
+                            result = ds.Tables[0].ToListof<ErrorStatus>();
+                        }
+                    }
+                }
+            }
+
+            return result.FirstOrDefault();
+        }
+
+        public static object CheckDBObj(bool val,object objVal)
+        {
+            if (!val)
+                return DBNull.Value;
+            else
+                return objVal;
         }
 
         public static object CheckDBNUll(int value)

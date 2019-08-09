@@ -1,6 +1,7 @@
 @using SitecoreBugger.Site.Model.Global;
 @model SitecoreBugger.Site.Data.Model.MasterData
 
+
 @{
     Layout = "~/Views/Layout/_Account.cshtml";
 }
@@ -61,10 +62,10 @@
         </ul>
         <ul class="list-unstyled CTAs">
             <li>
-                <a href="https://github.com/andiappan-ar/sitecore-bugger" class="download">Go to source</a>
+                <a href="https://github.com/andiappan-ar/sitecore-bugger" class="download rounded-0">Go to source</a>
             </li>
             <li>
-                <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+                <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article rounded-0">Back to article</a>
             </li>
         </ul>
     </nav>
@@ -72,10 +73,10 @@
     <div id="content" class="offset-1--">
         <nav class="navbar navbar-expand-lg sc_bugger-element-background-color">
             <div class="container-fluid">
-                <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                <button type="button" id="sidebarCollapse" class="btn btn-primary rounded-0">
                     <i class="fa fa-arrows-h"></i>
                 </button>
-                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto rounded-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-align-justify"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -86,7 +87,7 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="#">
                                 <!--User details-->
-                                <input id="user-info" type="hidden" uid="@Model.user.UserId" rid="@Model.user.RoleId"/>
+                                <input id="user-info" type="hidden" uid="@Model.user.UserId" rid="@Model.user.RoleId" a-uid=""/>
                                 <i class="fa fa-user-circle">
                                     @Model.user.UserName
                                 </i>
@@ -101,11 +102,11 @@
         <hr />
         <div class="container-fluid">
             <p>
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                <button class="btn btn-primary rounded-0" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     Collapse <i class="fa fa-filter" aria-hidden="true"></i>
                 </button>
                 <div class="collapse show " id="collapseExample">
-                    <div class="card card-body sc_bugger-element-background-color">
+                    <div class="card card-body sc_bugger-element-background-color rounded-0">
                         <form>
                             <div class="form-group">
                                 <div class="row">
@@ -114,460 +115,521 @@
                                             Select project
                                         </label>
                                         <!--Project details-->
-                                        <select id="filter-project-list" class="browser-default custom-select colorful-select">
+                                        <select id="filter-project-list" class="browser-default custom-select colorful-select rounded-0">
                                             <option value="" selected>Select project</option>
                                             @foreach (Project val in Model.project)
                                             {
                                                 <option value="@val.ProjectId">@val.ProjectName</option>
                                             }
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="filter-panel rounded border card card-body sc_bugger-element-background-color">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="autocomplete">
+                                                <label class="form-label" for="gridCheck">
+                                                    Search issue by Id
+                                                </label>
+                                                <select id="filter-error-list" class="browser-default custom-select colorful-select rounded-0">
+                                                    <option value="">Search issue by Id</option>
+                                                </select>
+                                                @*<input id="filter-main-search-issue" type="text" name="myCountry" placeholder="Search issue" class="form-control">*@
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <button id="filter-clear" class="btn btn-primary  float-right rounded-0" type="button">
+                                                <i class="fa fa-undo"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="filter-panel rounded border card card-body sc_bugger-element-background-color">
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="autocomplete">
-                                                    <label class="form-label" for="gridCheck">
-                                                        Search issue by Id
-                                                    </label>
-                                                    <select id="filter-error-list" class="browser-default custom-select colorful-select">
-                                                        <option value="">Search issue by Id</option>
-                                                    </select>
-                                                    @*<input id="filter-main-search-issue" type="text" name="myCountry" placeholder="Search issue" class="form-control">*@
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <button id="filter-clear" class="btn btn-primary  float-right" type="button">
-                                                    <i class="fa fa-undo"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group form-check">
-                                        <div class="row">
-                                            <div class="col">
-                                                <input class="form-check-input" type="checkbox" id="filter-myitems">
-                                                <label class="form-check-label" for="gridCheck">
-                                                    My items
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col">
-                                                <label class="form-check-label" for="gridCheck">
-                                                    Error type:
-                                                </label>
-                                                <select id="filter-error-type" class="browser-default custom-select colorful-select dropdown-success" multiple>
-                                                    @foreach (ValuePair val in Model.ErrorType)
-                                                    {
-                                                        <option value="@val.EId">@val.EDisplayName</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <label class="form-check-label" for="gridCheck">
-                                                    Error severity:
-                                                </label>
-                                                <select id="filter-error-severity" class="browser-default custom-select colorful-select dropdown-success" multiple>
-                                                    @foreach (ValuePair val in Model.ErrorSeverity)
-                                                    {
-                                                        <option value="@val.EId">@val.EDisplayName</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <label class="form-check-label" for="gridCheck">
-                                                    Error status:
-                                                </label>
-                                                <select id="filter-error-status" class="browser-default custom-select colorful-select dropdown-success" multiple>
-                                                    @foreach (ValuePair val in Model.ErrorStatus)
-                                                    {
-                                                        <option value="@val.EId">@val.EDisplayName</option>
-                                                    }
-                                                </select>
-                                            </div>
+                                <div class="form-group form-check">
+                                    <div class="row">
+                                        <div class="col">
+                                            <input class="form-check-input" type="checkbox" id="filter-myitems">
+                                            <label class="form-check-label" for="gridCheck">
+                                                My items
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="form-check-label" for="gridCheck">
+                                                Error type:
+                                            </label>
+                                            <select id="filter-error-type" class="browser-default custom-select colorful-select dropdown-success rounded-0" multiple>
+                                                @foreach (ValuePair val in Model.ErrorType)
+                                                {
+                                                    <option value="@val.EId">@val.EDisplayName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-check-label" for="gridCheck">
+                                                Error severity:
+                                            </label>
+                                            <select id="filter-error-severity" class="browser-default custom-select colorful-select dropdown-success rounded-0" multiple>
+                                                @foreach (ValuePair val in Model.ErrorSeverity)
+                                                {
+                                                    <option value="@val.EId">@val.EDisplayName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-check-label" for="gridCheck">
+                                                Error status:
+                                            </label>
+                                            <select id="filter-error-status" class="browser-default custom-select colorful-select dropdown-success rounded-0" multiple>
+                                                @foreach (ValuePair val in Model.ErrorStatus)
+                                                {
+                                                    <option value="@val.EId">@val.EDisplayName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            </form>
-                            <br />
-                            <button id="filter-search" type="button" class="btn btn-primary" data-dismiss="modal">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>
-                        </div>
+                        </form>
+                        <br />
+                        <button id="filter-search" type="button" class="btn btn-primary rounded-0" data-dismiss="modal">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
                     </div>
-                </p>
+                </div>
+            </p>
+        </div>
+        <hr />
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <h4>Error lists</h4>
+                </div>
             </div>
-            <hr />
-            <div class="container-fluid">
+            <br />
+            <div class="card card-body sc_bugger-element-background-color rounded-0">
                 <div class="row">
                     <div class="col">
-                        <h4>Error lists</h4>
+                        <button id="export-error" class="btn btn-primary float-right rounded-0" type="button" data-toggle="collapse"
+                                data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
                 <br />
-                <div class="card card-body sc_bugger-element-background-color">
-                    <div class="row">
-                        <div class="col">
-                            <button id="export-error" class="btn btn-primary float-right" type="button" data-toggle="collapse"
-                                    data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-                            </button>
-                        </div>
+                <div class="row">
+                    <div class="col">
+                        <select id="filter-error-view" class="browser-default custom-select colorful-select dropdown-success rounded-0">
+                            <option value="card" selected>Card view</option>
+                            <option value="detail">Detailed view</option>
+                            <option value="mini">Mini view</option>
+                        </select>
                     </div>
-                    <br />
-                    <div class="row">
-                        <div class="col">
-                            <select id="filter-error-view" class="browser-default custom-select colorful-select dropdown-success">
-                                <option value="card" selected>Card view</option>
-                                <option value="detail">Detailed view</option>
-                                <option value="mini">Mini view</option>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col">
+                        <h2 id="issue-list-view-type-head" style="display:none"></h2>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div id="issue-list-card-details" class="card-columns">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--Error detail modal-->
+    <div class="sc_bugger-element-modal sc_bugger-element modal error-detail-modal buger-element rounded-0" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-0">
+                <div class="modal-header sc_bugger-element-background-color rounded-0">
+                    <h4 class="modal-title">Error details</h4>
+                    <button type="button" class="close rounded-0" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body sc_bugger-element-background-color-light rounded-0">
+                    <form ID="sc_bugger-form-mark-error" class="sc_bugger-form-validator" is-valid-form="false" novalidate>
+                        <!--Error Id-->
+                        <input type="hidden" id="errorID" />
+                        <!--Error title-->
+                        <div class="form-group">
+                            <label for="errorTitle">Error title</label>
+                            <input type="text" class="form-control" id="errorTitle" placeholder="Error title" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <!--Error detail-->
+                        <div class="form-group">
+                            <label class="" for="errorDetail">Error description (Html allowed)</label>
+                            <textarea class="form-control" id="errorDetail" rows="3" required></textarea>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <!--Error type-->
+                        <div class="form-group">
+                            <label class="" for="exampleFormControlSelect1">Error type</label>
+                            <select class="form-control rounded-0" id="errorType" required>
+                                @foreach (ValuePair val in Model.ErrorType)
+                                {
+                                    <option value="@val.EId">@val.EDisplayName</option>
+                                }
                             </select>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
                         </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col">
-                            <h2 id="issue-list-view-type-head" style="display:none"></h2>
+                        <!--Error Severity-->
+                        <div class="form-group">
+                            <label class="" for="errorSeverity">Error Severity</label>
+                            <select class="form-control rounded-0" id="errorSeverity" required>
+                                @foreach (ValuePair val in Model.ErrorSeverity)
+                                {
+                                    <option value="@val.EId">@val.EDisplayName</option>
+                                }
+                            </select>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
                         </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div id="issue-list-card-details" class="card-columns">
+                        <!--Error Status-->
+                        <div class="form-group">
+                            <label class="" for="errorSeverity">Error Status</label>
+                            <select class="form-control rounded-0" id="errorStatus" required>
+                                @foreach (ValuePair val in Model.ErrorStatus)
+                                {
+                                    <option value="@val.EId">@val.EDisplayName</option>
+                                }
+                            </select>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
                         </div>
-                    </div>
+
+                        <!--Device detail-->
+                        <div class="form-group">
+                            <p>
+                                <a class="btn btn-primary rounded-0" data-toggle="collapse" href="#collapseExample" role="button"
+                                   aria-expanded="false" aria-controls="collapseExample">
+                                    Device details -
+                                    <i class="fa fa-arrows-v" aria-hidden="true"></i>
+                                </a>
+                            </p>
+                            <div class="collapse" id="collapseExample">
+                                <div id="browser-detail" class="card card-body">
+                                </div>
+                            </div>
+                        </div>
+                        <!--screen shot-->
+                        <div class="form-group sc_bugger-screen-shot-div">
+                            <div class="custom-file">
+                                <input id="sc_bugger-upload-screenshot" accept="image/*" type="file" class="custom-file-input" is-updated-creenshot="false">
+                                <label class="custom-file-label" for="validatedCustomFile">Upload screen shot...</label>
+                                <div class="invalid-feedback">Example invalid custom file feedback</div>
+                            </div>
+                            <figure class="figure">
+                                <br />
+                                <img id="error-screen-shot" class="figure-img img-fluid rounded">
+                                <figcaption class="figure-caption text-right">Screen shot of an issue.</figcaption>
+                            </figure>
+                        </div>
+                        <button id="hidden-submit" class="sc_bugger-hide rounded-0" type="submit">Submit form</button>
+                    </form>
                 </div>
-
-            </div>
-        </div>
-        <!--Error detail modal-->
-        <div class="sc_bugger-element-modal sc_bugger-element modal error-detail-modal buger-element" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header sc_bugger-element-background-color">
-                        <h4 class="modal-title">Error details</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body sc_bugger-element-background-color-light">
-                        <form ID="sc_bugger-form-mark-error" class="sc_bugger-form-validator" is-valid-form="false" novalidate>
-                            <!--Error title-->
-                            <div class="form-group">
-                                <label for="errorTitle">Error title</label>
-                                <input type="text" class="form-control" id="errorTitle" placeholder="Error title" required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
-                            <!--Error detail-->
-                            <div class="form-group">
-                                <label class="" for="errorDetail">Error description (Html allowed)</label>
-                                <textarea class="form-control" id="errorDetail" rows="3" required></textarea>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
-                            <!--Error type-->
-                            <div class="form-group">
-                                <label class="" for="exampleFormControlSelect1">Error type</label>
-                                <select class="form-control" id="errorType" required>
-                                    @foreach (ValuePair val in Model.ErrorType)
-                                    {
-                                        <option value="@val.EId">@val.EDisplayName</option>
-                                    }
-                                </select>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
-                            <!--Error Severity-->
-                            <div class="form-group">
-                                <label class="" for="errorSeverity">Error Severity</label>
-                                <select class="form-control" id="errorSeverity" required>
-                                    @foreach (ValuePair val in Model.ErrorSeverity)
-                                    {
-                                        <option value="@val.EId">@val.EDisplayName</option>
-                                    }
-                                </select>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
-                            <!--Error Status-->
-                            <div class="form-group">
-                                <label class="" for="errorSeverity">Error Status</label>
-                                <select class="form-control" id="errorStatus" required>
-                                    @foreach (ValuePair val in Model.ErrorStatus)
-                                    {
-                                        <option value="@val.EId">@val.EDisplayName</option>
-                                    }
-                                </select>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
-
-                            <!--Device detail-->
-                            <div class="form-group">
-                                <p>
-                                    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
-                                       aria-expanded="false" aria-controls="collapseExample">
-                                        Device details -
-                                        <i class="fa fa-arrows-v" aria-hidden="true"></i>
-                                    </a>
-                                </p>
-                                <div class="collapse" id="collapseExample">
-                                    <div id="browser-detail" class="card card-body">
-                                    </div>
-                                </div>
-                            </div>
-                            <!--screen shot-->
-                            <div class="form-group sc_bugger-screen-shot-div">
-                                <div class="custom-file">
-                                    <input id="sc_bugger-upload-screenshot" accept="image/*" type="file" class="custom-file-input" id="validatedCustomFile">
-                                    <label class="custom-file-label" for="validatedCustomFile">Upload screen shot...</label>
-                                    <div class="invalid-feedback">Example invalid custom file feedback</div>
-                                </div>
-                                <figure class="figure">
-                                    <br />
-                                    <img id="error-screen-shot" class="figure-img img-fluid rounded">
-                                    <figcaption class="figure-caption text-right">Screen shot of an issue.</figcaption>
-                                </figure>
-                            </div>
-                            <button id="hidden-submit" class="sc_bugger-hide" type="submit">Submit form</button>
-                        </form>
-                    </div>
-                    <div class="modal-footer sc_bugger-element-background-color">
-                        <button id="sc_bugger-submit-error" type="button" class="btn btn-primary ">Submit</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    </div>
+                <div class="modal-footer sc_bugger-element-background-color rounded-0">
+                    <button id="sc_bugger-submit-error" type="button" class="btn btn-primary rounded-0">Save</button>
+                    <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-    <div id="sc-bugger-overlay">
+</div>
+<div id="sc-bugger-overlay">
 
-    </div>
+</div>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        var SC_DASHBOARD = (function () {
-            return {
-                Config: {
-                    ProjectName: "Bugger",
-                    GetErrorUrl: "/sc-bugger/DashBoard/GetError",
-                    GetErrorIdsUrl: "/sc-bugger/ApiScBugger/GetErrorIds",
-                    GetExcelReportUrl: "/sc-bugger/ApiScBugger/GetExcelReport",
-                },
-                Settings: {
-                    CSS: {
-                        SeverityColor: {
-                            Critical: "text-white bg-danger",
-                            High: "text-white bg-dark",
-                            Medium: "text-dark bg-warning",
-                            Low: "text-secondary bg-light",
-                        }
+    var SC_DASHBOARD = (function () {
+        return {
+            Config: {              
+                GetErrorUrl: "/sc-bugger/DashBoard/GetError",
+                GetErrorIdsUrl: "/sc-bugger/ApiScBugger/GetErrorIds",
+                SaveErrorUrl: "/sc-bugger/ApiScBugger/SaveError",
+                GetExcelReportUrl: "/sc-bugger/ApiScBugger/GetExcelReport",
+            },
+            Settings: {
+                CSS: {
+                    SeverityColor: {
+                        Critical: "text-white bg-danger",
+                        High: "text-white bg-dark",
+                        Medium: "text-dark bg-warning",
+                        Low: "text-secondary bg-light",
+                    }
+                }
+            },
+            GlobalVariables: {
+                GlobalFilter: {
+                    ProjectId: null,
+                    ErrorId: null,
+                    ErrorType: null,
+                    ErrorSeverity: null,
+                    IsMyItem: null,
+                    UserId: null,
+                    ErrorStatus: null,
+                    Date: null,
+                    PageSize: null,
+                    PageNumber: null,
+                    FilterView: "card",
+                    Meta: {
+                        ViewTypeDisplayName: null
                     }
                 },
-                GlobalVariables: {                    
-                    GlobalFilter: {
-                        ProjectId: null,
-                        ErrorId: null,
-                        ErrorType: null,
-                        ErrorSeverity: null,
-                        IsMyItem: null,
-                        UserId: null,
-                        ErrorStatus: null,
-                        Date: null,
-                        PageSize:null,
-                        PageNumber:null,
-                        FilterView: "card",
-                        Meta: {
-                            ViewTypeDisplayName: null
-                        }
-                    },
-                },
-                Issues: {
-                    All: null,
-                    AllIds: null
-                },
+            },
+            Issues: {
+                All: null,
+                AllIds: null
+            },
+            Init: function () {
+                SC_DASHBOARD.EventListeners.Init();
+            },
+            EventListeners: {
                 Init: function () {
-                    SC_DASHBOARD.EventListeners.Init();
+                    SC_DASHBOARD.EventListeners.DocumentReadyEvent();
+
+                    SC_DASHBOARD.FunctionalMethods.ActivateAutoComplete();
                 },
-                EventListeners: {
-                    Init: function () {
-                        SC_DASHBOARD.EventListeners.DocumentReadyEvent();
-
-                        SC_DASHBOARD.FunctionalMethods.ActivateAutoComplete();
-                    },
-                    //Selector : $(document)
-                    DocumentReadyEvent: function () {
-                        $(document).ready(function () {
-                            SC_DASHBOARD.EventListeners.DashBoardEvents.NavigationEvents();
-                            SC_DASHBOARD.EventListeners.FilterEvents();
-                            SC_DASHBOARD.EventListeners.ListEvents();
-                            //SC_DASHBOARD.ApiMethods.SubmitError();
+                //Selector : $(document)
+                DocumentReadyEvent: function () {
+                    $(document).ready(function () {
+                        SC_DASHBOARD.EventListeners.DashBoardEvents.NavigationEvents();
+                        SC_DASHBOARD.EventListeners.FilterEvents();
+                        SC_DASHBOARD.EventListeners.ListEvents();
+                        SC_DASHBOARD.EventListeners.File.UploadScreenshot();
+                        //SC_DASHBOARD.ApiMethods.GetError();
+                    });
+                },
+                DashBoardEvents: {
+                    NavigationEvents: function () {
+                        $('#sidebarCollapse').on('click', function () {
+                            $('#sidebar').toggleClass('active');
                         });
-                    },
-                    DashBoardEvents: {
-                        NavigationEvents: function () {
-                            $('#sidebarCollapse').on('click', function () {
-                                $('#sidebar').toggleClass('active');
-                            });
-                        }
-                    },
-                    FilterEvents: function () {
-                        // Disable all filter except project.
-                        $("#filter-error-list,#filter-myitems,#filter-error-type,#filter-error-severity,#filter-error-status,#filter-search").attr("disabled", "disabled");
-
-                        //Project filter change event
-                        $('#filter-project-list').change(function () {
-                            SC_DASHBOARD.GlobalVariables.GlobalFilter.ProjectId = $(this).val();
-                            SC_DASHBOARD.ApiMethods.GetErrorIds();
-                            $("#filter-error-list,#filter-myitems,#filter-error-type,#filter-error-severity,#filter-error-status,#filter-search").removeAttr("disabled");
-                        });
-
-                        //Issue id change event
-                        $('#filter-error-list').change(function () {
-                            SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorId = $(this).val();                           
-                        });
-
-                        // Is my item, check event
-                        $('#filter-myitems').change(function () {
-                            SC_DASHBOARD.GlobalVariables.GlobalFilter.IsMyItem = this.checked;
-                            SC_DASHBOARD.GlobalVariables.GlobalFilter.UserId = $("#user-info").attr("uid");
-                        });
-
-                        $('#filter-error-type').on('change', function () {
-                            var option_all = $("#filter-error-type option:selected").map(function () {
-                                return $(this).val();
-                            }).get().join(',');
-
-                            SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorType = option_all;
-                        });
-
-                        $('#filter-error-severity').on('change', function () {
-                            var option_all = $("#filter-error-severity option:selected").map(function () {
-                                return $(this).val();
-                            }).get().join(',');
-
-                            SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorSeverity = option_all;
-                        });
-
-                        $('#filter-error-status').on('change', function () {
-                            var option_all = $("#filter-error-status option:selected").map(function () {
-                                return $(this).val();
-                            }).get().join(',');
-
-                            SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorStatus = option_all;
-                        });
-
-                        $('#filter-error-view').on('change', function () {
-                            SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView = this.value;
-
-                            SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName = $("#filter-error-view option:selected").text();
-
-                            SC_DASHBOARD.FunctionalMethods.IssueList.RefreshIssueList();
-
-                        });
-
-                        $('#filter-clear i').on('click', function () {
-                            $('#filter-error-type,#filter-error-severity,#filter-error-status,#filter-main-search-issue,#filter-error-list').val("");
-                            $("#filter-myitems").prop("checked", false);
-                        });
-
-                        $('#filter-search').on('click', function () {                          
-                            SC_DASHBOARD.ApiMethods.SubmitError();
-                        });
-
-                        $("#export-error").on('click', function () {
-                            SC_DASHBOARD.ApiMethods.GetExcelReport();
-                        });
-
-
-                    },
-                    ListEvents: function () {
-                        $(document).on("click", "#issue-list-card-details .card .card-header #edit-error", function () {
-                            $('.sc_bugger-element-modal.error-detail-modal').modal('show');
-
-                            var editableData = SC_DASHBOARD.Issues.All.filter(element => element.ErrorId == $(this).closest(".card").attr("id"))[0];
-
-                            $("#errorID").text(editableData.ErrorId);
-                            $("#errorTitle").val(editableData.ErrorTitle);
-                            $("#errorDetail").val(editableData.ErrorDetail);
-                            $("#errorType").val(editableData.ErrorType);
-                            $("#errorSeverity").val(editableData.ErrorSeverity);
-                            $("#errorStatus").val(editableData.ErrorStatus);
-                            $("#error-screen-shot").attr("src", editableData.ScreenShot);
-
-                        });
-
                     }
                 },
-                FunctionalMethods: {
-                    ActivateAutoComplete: function () {
-                        /*initiate the autocomplete function on the "filter-main-search-issue" element, and pass along the countries array as possible autocomplete values:*/
-                       
-                        //SC_DASHBOARD.UtilityMethods.AutoCompleteEvents(document.getElementById("filter-main-search-issue"), SC_DASHBOARD.Issues.AllIds);
+                FilterEvents: function () {
+                    // Disable all filter except project.
+                    $("#filter-error-list,#filter-myitems,#filter-error-type,#filter-error-severity,#filter-error-status,#filter-search").attr("disabled", "disabled");
+
+                    //Project filter change event
+                    $('#filter-project-list').change(function () {
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.ProjectId = $(this).val();
+                        SC_DASHBOARD.ApiMethods.GetErrorIds();
+                        $("#filter-error-list,#filter-myitems,#filter-error-type,#filter-error-severity,#filter-error-status,#filter-search").removeAttr("disabled");
+                    });
+
+                    //Issue id change event
+                    $('#filter-error-list').change(function () {
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorId = $(this).val();
+                    });
+
+                    // Is my item, check event
+                    $('#filter-myitems').change(function () {
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.IsMyItem = this.checked;
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.UserId = $("#user-info").attr("uid");
+                    });
+
+                    $('#filter-error-type').on('change', function () {
+                        var option_all = $("#filter-error-type option:selected").map(function () {
+                            return $(this).val();
+                        }).get().join(',');
+
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorType = option_all;
+                    });
+
+                    $('#filter-error-severity').on('change', function () {
+                        var option_all = $("#filter-error-severity option:selected").map(function () {
+                            return $(this).val();
+                        }).get().join(',');
+
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorSeverity = option_all;
+                    });
+
+                    $('#filter-error-status').on('change', function () {
+                        var option_all = $("#filter-error-status option:selected").map(function () {
+                            return $(this).val();
+                        }).get().join(',');
+
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorStatus = option_all;
+                    });
+
+                    $('#filter-error-view').on('change', function () {
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView = this.value;
+
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName = $("#filter-error-view option:selected").text();
+
+                        SC_DASHBOARD.FunctionalMethods.IssueList.RefreshIssueList();
+
+                    });
+
+                    $('#filter-clear i').on('click', function () {
+                        $('#filter-error-type,#filter-error-severity,#filter-error-status,#filter-main-search-issue,#filter-error-list').val("");
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorId = null;
+                        $("#filter-myitems").prop("checked", false);
+                    });
+
+                    $('#filter-search').on('click', function () {
+                        SC_DASHBOARD.ApiMethods.GetError();
+                    });
+
+                    $("#export-error").on('click', function () {
+                        SC_DASHBOARD.ApiMethods.GetExcelReport();
+                    });
+
+                    $("#sc_bugger-submit-error").on('click', function () {
+
+                        var isUpdateScreenshot = ($("#sc_bugger-upload-screenshot").attr("is-updated-creenshot") == "true");
+
+                        var inputModel = {
+                            ErrorId : $("#errorID").val(),
+                            ErrorTitle: $("#errorTitle").val(),
+                            ErrorDetail: $("#errorDetail").val(),
+                            ErrorSeverityId: $("#errorSeverity").val(),
+                            ErrorTypeId: $("#errorType").val(),
+                            ErrorStatusId: $("#errorStatus").val(),
+                            ScreenShotB64: (isUpdateScreenshot == true) ? $('#error-screen-shot').attr("src") : null,
+                            UpdateScreenshot : isUpdateScreenshot
+                        };
+
+                        SC_DASHBOARD.ApiMethods.SaveError(inputModel);
+
+                    });
+
+
+                },
+                ListEvents: function () {
+                    $(document).on("click", "#issue-list-card-details .card .card-header #edit-error", function () {
+                        $('.sc_bugger-element-modal.error-detail-modal').modal('show');
+
+                        // var editableData = SC_DASHBOARD.Issues.All.filter(element => element.ErrorId == $(this).closest(".card").attr("id"))[0];
+
+                        var parentCard = $(this).closest(".card").find(".all-values");
+                        var parentCardImage = $(this).closest(".card").find("img");
+
+                        $("#errorID").val(parentCard.attr("err-id"));
+                        $("#errorTitle").val(parentCard.attr("err-title"));
+                        $("#errorDetail").val(parentCard.attr("err-detail"));
+                        $("#errorType").val(parentCard.attr("err-type"));
+                        $("#errorSeverity").val(parentCard.attr("err-severity"));
+                        $("#errorStatus").val(parentCard.attr("err-status"));
+                        $("#error-screen-shot").attr("src", parentCardImage.attr("src"));
+
+                        var tempPara = [];
+                        jQuery.each(JSON.parse(parentCard.attr("devide-detail")), function (name, value) {
+                            if (name != "uaMatch") {
+                                tempPara.push($("<p></p>").text(value.name +" : " + value.value + ".\n"));                               
+                            }
+                        });
+
+                        $("#browser-detail").append(tempPara);
+
+                    });
+
+                }
+                ,
+                File: {
+                    UploadScreenshot: function () {
+                        $(function () {
+                            $(document).on("change", "#sc_bugger-upload-screenshot", function () {
+                                var uploadFile = $(this);
+                                var files = !!this.files ? this.files : [];
+                                if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+                                if (/^image/.test(files[0].type)) { // only image file
+                                    var reader = new FileReader(); // instance of the FileReader
+                                    reader.readAsDataURL(files[0]); // read the local file
+
+                                    reader.onloadend = function () { // set image data as background of div
+                                        //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
+                                        //$("#error-screen-shot").css("background-image", "url(" + this.result + ")");
+                                        $(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", this.result);
+                                      
+                                        $("#sc_bugger-upload-screenshot").attr("is-updated-creenshot", true);
+                                    }
+                                }
+
+                            });
+                        });
+                    }
+                }
+            },
+            FunctionalMethods: {
+                ActivateAutoComplete: function () {
+                    /*initiate the autocomplete function on the "filter-main-search-issue" element, and pass along the countries array as possible autocomplete values:*/
+
+                    //SC_DASHBOARD.UtilityMethods.AutoCompleteEvents(document.getElementById("filter-main-search-issue"), SC_DASHBOARD.Issues.AllIds);
+                },
+                IssueList: {
+                    TempServerCall: function () {
+
                     },
-                    IssueList: {
-                        TempServerCall: function () {
+                    GetIssueList: function () {
 
-                        },
-                        GetIssueList: function () {
+                        // Get filter information
 
-                            // Get filter information
+                        // pass it to server
 
-                            // pass it to server
+                        // get json
 
-                            // get json
+                        // Refresh issue list
 
-                            // Refresh issue list
+                    },
+                    RefreshIssueList: function () {
 
-                        },
-                        RefreshIssueList: function () {
-
-                            SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView = $('#filter-error-view').val();
-                            SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName = $("#filter-error-view option:selected").text();
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView = $('#filter-error-view').val();
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName = $("#filter-error-view option:selected").text();
 
 
-                            var currentIssueList = SC_DASHBOARD.Issues.All;
+                        var currentIssueList = SC_DASHBOARD.Issues.All;
 
-                            var listElement = [];
+                        var listElement = [];
 
-                            $.each(currentIssueList, function (i, _issue) {
+                        $.each(currentIssueList, function (i, _issue) {
 
-                                // Frame json
-                                var cardViewTemplateFields = {
-                                    id: _issue.ErrorId,
-                                    idFramed: " id='" + _issue.ErrorId + "' ",
-                                    ScreenShot: _issue.ScreenShot,
-                                    ErrorTitle: _issue.ErrorTitle,
-                                    ErrorDetail: _issue.ErrorDetail,
-                                    Date: _issue.Date,
-                                    SeverityColor: " " + SC_DASHBOARD.UtilityMethods.GetSeverityColor(_issue.ErrorSeverity) + " ",
-                                };
+                            // Frame json
+                            var cardViewTemplateFields = {
+                                id: _issue.ErrorId,
+                                idFramed: " id='" + _issue.ErrorId + "' ",
+                                ScreenShot: _issue.ScreenShot,
+                                ErrorTitle: _issue.ErrorTitle,
+                                ErrorDetail: _issue.ErrorDetail,
+                                Date: _issue.Date,
+                                SeverityColor: " " + SC_DASHBOARD.UtilityMethods.GetSeverityColor(_issue.ErrorSeverity) + " ",
+                            };
 
-                                var templateString = null;
+                            var templateString = null;
 
 
 
-                                switch (SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView) {
-                                    case "card":
-                                        templateString = `<div` + cardViewTemplateFields.idFramed + `class="card` + cardViewTemplateFields.SeverityColor + `">
+                            switch (SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView) {
+                                case "card":
+                                    templateString = `<div` + cardViewTemplateFields.idFramed + `class="card` + cardViewTemplateFields.SeverityColor + `">
                                                             <div class="card-header">` + cardViewTemplateFields.id + `
                                                         <a id="edit-error" href="javascript:void(0)" class="float-right text-primary" ><i class="fa fa-pencil-square-o fa-2x"></i></a>
                                                         <a id="remove-error" href="javascript:void(0)" class="float-right text-primary  mr-2" ><i class="fa fa-trash fa-2x"></i></a>
@@ -579,9 +641,9 @@
                                                                     <p class="card-text"><small class="text-muted">` + cardViewTemplateFields.Date + `</small></p>
                                                                 </div>
                                                             </div>`;
-                                        break;
-                                    case "detail":
-                                        templateString = `<div ` + cardViewTemplateFields.idFramed + `class="card` + cardViewTemplateFields.SeverityColor + `w-2000">
+                                    break;
+                                case "detail":
+                                    templateString = `<div ` + cardViewTemplateFields.idFramed + `class="card` + cardViewTemplateFields.SeverityColor + `w-2000">
                                                         <div class="card-header">` + cardViewTemplateFields.id + `
                                                          <a id="edit-error" href="javascript:void(0)" class="float-right text-primary" ><i class="fa fa-pencil-square-o fa-2x"></i></a>
                                                         <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2" ><i class="fa fa-trash fa-2x"></i></a>
@@ -593,9 +655,9 @@
                                                             <p class="card-text"><small class="text-muted">` + cardViewTemplateFields.Date + `</small></p>
                                                         </div>
                                                     </div>`;
-                                        break;
-                                    case "mini":
-                                        templateString = `<div ` + cardViewTemplateFields.idFramed + `class="card text-white ` + cardViewTemplateFields.SeverityColor + ` ">
+                                    break;
+                                case "mini":
+                                    templateString = `<div ` + cardViewTemplateFields.idFramed + `class="card text-white ` + cardViewTemplateFields.SeverityColor + ` ">
                                                         <div class="card-header">` + cardViewTemplateFields.id + `
                                                          <a id="edit-error" href="javascript:void(0)" class="float-right text-primary" ><i class="fa fa-pencil-square-o fa-2x"></i></a>
                                                         <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2" ><i class="fa fa-trash fa-2x"></i></a>
@@ -605,295 +667,314 @@
                                                             <p class="card-text">` + cardViewTemplateFields.ErrorDetail + `</p>
                                                         </div>
                                                     </div>`;
-                                        break;
-                                }
-
-                                listElement.push($(templateString));
-                            });
-
-                            // Heading
-                            $("#issue-list-view-type-head").text(SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName);
-                            // List
-                            $("#issue-list-card-details").html("");
-                            $("#issue-list-card-details").append(listElement);
-
-                            // Detailed view class
-                            if (SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView == "detail") {
-                                $("#issue-list-card-details").addClass("list-group");
-                            }
-                            else {
-                                $("#issue-list-card-details").removeClass("list-group");
+                                    break;
                             }
 
-
-                        }
-                    }
-
-                },
-                UtilityMethods: {
-                    AutoCompleteEvents: function (inp, arr) {
-                        /*the autocomplete function takes two arguments,
-      the text field element and an array of possible autocompleted values:*/
-                        var currentFocus;
-                        /*execute a function when someone writes in the text field:*/
-                        inp.addEventListener("input", function (e) {
-                            var a, b, i, val = this.value;
-                            /*close any already open lists of autocompleted values*/
-                            closeAllLists();
-                            if (!val) { return false; }
-                            currentFocus = -1;
-                            /*create a DIV element that will contain the items (values):*/
-                            a = document.createElement("DIV");
-                            a.setAttribute("id", this.id + "autocomplete-list");
-                            a.setAttribute("class", "autocomplete-items");
-                            /*append the DIV element as a child of the autocomplete container:*/
-                            this.parentNode.appendChild(a);
-                            /*for each item in the array...*/
-                            for (i = 0; i < arr.length; i++) {
-                                /*check if the item starts with the same letters as the text field value:*/
-
-                                if (arr[i].ErrorId.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                                    /*create a DIV element for each matching element:*/
-                                    b = document.createElement("DIV");
-                                    /*make the matching letters bold:*/
-                                    b.innerHTML = "<strong>" + arr[i].ErrorId.substr(0, val.length) + "</strong>";
-                                    b.innerHTML += arr[i].ErrorId.substr(val.length);
-                                    /*insert a input field that will hold the current array item's value:*/
-                                    b.innerHTML += "<input type='hidden' value='" + arr[i].ErrorId + "'>";
-                                    /*execute a function when someone clicks on the item value (DIV element):*/
-                                    b.addEventListener("click", function (e) {
-                                        /*insert the value for the autocomplete text field:*/
-                                        inp.value = this.getElementsByTagName("input")[0].value;
-                                        /*close the list of autocompleted values,
-                                        (or any other open lists of autocompleted values:*/
-                                        closeAllLists();
-                                    });
-                                    a.appendChild(b);
-                                }
-                            }
+                            listElement.push($(templateString));
                         });
-                        /*execute a function presses a key on the keyboard:*/
-                        inp.addEventListener("keydown", function (e) {
-                            var x = document.getElementById(this.id + "autocomplete-list");
-                            if (x) x = x.getElementsByTagName("div");
-                            if (e.keyCode == 40) {
-                                /*If the arrow DOWN key is pressed,
-                                increase the currentFocus variable:*/
-                                currentFocus++;
-                                /*and and make the current item more visible:*/
-                                addActive(x);
-                            } else if (e.keyCode == 38) { //up
-                                /*If the arrow UP key is pressed,
-                                decrease the currentFocus variable:*/
-                                currentFocus--;
-                                /*and and make the current item more visible:*/
-                                addActive(x);
-                            } else if (e.keyCode == 13) {
-                                /*If the ENTER key is pressed, prevent the form from being submitted,*/
-                                e.preventDefault();
-                                if (currentFocus > -1) {
-                                    /*and simulate a click on the "active" item:*/
-                                    if (x) x[currentFocus].click();
-                                }
-                            }
-                        });
-                        function addActive(x) {
-                            /*a function to classify an item as "active":*/
-                            if (!x) return false;
-                            /*start by removing the "active" class on all items:*/
-                            removeActive(x);
-                            if (currentFocus >= x.length) currentFocus = 0;
-                            if (currentFocus < 0) currentFocus = (x.length - 1);
-                            /*add class "autocomplete-active":*/
-                            x[currentFocus].classList.add("autocomplete-active");
+
+                        // Heading
+                        $("#issue-list-view-type-head").text(SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName);
+                        // List
+                        $("#issue-list-card-details").html("");
+                        $("#issue-list-card-details").append(listElement);
+
+                        // Detailed view class
+                        if (SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView == "detail") {
+                            $("#issue-list-card-details").addClass("list-group");
                         }
-                        function removeActive(x) {
-                            /*a function to remove the "active" class from all autocomplete items:*/
-                            for (var i = 0; i < x.length; i++) {
-                                x[i].classList.remove("autocomplete-active");
-                            }
+                        else {
+                            $("#issue-list-card-details").removeClass("list-group");
                         }
-                        function closeAllLists(elmnt) {
-                            /*close all autocomplete lists in the document,
-                            except the one passed as an argument:*/
-                            var x = document.getElementsByClassName("autocomplete-items");
-                            for (var i = 0; i < x.length; i++) {
-                                if (elmnt != x[i] && elmnt != inp) {
-                                    x[i].parentNode.removeChild(x[i]);
-                                }
-                            }
-                        }
-                        /*execute a function when someone clicks in the document:*/
-                        document.addEventListener("click", function (e) {
-                            closeAllLists(e.target);
-                        });
-                    }
-                    ,
-                    GetSeverityColor: function (severity) {
-                        switch (severity) {
-                            case "4":
-                                return SC_DASHBOARD.Settings.CSS.SeverityColor.Critical;
-                                break;
-                            case "3":
-                                return SC_DASHBOARD.Settings.CSS.SeverityColor.High;
-                                break;
-                            case "2":
-                                return SC_DASHBOARD.Settings.CSS.SeverityColor.Medium;
-                                break;
-                            case "1":
-                                return SC_DASHBOARD.Settings.CSS.SeverityColor.Low;
-                                break;
-                            default:
-                                return SC_DASHBOARD.Settings.CSS.SeverityColor.Low;
-                                break;
-                        }
+
 
                     }
+                }
+
+            },
+            UtilityMethods: {
+                AutoCompleteEvents: function (inp, arr) {
+                    /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+                    var currentFocus;
+                    /*execute a function when someone writes in the text field:*/
+                    inp.addEventListener("input", function (e) {
+                        var a, b, i, val = this.value;
+                        /*close any already open lists of autocompleted values*/
+                        closeAllLists();
+                        if (!val) { return false; }
+                        currentFocus = -1;
+                        /*create a DIV element that will contain the items (values):*/
+                        a = document.createElement("DIV");
+                        a.setAttribute("id", this.id + "autocomplete-list");
+                        a.setAttribute("class", "autocomplete-items");
+                        /*append the DIV element as a child of the autocomplete container:*/
+                        this.parentNode.appendChild(a);
+                        /*for each item in the array...*/
+                        for (i = 0; i < arr.length; i++) {
+                            /*check if the item starts with the same letters as the text field value:*/
+
+                            if (arr[i].ErrorId.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                                /*create a DIV element for each matching element:*/
+                                b = document.createElement("DIV");
+                                /*make the matching letters bold:*/
+                                b.innerHTML = "<strong>" + arr[i].ErrorId.substr(0, val.length) + "</strong>";
+                                b.innerHTML += arr[i].ErrorId.substr(val.length);
+                                /*insert a input field that will hold the current array item's value:*/
+                                b.innerHTML += "<input type='hidden' value='" + arr[i].ErrorId + "'>";
+                                /*execute a function when someone clicks on the item value (DIV element):*/
+                                b.addEventListener("click", function (e) {
+                                    /*insert the value for the autocomplete text field:*/
+                                    inp.value = this.getElementsByTagName("input")[0].value;
+                                    /*close the list of autocompleted values,
+                                    (or any other open lists of autocompleted values:*/
+                                    closeAllLists();
+                                });
+                                a.appendChild(b);
+                            }
+                        }
+                    });
+                    /*execute a function presses a key on the keyboard:*/
+                    inp.addEventListener("keydown", function (e) {
+                        var x = document.getElementById(this.id + "autocomplete-list");
+                        if (x) x = x.getElementsByTagName("div");
+                        if (e.keyCode == 40) {
+                            /*If the arrow DOWN key is pressed,
+                            increase the currentFocus variable:*/
+                            currentFocus++;
+                            /*and and make the current item more visible:*/
+                            addActive(x);
+                        } else if (e.keyCode == 38) { //up
+                            /*If the arrow UP key is pressed,
+                            decrease the currentFocus variable:*/
+                            currentFocus--;
+                            /*and and make the current item more visible:*/
+                            addActive(x);
+                        } else if (e.keyCode == 13) {
+                            /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                            e.preventDefault();
+                            if (currentFocus > -1) {
+                                /*and simulate a click on the "active" item:*/
+                                if (x) x[currentFocus].click();
+                            }
+                        }
+                    });
+                    function addActive(x) {
+                        /*a function to classify an item as "active":*/
+                        if (!x) return false;
+                        /*start by removing the "active" class on all items:*/
+                        removeActive(x);
+                        if (currentFocus >= x.length) currentFocus = 0;
+                        if (currentFocus < 0) currentFocus = (x.length - 1);
+                        /*add class "autocomplete-active":*/
+                        x[currentFocus].classList.add("autocomplete-active");
+                    }
+                    function removeActive(x) {
+                        /*a function to remove the "active" class from all autocomplete items:*/
+                        for (var i = 0; i < x.length; i++) {
+                            x[i].classList.remove("autocomplete-active");
+                        }
+                    }
+                    function closeAllLists(elmnt) {
+                        /*close all autocomplete lists in the document,
+                        except the one passed as an argument:*/
+                        var x = document.getElementsByClassName("autocomplete-items");
+                        for (var i = 0; i < x.length; i++) {
+                            if (elmnt != x[i] && elmnt != inp) {
+                                x[i].parentNode.removeChild(x[i]);
+                            }
+                        }
+                    }
+                    /*execute a function when someone clicks in the document:*/
+                    document.addEventListener("click", function (e) {
+                        closeAllLists(e.target);
+                    });
                 }
                 ,
-                ApiMethods: {
-                    SubmitError: function () {
-                        $.ajax({
-                            url: SC_DASHBOARD.Config.GetErrorUrl,
-                            type: "post",
-                            async: false,
-                            data: (SC_DASHBOARD.GlobalVariables.GlobalFilter),
-                            success: function (response) {
-                                $("#issue-list-card-details").html("");
-                                $("#issue-list-card-details").html(response);                               
-                                //SC_DASHBOARD.Issues.All = response;
-                                //console.log(response);
-                                //SC_DASHBOARD.FunctionalMethods.IssueList.RefreshIssueList();
-                            },
-                            error: function (response) {
-                                console.log(response);
-                            }
-
-
-                        });
-                    },
-                    GetErrorIds: function () {
-                        $.ajax({
-                            url: SC_DASHBOARD.Config.GetErrorIdsUrl,
-                            type: "post",
-                            async: false,
-                            data: (SC_DASHBOARD.GlobalVariables.GlobalFilter),
-                            success: function (response) {
-                                SC_DASHBOARD.Issues.AllIds = response;
-                                $('#filter-error-list').empty();
-
-                                if (SC_DASHBOARD.Issues.AllIds.length > 0) {
-                                    $('#filter-error-list').append('<option selected="selected" value="">Search issue by Id.</option>')
-                                    $.each(SC_DASHBOARD.Issues.AllIds, function (key, value) {
-                                        $('#filter-error-list')
-                                            .append($("<option></option>")
-                                                .attr("value", value.ErrorId)
-                                                .text(value.ErrorId));
-                                    });
-                                }
-                                else {
-                                    $('#filter-error-list').append('<option selected="selected">No values found.</option>')
-                                }
-
-                              
-                               
-                            },
-                            error: function (response) {
-                                console.log(response);
-                            }
-                        });
+                GetSeverityColor: function (severity) {
+                    switch (severity) {
+                        case "4":
+                            return SC_DASHBOARD.Settings.CSS.SeverityColor.Critical;
+                            break;
+                        case "3":
+                            return SC_DASHBOARD.Settings.CSS.SeverityColor.High;
+                            break;
+                        case "2":
+                            return SC_DASHBOARD.Settings.CSS.SeverityColor.Medium;
+                            break;
+                        case "1":
+                            return SC_DASHBOARD.Settings.CSS.SeverityColor.Low;
+                            break;
+                        default:
+                            return SC_DASHBOARD.Settings.CSS.SeverityColor.Low;
+                            break;
                     }
-                    ,
-                    GetExcelReport: function () {
 
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('POST', SC_DASHBOARD.Config.GetExcelReportUrl, true);
-                        xhr.responseType = 'blob';
-                        //$.each(SERVER.authorization(), function (k, v) {
-                        //    xhr.setRequestHeader(k, v);
-                        //});
-                        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-                        xhr.onload = function (e) {
-
-                            if (this.status == 200) {
-                                var blob = new Blob([this.response], { type: 'application/vnd.ms-excel' });
-                                var downloadUrl = URL.createObjectURL(blob);
-                                var a = document.createElement("a");
-                                a.href = downloadUrl;
-                                a.download = "data.xls";
-                                document.body.appendChild(a);
-                                a.click();
-                            } else {
-                                alert('Unable to download excel.')
-                            }
-                        };
-                        xhr.send(JSON.stringify(SC_DASHBOARD.GlobalVariables.GlobalFilter));
-
-
-                    },
                 }
-            };
-        }());
+            }
+            ,
+            ApiMethods: {
+                GetError: function () {
+                    $.ajax({
+                        url: SC_DASHBOARD.Config.GetErrorUrl,
+                        type: "post",
+                        async: false,
+                        data: (SC_DASHBOARD.GlobalVariables.GlobalFilter),
+                        success: function (response) {
+                            $("#issue-list-card-details").html("");
+                            $("#issue-list-card-details").html(response);
+                            //SC_DASHBOARD.Issues.All = response;
+                            //console.log(response);
+                            //SC_DASHBOARD.FunctionalMethods.IssueList.RefreshIssueList();
+                        },
+                        error: function (response) {
+                            console.log(response);
+                        }
 
-        SC_DASHBOARD.Init();
+
+                    });
+                },
+                SaveError: function (inputModel) {
+                    $.ajax({
+                        url: SC_DASHBOARD.Config.SaveErrorUrl,
+                        type: "post",
+                        async: false,
+                        //processData: false,
+                        data: (inputModel),
+                        success: function (response) {
+                            if (response.IsSuccess) {
+
+                            }
+                        },
+                        error: function (response) {
+                            console.log(response);
+                        }
 
 
-        function GetSeverityColor(severity) {
-            return "red";
+                    });
+                },
+                GetErrorIds: function () {
+                    $.ajax({
+                        url: SC_DASHBOARD.Config.GetErrorIdsUrl,
+                        type: "post",
+                        async: false,
+                        data: (SC_DASHBOARD.GlobalVariables.GlobalFilter),
+                        success: function (response) {
+                            SC_DASHBOARD.Issues.AllIds = response;
+                            $('#filter-error-list').empty();
+
+                            if (SC_DASHBOARD.Issues.AllIds.length > 0) {
+                                $('#filter-error-list').append('<option selected="selected" value="">Search issue by Id.</option>')
+                                $.each(SC_DASHBOARD.Issues.AllIds, function (key, value) {
+                                    $('#filter-error-list')
+                                        .append($("<option></option>")
+                                            .attr("value", value.ErrorId)
+                                            .text(value.ErrorId));
+                                });
+                            }
+                            else {
+                                $('#filter-error-list').append('<option selected="selected">No values found.</option>')
+                            }
+
+
+
+                        },
+                        error: function (response) {
+                            console.log(response);
+                        }
+                    });
+                }
+                ,
+                GetExcelReport: function () {
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', SC_DASHBOARD.Config.GetExcelReportUrl, true);
+                    xhr.responseType = 'blob';
+                    //$.each(SERVER.authorization(), function (k, v) {
+                    //    xhr.setRequestHeader(k, v);
+                    //});
+                    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+                    xhr.onload = function (e) {
+
+                        if (this.status == 200) {
+                            var blob = new Blob([this.response], { type: 'application/vnd.ms-excel' });
+                            var downloadUrl = URL.createObjectURL(blob);
+                            var a = document.createElement("a");
+                            a.href = downloadUrl;
+                            a.download = "data.xls";
+                            document.body.appendChild(a);
+                            a.click();
+                        } else {
+                            alert('Unable to download excel.')
+                        }
+                    };
+                    xhr.send(JSON.stringify(SC_DASHBOARD.GlobalVariables.GlobalFilter));
+
+
+                },
+            }
+        };
+    }());
+
+    SC_DASHBOARD.Init();
+
+
+    function GetSeverityColor(severity) {
+        return "red";
+    }
+
+
+
+
+</script>
+<style type="text/css">
+
+
+    /*the container must be positioned relative:*/
+    .autocomplete {
+        position: relative;
+        display: inline-block;
+    }
+
+
+
+    .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 0;
+        right: 0;
+    }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
         }
 
-
-
-
-    </script>
-    <style type="text/css">
-
-
-            /*the container must be positioned relative:*/
-            .autocomplete {
-                position: relative;
-                display: inline-block;
+            /*when hovering an item:*/
+            .autocomplete-items div:hover {
+                background-color: #e9e9e9;
             }
 
+    /*when navigating through the items using the arrow keys:*/
+    .autocomplete-active {
+        background-color: DodgerBlue !important;
+        color: #ffffff;
+    }
 
+    .sc_bugger-element-background-color {
+        background-color: #30b579;
+        color: white;
+    }
 
-            .autocomplete-items {
-                position: absolute;
-                border: 1px solid #d4d4d4;
-                border-bottom: none;
-                border-top: none;
-                z-index: 99;
-                /*position the autocomplete items to be the same width as the container:*/
-                top: 100%;
-                left: 0;
-                right: 0;
-            }
-
-                .autocomplete-items div {
-                    padding: 10px;
-                    cursor: pointer;
-                    background-color: #fff;
-                    border-bottom: 1px solid #d4d4d4;
-                }
-
-                    /*when hovering an item:*/
-                    .autocomplete-items div:hover {
-                        background-color: #e9e9e9;
-                    }
-
-            /*when navigating through the items using the arrow keys:*/
-            .autocomplete-active {
-                background-color: DodgerBlue !important;
-                color: #ffffff;
-            }
-
-            .sc_bugger-element-background-color {
-                background-color: #30b579;
-                color: white;
-            }
-
-            /*model full screen*/
-            /*@@media (min-width: 576px) {
+    /*model full screen*/
+    /*@@media (min-width: 576px) {
           .modal-dialog { max-width: none; }
         }
 
@@ -906,4 +987,4 @@
         .modal-content {
           height: 99%;
         }*/
-    </style>
+</style>

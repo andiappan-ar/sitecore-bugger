@@ -5,6 +5,7 @@ var SC_BUGGER = (function () {
             ProjectName: "Bugger",
             Html2CanvasProxyUrl: "/sc-bugger/bugger/ImageProxy",
             SaveErrorUrl: "/sc-bugger/ApiScBugger/SaveError",
+            GetErrorUrl: "/sc-bugger/ApiScBugger/GetError",
         },
         Settings: {
             IsCompressScreenshot: true,
@@ -15,12 +16,13 @@ var SC_BUGGER = (function () {
                 CurrentBugElement: null,
                 OldBugElement: null,
                 ErrorGlobal: {
-                    errorId: null,
-                    errorTitle: null,
-                    errorType: null,
-                    errorSeverity: null,
-                    errorDetail: null,
-                    selector: null,
+                    ErrorId: null,
+                    ErrorTitle: null,
+                    ErrorTypeId: null,
+                    ErrorSeverityId: null,
+                    ErrorStatusId: null,
+                    ErrorDetail: null,
+                    Selector: null,
                     browserDetail: null,
                     url: null,
                     ScreenShot: null
@@ -49,10 +51,18 @@ var SC_BUGGER = (function () {
                     SC_BUGGER.EventListeners.File.UploadScreenshot();
                     SC_BUGGER.EventListeners.FormEvents.BootstrapSubmitFOrmValidationEvents();
                     //SC_BUGGER.UtilityMethods.StyleEvents.BuggerMainIconColorChangeInit();
+
+                    if (SC_BUGGER.UtilityMethods.GetParameterByName("sc-b-eid") != "") {
+                        var inputModel = {
+                            ErrorId: SC_BUGGER.UtilityMethods.GetParameterByName("sc-b-eid"),
+                            ProjectId: $(".sc_bugger-element #user-info").attr("pid")
+                        };
+                        SC_BUGGER.ApiMethods.GetError(inputModel);
+                    }
                 });
             },
             FormEvents: {
-                BootstrapSubmitFOrmValidationEvents: function(){
+                BootstrapSubmitFOrmValidationEvents: function () {
                     // Example starter JavaScript for disabling form submissions if there are invalid fields
                     (function () {
                         'use strict';
@@ -89,10 +99,10 @@ var SC_BUGGER = (function () {
                     $("#sc_bugger-icon-bar").removeClass("sc_bugger-hide");
                 });
 
-                $("#sc_bugger-settings-iscompressimage").change(function () {                   
-                        SC_BUGGER.Settings.IsCompressScreenshot = $(this).is(":checked");                    
+                $("#sc_bugger-settings-iscompressimage").change(function () {
+                    SC_BUGGER.Settings.IsCompressScreenshot = $(this).is(":checked");
                 });
-                
+
             },
             //Selector : $("#sc_bugger-save-error")
             MarkErrorEvent: function () {
@@ -102,30 +112,47 @@ var SC_BUGGER = (function () {
 
                     //Get value from model
                     SC_BUGGER.GlobalVariables.Element.ErrorGlobal = {
-                        errorTitle: $(".sc_bugger-element-modal.error-detail-modal #errorTitle").val(),
-                        errorType: $(".sc_bugger-element-modal.error-detail-modal #errorType").val(),
-                        errorSeverity: $(".sc_bugger-element-modal.error-detail-modal #errorSeverity").val(),
-                        errorDetail: $(".sc_bugger-element-modal.error-detail-modal #errorDetail").val(),
-                        selector: SC_BUGGER.GlobalVariables.Browser.CurrentBugElement.getPath(),
-                        browserDetail: SC_BUGGER.GlobalVariables.Browser.BasicDetails,
-                        url: window.location.href
+                        ProjectId: $(".sc_bugger-element #user-info").attr("pid"),
+                        ErrorTitle: $(".sc_bugger-element-modal.error-detail-modal #errorTitle").val(),
+                        OwnerUserId: $(".sc_bugger-element #user-info").attr("uid"),
+                        AssigneeUserId: $(".sc_bugger-element-modal.error-detail-modal #filter-a-user-id").val(),
+                        ErrorTypeId: $(".sc_bugger-element-modal.error-detail-modal #errorType").val(),
+                        ErrorSeverityId: $(".sc_bugger-element-modal.error-detail-modal #errorSeverity").val(),
+                        ErrorStatusId: $(".sc_bugger-element-modal.error-detail-modal #filter-error-status").val(),
+                        ErrorDetail: $(".sc_bugger-element-modal.error-detail-modal #errorDetail").val(),
+                        Selector: SC_BUGGER.GlobalVariables.Browser.CurrentBugElement.getPath(),
+                        DeviceDetails: JSON.stringify(SC_BUGGER.GlobalVariables.Browser.BasicDetails),
+                        Uri: window.location.href,
+                        screenShotDetail:$("#screenShotDetail").val()
                     };
 
                     // Validation
                     if (SC_BUGGER.ValidationEvents.ValidateMarkError() == "true") {
 
                         SC_BUGGER.FunctionalMethods.MarkErrorwithPopup(SC_BUGGER.GlobalVariables.Element.ErrorGlobal);
-
+                      
                         $('.sc_bugger-element-modal.error-detail-modal').modal('hide');
                         SC_BUGGER.EventListeners.Body.UnbindBuggerBodyEvents();
                         $("#sc_bugger-save-error-confirm").removeClass("sc_bugger-disabled");
 
-
+                        // Make all save elements visible
+                        $(".sc_bugger-element #main-form-save-elements").removeClass("sc_bugger-hide");
+                        $(".form-group-screenshot-div").addClass("sc_bugger-hide");
+                        // Make all save elements required
+                        $(".sc_bugger-element #main-form-save-elements #errorDetail,#errorType,#errorSeverity,#filter-error-status,#filter-a-user-id").attr("required", true);
                     }
 
                     $("#sc_bugger-submit-error").unbind();
 
                     $("#sc_bugger-submit-error").click(function () {
+
+                        var isUpdateScreenshot = ($("#sc_bugger-upload-screenshot").attr("is-updated-creenshot") == "true");
+
+
+                        SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShotB64 = (isUpdateScreenshot == true) ? $('#error-screen-shot').attr("src") : null;
+                        SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = null;
+                        SC_BUGGER.GlobalVariables.Element.ErrorGlobal.UpdateScreenshot = isUpdateScreenshot;
+
 
                         // Validation
                         if (SC_BUGGER.ValidationEvents.ValidateMarkError() == "true") {
@@ -136,10 +163,18 @@ var SC_BUGGER = (function () {
 
                         }
                     });
-                   
+
                 });
             },
             RemoveMarkErrorEvent: function () {
+
+                // Make all save elements hide
+                $(".sc_bugger-element #main-form-save-elements").addClass("sc_bugger-hide");
+                $(".form-group-screenshot-div").removeClass("sc_bugger-hide");
+                // Make all save elements non required
+                $(".sc_bugger-element #main-form-save-elements #errorDetail,#errorType,#errorSeverity,#filter-error-status,#filter-a-user-id").removeAttr("required");
+               
+
                 //Remove old element
                 if (SC_BUGGER.GlobalVariables.Browser.OldBugElement != null) {
 
@@ -149,6 +184,42 @@ var SC_BUGGER = (function () {
 
                 }
             },
+            CompressImage: function (base64, maxWidth, maxHeight) {
+
+                // Max size for thumbnail
+                if (typeof (maxWidth) === 'undefined') var maxWidth = 500;
+                if (typeof (maxHeight) === 'undefined') var maxHeight = 500;
+
+                // Create and initialize two canvas
+                var canvas = document.createElement("canvas");
+                var ctx = canvas.getContext("2d");
+                var canvasCopy = document.createElement("canvas");
+                var copyContext = canvasCopy.getContext("2d");
+
+                // Create original image
+                var img = new Image();
+                img.src = base64;
+
+                // Determine new ratio based on max size
+                var ratio = 1;
+                if (img.width > maxWidth)
+                    ratio = maxWidth / img.width;
+                else if (img.height > maxHeight)
+                    ratio = maxHeight / img.height;
+
+                // Draw original image in second canvas
+                canvasCopy.width = img.width;
+                canvasCopy.height = img.height;
+                copyContext.drawImage(img, 0, 0);
+
+                // Copy and resize second canvas to first canvas
+                canvas.width = img.width * ratio;
+                canvas.height = img.height * ratio;
+                ctx.drawImage(canvasCopy, 0, 0, canvasCopy.width, canvasCopy.height, 0, 0, canvas.width, canvas.height);
+
+                return canvas.toDataURL();
+
+            },
             //Selector : $("body")
             Body: {
 
@@ -157,16 +228,16 @@ var SC_BUGGER = (function () {
                     $('body').css({ 'cursor': 'crosshair' });
 
                     //MOuse move event
-                    $("body").on("sc_bugger.body.mousemove", function (event, evt) {                       
+                    $("body").on("sc_bugger.body.mousemove", function (event, evt) {
                         if (!SC_BUGGER.FunctionalMethods.IsBuggerelement(evt.target)) {
                             $(evt.target).addClass("sc_bugger-bgm-re");
-                           // console.log($(evt.target).getPath());
+                            // console.log($(evt.target).getPath());
                         }
                     });
                     $("body").on("mousemove touchstart", function (evt) {
                         $("body").trigger("sc_bugger.body.mousemove", evt);
                     });
-                    
+
                     //MOuse out event
                     $("body").on("sc_bugger.body.mouseout", function (event, evt) {
                         if (!SC_BUGGER.FunctionalMethods.IsBuggerelement(evt.target)) {
@@ -176,7 +247,7 @@ var SC_BUGGER = (function () {
                     $("body").on("mouseout touchend", function (evt) {
                         $("body").trigger("sc_bugger.body.mouseout", evt);
                     });
-                   
+
 
                     //Click event
                     $("body").on("sc_bugger.body.click", function (event, evt) {
@@ -224,7 +295,7 @@ var SC_BUGGER = (function () {
                 $("#sc_bugger-error-detail").click(function () {
                     // Show and hide action buttons
                     $("#sc_bugger-submit-error").addClass("sc_bugger-hide");
-                    $("#sc_bugger-save-error").removeClass("sc_bugger-hide");                    
+                    $("#sc_bugger-save-error").removeClass("sc_bugger-hide");
                     SC_BUGGER.EventListeners.Body.InitBuggerBodyEvents();
                 });
 
@@ -278,6 +349,7 @@ var SC_BUGGER = (function () {
                                     //$("#error-screen-shot").css("background-image", "url(" + this.result + ")");
                                     $(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", this.result);
                                     SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = this.result;
+                                    $("#sc_bugger-upload-screenshot").attr("is-updated-creenshot", true);
                                 }
                             }
 
@@ -292,19 +364,28 @@ var SC_BUGGER = (function () {
                 return $(elementTarget).parents('.sc_bugger-element').length;
             },
             MarkErrorwithPopup: function (errorObj) {
-                $(errorObj.selector).addClass("sc_bugger-popover red-tooltip sc_bugger-bgm-error")
+                $(errorObj.Selector).addClass("sc_bugger-popover red-tooltip sc_bugger-bgm-error")
                     .attr({
                         "data-toggle": "popover",
                         "data-html": "true",
                         "data-placement": "bottom",
-                        "title": "<span class='glyphicon glyphicon-remove'> <strong>" + errorObj.errorTitle + "</strong></span>",
-                        "data-content": errorObj.errorDetail,
+                        "title": "<span class='glyphicon glyphicon-remove'> <strong>" + errorObj.ErrorTitle + "</strong></span>",
+                        "data-content": errorObj.screenShotDetail,
                     });
 
                 SC_BUGGER.EventListeners.InitiateToolTip();
             }
         },
         UtilityMethods: {
+            GetParameterByName:function(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, '\\$&');
+                var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            },
             StyleEvents: {
                 BuggerMainIconColorChangeInit: function () {
                     setInterval(SC_BUGGER.UtilityMethods.StyleEvents.GetRandomColor(document.getElementById('sc_bugger-bug-icon-b')), 500);
@@ -334,58 +415,24 @@ var SC_BUGGER = (function () {
                 html2canvas(target_container, objJ).then(function (canvas) {
                     var img = canvas.toDataURL();
 
-                    //var tempImage = $(".sc_bugger-element-modal.error-detail-modal #error-screen-shot")[0];
-
-                    //tempImage.onload = function () {
-                    //    alert(tempImage.width + ", " + tempImage.height);
-                    //    var canvas = document.createElement("canvas");
-                    //    var context = canvas.getContext("2d");
-                    //    canvas.width = tempImage.width / 4;
-                    //    canvas.height = tempImage.height / 4;
-                    //    context.drawImage(tempImage,
-                    //        0,
-                    //        0,
-                    //        tempImage.width,
-                    //        tempImage.height,
-                    //        0,
-                    //        0,
-                    //        canvas.width,
-                    //        canvas.height
-                    //    );
-
-                    //    source_img_obj.src = canvas.toDataURL();
-                    //};
-
-                    //$(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", img);
-                   
-
-                    //SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = (SC_BUGGER.Settings.IsCompressScreenshot) ?
-                    //    SC_BUGGER.UtilityMethods.GetCompressedImage(tempImage, 50, 3000, "png") : img;
+                    //var string = img;
+                    //alert("Size of sample is: " + string.length);
+                    //var compressed = LZString.compress(string);
+                    //alert("Size of compressed sample is: " + compressed.length);
+                    //string = LZString.decompress(compressed);
+                    //alert("Size of decompressed sample is: "+string.length);
 
                     SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = img;
 
-
+                    $("#sc_bugger-upload-screenshot").attr("is-updated-creenshot", true);
                     $(".sc_bugger-screen-shot-div").removeClass("sc_bugger-hide");
                     $(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot);
                     $('.sc_bugger-element-modal.error-detail-modal').modal('show');
                     $(".sc_bugger-element-modal.error-detail-modal").css("z-index", $(".popover").css("z-index") + 1);
 
-                    //var image = new Image();
-                    //image.src = img;
-                    //var w = window.open("");
-                    //w.document.write(image.outerHTML);
-
                 });
 
                 //  window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
-            },
-            ///quality 1 to 100
-            GetCompressedImage: function (image, quality, maxWidth, output_format) {
-
-                var canvas = document.createElement("canvas");
-                var context = canvas.getContext("2d");
-                canvas.width = image.width / 4;
-               
             }
         },
         ExtenionMethods: {
@@ -625,66 +672,48 @@ var SC_BUGGER = (function () {
         ApiMethods: {
             SubmitError: function () {
 
-               $.ajax({
-                   url:SC_BUGGER.Config.SaveErrorUrl ,
-                   type:"post",
-                   data: SC_BUGGER.GlobalVariables.Element.ErrorGlobal,
+                $.ajax({
+                    url: SC_BUGGER.Config.SaveErrorUrl,
+                    type: "post",
+                    async: false,
+                    data: (SC_BUGGER.GlobalVariables.Element.ErrorGlobal),
                     success: function (result) {
                         debugger;
                     }
                 });
-            }
+            },
+            GetError: function (inputModel) {
+                $.ajax({
+                    url: SC_BUGGER.Config.GetErrorUrl,
+                    type: "post",
+                    async: false,
+                    data: (inputModel),
+                    success: function (response) {
+                        if (response.length > 0) {
+                            response = response[0];
+                            var errorObj = {
+                                Selector: response.Selector,
+                                ErrorTitle: response.ErrorTitle,
+                                screenShotDetail: response.ErrorDetail
+                            };
+                            SC_BUGGER.GlobalVariables.Browser.OldBugElement = $(errorObj);
+                            SC_BUGGER.FunctionalMethods.MarkErrorwithPopup(errorObj);
+                        }
+                       
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+
+
+                });
+            },
         }
     };
 }());
 
 SC_BUGGER.Init();
 
-function readTextFile(file, callback) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.overrideMimeType("application/json");
-    rawFile.open("GET", file, true);
-    rawFile.onreadystatechange = function () {
-        if (rawFile.readyState === 4 && rawFile.status == "200") {
-            callback(rawFile.responseText);
-        }
-    }
-    rawFile.send(null);
-}
 
-//var mokedData = null;
-
-////usage:
-//readTextFile("/MockedError.json", function (text) {
-//    mokedData = JSON.parse(text);
-//    // console.log(data);
-//    MarkError();
-
-//});
-
-//function getQueryStringValue(key) {
-//    return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
-//}
-
-//function getError(key) {
-//    return mokedData.filter(
-//        function (data) {
-//            if (data.errorId == key) {
-//                return data;
-//            }
-
-//            return null;
-//        }
-//    );
-//}
-
-//function MarkError() {
-//    var errorObj = getError(getQueryStringValue("sc-b-e-id"))[0];
-
-//    SC_BUGGER.FunctionalMethods.MarkErrorwithPopup(errorObj);
-
-
-
-//}
 
 

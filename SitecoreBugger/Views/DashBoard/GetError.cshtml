@@ -17,16 +17,22 @@
 
 
             case "card":
-                <div id="@err.ErrorId" class="card  @GetSeverityColor(err.ErrorSeverityId.ToString())">
+                <div id="sc-bugger-each-id-@err.ErrorId" class="card  rounded-0 @GetSeverityColor(err.ErrorSeverityId.ToString())">
+                    <input type="hidden" class="all-values" 
+                           err-title="@err.ErrorTitle" err-detail="@err.ErrorDetail" err-devicedetail=""
+                           err-id="@err.ErrorId" err-severity="@err.ErrorSeverityId" err-type="@err.ErrorTypeId" err-status="@err.ErrorStatusId"
+                           devide-detail="@err.DeviceDetails" 
+                           />
                     <div class="card-header">
                         @err.ErrorId
                         <a id="edit-error" href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o fa-2x"></i></a>
                         <a id="remove-error" href="javascript:void(0)" class="float-right text-primary  mr-2"><i class="fa fa-trash fa-2x"></i></a>
+                        <a id="goto-error" href="@err.Uri&sc-b-eid=@err.ErrorId" target="_blank" class="float-right text-primary  mr-2"><i class="fa fa-external-link fa-2x"></i></a>
                     </div>
 
                     @if (isImageFound)
                     {
-                        <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(err.ScreenShot)">
+                        <img class="card-img-top" src="data:image/png;base64,@System.Convert.ToBase64String(err.ScreenShot)">
                     }
 
                     <div class="card-body">
@@ -37,16 +43,21 @@
                 </div>
                 break;
             case "detail":
-                <div id="@err.ErrorId" class="card  w-2000 @GetSeverityColor(err.ErrorSeverityId.ToString())">
+                <div id="sc-bugger-each-id-@err.ErrorId" class="card rounded-0  w-2000 @GetSeverityColor(err.ErrorSeverityId.ToString())">
+                    <input type="hidden" class="all-values"
+                           err-title="@err.ErrorTitle" err-detail="@err.ErrorDetail" err-devicedetail=""
+                           err-id="@err.ErrorId" err-severity="@err.ErrorSeverityId" err-type="@err.ErrorTypeId" err-status="@err.ErrorStatusId"
+                           devide-detail="@err.DeviceDetails" />
                     <div class="card-header">
                         @err.ErrorId
                         <a id="edit-error" href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o fa-2x"></i></a>
                         <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2"><i class="fa fa-trash fa-2x"></i></a>
+                        <a id="goto-error" href="@err.Uri&sc-b-eid=@err.ErrorId" target="_blank" class="float-right text-primary  mr-2"><i class="fa fa-external-link fa-2x"></i></a>
                     </div>
 
                     @if (isImageFound)
                     {
-                        <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(err.ScreenShot)">
+                        <img class="card-img-top" src="data:image/png;base64,@System.Convert.ToBase64String(err.ScreenShot)">
                     }
                     <div class="card-body">
                         <h5 class="card-title">@err.ErrorTitle</h5>
@@ -56,11 +67,16 @@
                 </div>
                 break;
             case "mini":
-                <div id="@err.ErrorId" class="card text-white    @GetSeverityColor(err.ErrorSeverityId.ToString())">
+                <div id="sc-bugger-each-id-@err.ErrorId" class="card rounded-0  @GetSeverityColor(err.ErrorSeverityId.ToString())">
+                    <input type="hidden" class="all-values"
+                           err-title="@err.ErrorTitle" err-detail="@err.ErrorDetail" err-devicedetail=""
+                           err-id="@err.ErrorId" err-severity="@err.ErrorSeverityId" err-type="@err.ErrorTypeId" err-status="@err.ErrorStatusId"
+                           devide-detail="@err.DeviceDetails" />
                     <div class="card-header">
                         @err.ErrorId
                         <a id="edit-error" href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o fa-2x"></i></a>
                         <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2"><i class="fa fa-trash fa-2x"></i></a>
+                        <a id="goto-error" href="@err.Uri&sc-b-eid=@err.ErrorId" target="_blank" class="float-right text-primary  mr-2"><i class="fa fa-external-link fa-2x"></i></a>
                     </div>
 
                     <div class="card-body">
@@ -70,11 +86,16 @@
                 </div>
                 break;
             default:
-                <div id="@err.ErrorId" class="card text-white    @GetSeverityColor(err.ErrorSeverityId.ToString())">
+                <div id="sc-bugger-each-id-@err.ErrorId" class="card rounded-0  @GetSeverityColor(err.ErrorSeverityId.ToString())">
+                    <input type="hidden" class="all-values"
+                           err-title="@err.ErrorTitle" err-detail="@err.ErrorDetail" err-devicedetail=""
+                           err-id="@err.ErrorId" err-severity="@err.ErrorSeverityId" err-type="@err.ErrorTypeId" err-status="@err.ErrorStatusId"
+                           devide-detail="@err.DeviceDetails" />
                     <div class="card-header">
                         @err.ErrorId
                         <a id="edit-error" href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o fa-2x"></i></a>
                         <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2"><i class="fa fa-trash fa-2x"></i></a>
+                        <a id="goto-error" href="@err.Uri&sc-b-eid=@err.ErrorId" target="_blank" class="float-right text-primary  mr-2"><i class="fa fa-external-link fa-2x"></i></a>
                     </div>
 
                     <div class="card-body">

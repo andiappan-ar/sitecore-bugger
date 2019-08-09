@@ -1,13 +1,18 @@
-﻿
+﻿@using SitecoreBugger.Site.Model.Global;
+@using SitecoreBugger.Site.Business.Bugger;
+
 @{
-    ViewBag.Title = "Tools";
     Layout = null;
+    var masterData = (new BuggerBusiness()).GetMasterRecords();
 }
 
 <!--handle conflict styles and scripts-->
 <link href="~/Content/Styles/sc-bugger-tools-main.css" rel="stylesheet" />
-
+@*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>*@
 <div class="sc_bugger-element row">
+    <!--User details-->
+    <input id="user-info" type="hidden" uid="@masterData.user.UserId" rid="@masterData.user.RoleId" pid="@masterData.currentProject.ProjectId" a-uid="" />
+
     <!--Error detail modal-->
     <div class="sc_bugger-element-modal sc_bugger-element modal error-detail-modal buger-element" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -20,97 +25,136 @@
                 </div>
                 <div class="modal-body sc_bugger-element-background-color-light">
 
-
                     <form ID="sc_bugger-form-mark-error" class="sc_bugger-form-validator" is-valid-form="false" novalidate>
                         <!--Error title-->
                         <div class="form-group">
                             <label for="errorTitle">Error title</label>
                             <input type="text" class="form-control" id="errorTitle" placeholder="Error title" required>
                             <div class="valid-feedback">
-                                Looks good!
+
                             </div>
                             <div class="invalid-feedback">Please fill out this field.</div>
                         </div>
 
-                        <!--Error type-->
-                        <div class="form-group">
-                            <label class="" for="exampleFormControlSelect1">Error type</label>
-                            <select class="form-control" id="errorType" required>
-                                <option value="Functional">Functional</option>
-                                <option value="Design">Design</option>
-                                <option value="Environmental">Environmental</option>
-                            </select>
+                        <!--Screen shot description-->
+                        <div class="form-group form-group-screenshot-div">
+                            <label class="" for="screenShotDetail">Add screen-shot description.</label>
+                            <textarea class="form-control" id="screenShotDetail" rows="3" placeholder="Add screen shot description here." required></textarea>
                             <div class="valid-feedback">
-                                Looks good!
+
                             </div>
                             <div class="invalid-feedback">Please fill out this field.</div>
                         </div>
 
-                        <!--Error Severity-->
-                        <div class="form-group">
-                            <label class="" for="errorSeverity">Error Severity</label>
-                            <select class="form-control" id="errorSeverity" required>
-                                <option value="Critical">Critical</option>
-                                <option value="High">High</option>
-                                <option value="Medium">Medium</option>
-                                <option value="Low">Low</option>
-                            </select>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div class="invalid-feedback">Please fill out this field.</div>
-                        </div>
+                        <div id="main-form-save-elements" class="sc_bugger-hide">
 
-                        <!--Error detail-->
-                        <div class="form-group">
-                            <label class="" for="errorDetail">Error description (Html allowed)</label>
-                            <textarea class="form-control" id="errorDetail" rows="3" required></textarea>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div class="invalid-feedback">Please fill out this field.</div>
-                        </div>
-
-                        <!--Device detail-->
-                        <div class="form-group">
-                            <p>
-                                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
-                                   aria-expanded="false" aria-controls="collapseExample">
-                                    Device details -
-                                    <i class="fa fa-arrows-v" aria-hidden="true"></i>
-                                </a>
-
-                            </p>
-                            <div class="collapse" id="collapseExample">
-                                <div id="browser-detail" class="card card-body">
+                            <!--Error detail-->
+                            <div class="form-group">
+                                <label class="" for="errorDetail">Detailed error description (Html allowed)</label>
+                                <textarea class="form-control" id="errorDetail" rows="3"></textarea>
+                                <div class="valid-feedback">
 
                                 </div>
-                            </div>
-                        </div>
-
-                        <!--screen shot-->
-
-
-                        <div class="form-group sc_bugger-screen-shot-div sc_bugger-hide ">
-
-                            <div class="custom-file">
-                                <input id="sc_bugger-upload-screenshot" accept="image/*" type="file" class="custom-file-input" id="validatedCustomFile">
-                                <label class="custom-file-label" for="validatedCustomFile">Upload screen shot...</label>
-                                <div class="invalid-feedback">Example invalid custom file feedback</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
 
-                            <figure class="figure">
-                                <br />
-                                <img id="error-screen-shot" class="figure-img img-fluid rounded">
-                                <figcaption class="figure-caption text-right">Screen shot of an issue.</figcaption>
-                            </figure>
+                            <!--Error type-->
+                            <div class="form-group">
+                                <label class="" for="exampleFormControlSelect1">Error type</label>
+                                <select class="form-control" id="errorType">
+                                    <option value="">Select</option>
+                                    @foreach (ValuePair val in masterData.ErrorType)
+                                    {
+                                        <option value="@val.EId">@val.EDisplayName</option>
+                                    }
+                                </select>
+                                <div class="valid-feedback">
+
+                                </div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <!--Error Severity-->
+                            <div class="form-group">
+                                <label class="" for="errorSeverity">Error Severity</label>
+                                <select class="form-control" id="errorSeverity">
+                                    <option value="">Select</option>
+                                    @foreach (ValuePair val in masterData.ErrorSeverity)
+                                    {
+                                        <option value="@val.EId">@val.EDisplayName</option>
+                                    }
+                                </select>
+                                <div class="valid-feedback">
+
+                                </div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <!--Error Status-->
+                            <div class="form-group">
+                                <label class="" for="filter-error-status">Error status:</label>
+                                <select class="form-control" id="filter-error-status">
+                                    <option value="">Select</option>
+                                    @foreach (ValuePair val in masterData.ErrorStatus)
+                                    {
+                                        <option value="@val.EId">@val.EDisplayName</option>
+                                    }
+                                </select>
+                                <div class="valid-feedback">
+
+                                </div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+
+                            <!--Assighned user-->
+                            <div class="form-group">
+                                <label class="" for="filter-error-status">Assighned to:</label>
+                                <select class="form-control" id="filter-a-user-id">
+                                    <option value="" >Select</option>
+                                    @foreach (User val in masterData.UserList)
+                                    {
+                                        <option value="@val.UserId" r-id="@val.RoleId">@val.UserName</option>
+                                    }
+                                </select>
+                                <div class="valid-feedback">
+
+                                </div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+
+                            <!--Device detail-->
+                            <div class="form-group">
+                                <p>
+                                    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
+                                       aria-expanded="false" aria-controls="collapseExample">
+                                        Device details -
+                                        <i class="fa fa-arrows-v" aria-hidden="true"></i>
+                                    </a>
+                                </p>
+                                <div class="collapse" id="collapseExample">
+                                    <div id="browser-detail" class="card card-body">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--screen shot-->
+
+                            <div class="form-group sc_bugger-screen-shot-div sc_bugger-hide ">
+                                <div class="custom-file">
+                                    <input id="sc_bugger-upload-screenshot" accept="image/*" type="file" class="custom-file-input" is-updated-creenshot="false">
+                                    <label class="custom-file-label" for="validatedCustomFile">Upload screen shot...</label>
+                                    <div class="invalid-feedback">Example invalid custom file feedback</div>
+                                </div>
+                                <figure class="figure">
+                                    <br />
+                                    <img id="error-screen-shot" class="figure-img img-fluid rounded">
+                                    <figcaption class="figure-caption text-right">Screen shot of an issue.</figcaption>
+                                </figure>
+                            </div>
+                            <button id="hidden-submit" class="sc_bugger-hide" type="submit">Submit form</button>
+
                         </div>
 
-                        <button id="hidden-submit" class="sc_bugger-hide" type="submit">Submit form</button>
+
                     </form>
-
                 </div>
-
                 <div class="modal-footer sc_bugger-element-background-color">
                     <button id="sc_bugger-submit-error" type="button" class="btn btn-primary sc_bugger-hide">Submit</button>
                     <button id="sc_bugger-save-error" type="button" class="btn btn-primary ">Mark error</button>
@@ -119,7 +163,6 @@
             </div>
         </div>
     </div>
-
     <!--Main modal-->
     <div class="sc_bugger-element-modal modal main-modal buger-element" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -141,7 +184,6 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Errors</label>
                         <div class="row">
-
                             <div class="col-4">
                                 <div class="list-group" id="list-tab" role="tablist">
                                     <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">
@@ -170,7 +212,6 @@
             </div>
         </div>
     </div>
-
     <!--Settings modal-->
     <div class="sc_bugger-element-modal modal settings-modal buger-element" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -186,7 +227,6 @@
                         <label for="exampleFormControlSelect1">Compress screenshot image</label>
                         <input type="checkbox" checked="checked" id="sc_bugger-settings-iscompressimage" />
                     </div>
-
                 </div>
                 <div class="modal-footer sc_bugger-element-background-color">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -194,7 +234,6 @@
             </div>
         </div>
     </div>
-
     <!--Bug icon-->
     <div class="sc_bugger-element sc_bugger-float">
         <div id="sc_bugger-icon-bar" class="icon-bar sc_bugger-my-float">
@@ -206,9 +245,6 @@
             <a href="#" class="main-icon"><i id="sc_bugger-bug-icon-b" class="fa fa-bug"></i></a>
         </div>
 
-
     </div>
 </div>
-
 <script src="~/Scripts/sc-bugger-main.js"></script>
-

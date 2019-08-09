@@ -20,6 +20,8 @@ namespace SitecoreBugger.Site.Model.Global
         public int AssigneeUserId { get; set; }
         public int ProjectId { get; set; }
         public byte[] ScreenShot { get; set; }
-        //public string ScreenShotB64 { get; set; }
+        public string ScreenShotB64 { get; set; }
+        public string DeviceDetails { get; set; }
+        public bool UpdateScreenshot { get; set; }
     }
 }

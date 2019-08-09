@@ -194,6 +194,7 @@
     <Compile Include="Model\Global\Error.cs" />
     <Compile Include="Model\Global\ErrorFilter.cs" />
     <Compile Include="Model\Global\ErrorIdList.cs" />
+    <Compile Include="Model\Global\ErrorStatus.cs" />
     <Compile Include="Model\Global\Project.cs" />
     <Compile Include="Model\Global\User.cs" />
     <Compile Include="Data\Repository\Connections.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Security\AuthServer\Repository\AuthenticationModule.cs" />
     <Compile Include="Security\AuthServer\Repository\Tester.cs" />
     <Compile Include="Security\SitecoreBugger\Core.cs" />
+    <Compile Include="Utilities\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\AccountBgm.png" />
