@@ -1,9 +1,11 @@
-﻿using SitecoreBugger.Site.Model.Global;
+﻿using SitecoreBugger.Site.Filter;
+using SitecoreBugger.Site.Model.Global;
 using System.Web.Mvc;
 
 
 namespace SitecoreBugger.Site.Controllers
 {
+    [BuggerAuthorizeFilter]
     public class DashBoardController : BaseController
     {
         // GET: DashBoard

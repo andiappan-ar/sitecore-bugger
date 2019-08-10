@@ -268,6 +268,10 @@ a.article:hover {
 }
 
 
+/* ---------------------------------------------------
+    Custom css
+----------------------------------------------------- */
+
 /*bgm custom*/
 
 .sc_bugger-element-background-color {
@@ -279,3 +283,63 @@ a.article:hover {
 }
 
 /*Spinnig wheel css*/
+
+
+
+/*the container must be positioned relative:*/
+.autocomplete {
+    position: relative;
+    display: inline-block;
+}
+
+
+
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+    .autocomplete-items div {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff;
+        border-bottom: 1px solid #d4d4d4;
+    }
+
+        /*when hovering an item:*/
+        .autocomplete-items div:hover {
+            background-color: #e9e9e9;
+        }
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+}
+
+.sc_bugger-element-background-color {
+    background-color: #30b579;
+    color: white;
+}
+
+/*model full screen*/
+/*@@media (min-width: 576px) {
+          .modal-dialog { max-width: none; }
+        }
+
+        .modal-dialog {
+          width: 98%;
+          height: 92%;
+          padding: 0;
+        }
+
+        .modal-content {
+          height: 99%;
+        }*/

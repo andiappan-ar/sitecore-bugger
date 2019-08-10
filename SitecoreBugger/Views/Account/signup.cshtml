@@ -1,45 +1,86 @@
-﻿
+﻿@using SitecoreBugger.Site.Model.Global;
+
 @{
-    ViewBag.Title = "signup";
+    ViewBag.Title = "Sign-up";
     Layout = "~/Views/Layout/_Account.cshtml";
 }
 
+@model Login
 
 <link href="~/Content/Styles/Login.css" rel="stylesheet" />
 
+<div id="login">
+
+    <h3 class="text-center text-white pt-5">
+        <blockquote class="blockquote text-center">
+            <h1 class="">Sitecore Bugger</h1>
+            <footer class=" blockquote-footer">Rich experience <cite title="Source Title">sitecore project bug management.</cite></footer>
+        </blockquote>
+    </h3>
 
 
-<div class="container">
-    <blockquote class="blockquote text-center">
-        <h1 class="text-white">Sitecore Bugger</h1>
-        <footer class="text-white blockquote-footer">Rich experience <cite title="Source Title">sitecore project bug management.</cite></footer>
-    </blockquote>
-    <center>
+    <div class="container">
 
-        <div class="middle">
-            <div id="login">
-                <form action="javascript:void(0);" method="get">
-                    <fieldset class="clearfix">
-                        <p><span class="fa fa-user"></span><input type="text" Placeholder="Domain/Username" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
-                        <p><span class="fa fa-lock"></span><input type="password" Placeholder="Password" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div id="login-box" class="col-md-12">
+                    <form id="login-form" class="form sc_bugger-form-validator" action="" method="post" novalidate>
+                        <br />
+                        <h3 class="text-center text-info">Sign up</h3>
+                        @if (!ViewBag.IsLoginFailed)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                Invalid user or password.
+                            </div>
+                            <br />
+                        }
 
-                        <div>
-                          
-                            <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" value="Sign In"></span>
+                        <div class="form-group">
+                            <label for="UserName" class="text-info">Username:</label><br>
+                            <input type="text" name="UserName" id="UserName" class="form-control rounded-0" required>
+                            <div class="invalid-feedback">Please fill out this field.</div>
                         </div>
-                    </fieldset>
-                    <div class="clearfix"></div>
-                </form>
-                <div class="clearfix"></div>
-            </div> <!-- end login -->
-            <div class="logo">
-                Sign-up
-                <div class="clearfix"></div>
-            </div>
 
+                        <div class="form-group">
+                            <label for="Password" class="text-info">Password:</label><br>
+                            <input type="password" name="Password" id="Password" class="form-control rounded-0" required>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-md btn-primary  rounded-0" value="submit">
+                        </div>
+
+                        <br />
+                    </form>
+                </div>
+            </div>
         </div>
-    </center>
+
+    </div>
 </div>
 
-
-
+<script type="text/javascript">
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('sc_bugger-form-validator');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        $(this).attr("is-valid-form", false);
+                    }
+                    else {
+                        $(this).attr("is-valid-form", true);
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>

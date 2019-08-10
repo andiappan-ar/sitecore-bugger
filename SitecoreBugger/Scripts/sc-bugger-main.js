@@ -6,10 +6,12 @@ var SC_BUGGER = (function () {
             Html2CanvasProxyUrl: "/sc-bugger/bugger/ImageProxy",
             SaveErrorUrl: "/sc-bugger/ApiScBugger/SaveError",
             GetErrorUrl: "/sc-bugger/ApiScBugger/GetError",
+            LoginBuggerUrl: "/sc-bugger/ApiScBugger/LoginUser"
         },
         Settings: {
             IsCompressScreenshot: true,
             Html2CanvasProxyUrl: "/sc-bugger/bugger/ImageProxy",
+            QueryString_SC_B_ID: "sc-b-eid"
         },
         GlobalVariables: {
             Element: {
@@ -52,9 +54,10 @@ var SC_BUGGER = (function () {
                     SC_BUGGER.EventListeners.FormEvents.BootstrapSubmitFOrmValidationEvents();
                     //SC_BUGGER.UtilityMethods.StyleEvents.BuggerMainIconColorChangeInit();
 
-                    if (SC_BUGGER.UtilityMethods.GetParameterByName("sc-b-eid") != "") {
+                    if (SC_BUGGER.UtilityMethods.GetParameterByName("sc-b-eid") != ""
+                        && SC_BUGGER.UtilityMethods.GetParameterByName("sc-b-eid") != null) {
                         var inputModel = {
-                            ErrorId: SC_BUGGER.UtilityMethods.GetParameterByName("sc-b-eid"),
+                            ErrorId: SC_BUGGER.UtilityMethods.GetParameterByName(SC_BUGGER.Settings.QueryString_SC_B_ID),
                             ProjectId: $(".sc_bugger-element #user-info").attr("pid")
                         };
                         SC_BUGGER.ApiMethods.GetError(inputModel);
@@ -73,13 +76,14 @@ var SC_BUGGER = (function () {
                             var validation = Array.prototype.filter.call(forms, function (form) {
                                 form.addEventListener('submit', function (event) {
                                     if (form.checkValidity() === false) {
-                                        //event.preventDefault();
-                                        //event.stopPropagation();
+                                        
                                         $(this).attr("is-valid-form", false);
                                     }
                                     else {
                                         $(this).attr("is-valid-form", true);
                                     }
+                                    event.preventDefault();
+                                      event.stopPropagation();
                                     form.classList.add('was-validated');
                                 }, false);
                             });
@@ -91,6 +95,26 @@ var SC_BUGGER = (function () {
                         var fileName = $(this).val().split("\\").pop();
                         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
                     });
+
+                    //Login form submit
+                    $("#sc_bugger-login-form").submit(function () {
+                        if ($(this)[0].checkValidity()==true) {
+                            var inputModel = {
+                                UserName: $("#sc_bugger-login-form #UserName").val(),
+                                Password: $("#sc_bugger-login-form #Password").val()
+                            }
+                            SC_BUGGER.ApiMethods.LoginBugger(inputModel);
+                        }                      
+                    });
+
+                   
+
+                        $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+                            if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+                                $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+                            }
+                        });
+                   
                 }
             },
             ModalEvents: function () {
@@ -122,7 +146,8 @@ var SC_BUGGER = (function () {
                         ErrorDetail: $(".sc_bugger-element-modal.error-detail-modal #errorDetail").val(),
                         Selector: SC_BUGGER.GlobalVariables.Browser.CurrentBugElement.getPath(),
                         DeviceDetails: JSON.stringify(SC_BUGGER.GlobalVariables.Browser.BasicDetails),
-                        Uri: window.location.href,
+                        Uri: SC_BUGGER.UtilityMethods.RemoveURLParameter(window.location.href, SC_BUGGER.Settings.QueryString_SC_B_ID),
+                        //Uri: window.location.href,
                         screenShotDetail:$("#screenShotDetail").val()
                     };
 
@@ -148,6 +173,21 @@ var SC_BUGGER = (function () {
 
                         var isUpdateScreenshot = ($("#sc_bugger-upload-screenshot").attr("is-updated-creenshot") == "true");
 
+                        //Get value from model
+                        SC_BUGGER.GlobalVariables.Element.ErrorGlobal = {
+                            ProjectId: $(".sc_bugger-element #user-info").attr("pid"),
+                            ErrorTitle: $(".sc_bugger-element-modal.error-detail-modal #errorTitle").val(),
+                            OwnerUserId: $(".sc_bugger-element #user-info").attr("uid"),
+                            AssigneeUserId: $(".sc_bugger-element-modal.error-detail-modal #filter-a-user-id").val(),
+                            ErrorTypeId: $(".sc_bugger-element-modal.error-detail-modal #errorType").val(),
+                            ErrorSeverityId: $(".sc_bugger-element-modal.error-detail-modal #errorSeverity").val(),
+                            ErrorStatusId: $(".sc_bugger-element-modal.error-detail-modal #filter-error-status").val(),
+                            ErrorDetail: $(".sc_bugger-element-modal.error-detail-modal #errorDetail").val(),
+                            Selector: SC_BUGGER.GlobalVariables.Browser.CurrentBugElement.getPath(),
+                            DeviceDetails: JSON.stringify(SC_BUGGER.GlobalVariables.Browser.BasicDetails),
+                            Uri: SC_BUGGER.UtilityMethods.RemoveURLParameter(window.location.href, SC_BUGGER.Settings.QueryString_SC_B_ID),                            
+                            screenShotDetail: $("#screenShotDetail").val()
+                        };
 
                         SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShotB64 = (isUpdateScreenshot == true) ? $('#error-screen-shot').attr("src") : null;
                         SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = null;
@@ -295,7 +335,7 @@ var SC_BUGGER = (function () {
                 $("#sc_bugger-error-detail").click(function () {
                     // Show and hide action buttons
                     $("#sc_bugger-submit-error").addClass("sc_bugger-hide");
-                    $("#sc_bugger-save-error").removeClass("sc_bugger-hide");
+                    $("#sc_bugger-save-error").removeClass("sc_bugger-hide");                    
                     SC_BUGGER.EventListeners.Body.InitBuggerBodyEvents();
                 });
 
@@ -317,8 +357,24 @@ var SC_BUGGER = (function () {
                 });
 
                 $("#sc_bugger-icon-bar .main-icon").click(function () {
-                    $("#sc_bugger-icon-bar .sub-icon").toggleClass("sc_bugger-hide");
-                    $("#sc_bugger-icon-bar").removeClass("sc_bugger-hide");
+                    //Check user logined
+                    var isUserLogined = false;
+
+                    if (SC_BUGGER.UtilityMethods.GetCookie($("#user-info").attr("cookie-key")) != null) {
+                       
+                            isUserLogined = true;
+                       
+                    }
+
+                    if (isUserLogined) {
+                        $("#sc_bugger-icon-bar .sub-icon").toggleClass("sc_bugger-hide");
+                        $("#sc_bugger-icon-bar").removeClass("sc_bugger-hide");
+                    }
+                    else {
+                        // Login popup show
+                        $('.sc_bugger-element-modal.sc-bugger-login-modal').modal('show');
+                    }
+                    
                 });
 
             },
@@ -377,6 +433,25 @@ var SC_BUGGER = (function () {
             }
         },
         UtilityMethods: {
+            GetCookie: function(name) {
+                var dc = document.cookie;
+                var prefix = name + "=";
+                var begin = dc.indexOf("; " + prefix);
+                if (begin == -1) {
+                    begin = dc.indexOf(prefix);
+                    if (begin != 0) return null;
+                }
+                else {
+                    begin += 2;
+                    var end = document.cookie.indexOf(";", begin);
+                    if (end == -1) {
+                        end = dc.length;
+                    }
+                }
+                // because unescape has been deprecated, replaced with decodeURI
+                //return unescape(dc.substring(begin + prefix.length, end));
+                return decodeURI(dc.substring(begin + prefix.length, end));
+            } ,
             GetParameterByName:function(name, url) {
                 if (!url) url = window.location.href;
                 name = name.replace(/[\[\]]/g, '\\$&');
@@ -385,6 +460,28 @@ var SC_BUGGER = (function () {
                 if (!results) return null;
                 if (!results[2]) return '';
                 return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            },
+            RemoveURLParameter: function(url, parameter) {
+                //prefer to use l.search if you have a location/link object
+                var urlparts = url.split('?');
+                if (urlparts.length >= 2) {
+
+                    var prefix = encodeURIComponent(parameter) + '=';
+                    var pars = urlparts[1].split(/[&;]/g);
+
+                    //reverse iteration as may be destructive
+                    for (var i = pars.length; i-- > 0;) {
+                        //idiom for string.startsWith
+                        if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+                            pars.splice(i, 1);
+                        }
+                    }
+
+                    url = urlparts[0] + '?' + pars.join('&');
+                    return url;
+                } else {
+                    return url;
+                }
             },
             StyleEvents: {
                 BuggerMainIconColorChangeInit: function () {
@@ -403,16 +500,24 @@ var SC_BUGGER = (function () {
             GetScreenShot: function () {
                 // window.scrollTo(0, 0);
 
-                var target_container = document.body;
+              
+
+                var target_container = SC_BUGGER.GlobalVariables.Browser.CurrentBugElement.get(0);
                 var objJ = {
                     //allowTaint: true,
                     //useCORS: true,
                     proxy: SC_BUGGER.Config.Html2CanvasProxyUrl,
-                    logging: true //Enable log (use Web Console for get Errors and Warings)
+                    //logging: true //Enable log (use Web Console for get Errors and Warings)
+
+                    useCORS: true,
+                    taintTest: false,
+                    allowTaint: false,
+
 
                 };
 
                 html2canvas(target_container, objJ).then(function (canvas) {
+                    $('.sc_bugger-element #pleaseWaitDialog').modal('show');
                     var img = canvas.toDataURL();
 
                     //var string = img;
@@ -429,6 +534,8 @@ var SC_BUGGER = (function () {
                     $(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot);
                     $('.sc_bugger-element-modal.error-detail-modal').modal('show');
                     $(".sc_bugger-element-modal.error-detail-modal").css("z-index", $(".popover").css("z-index") + 1);
+
+                    $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
 
                 });
 
@@ -672,17 +779,43 @@ var SC_BUGGER = (function () {
         ApiMethods: {
             SubmitError: function () {
 
+                $('.sc_bugger-element #pleaseWaitDialog').modal('show');
+
                 $.ajax({
                     url: SC_BUGGER.Config.SaveErrorUrl,
                     type: "post",
                     async: false,
                     data: (SC_BUGGER.GlobalVariables.Element.ErrorGlobal),
                     success: function (result) {
-                        debugger;
+                        $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+                    },
+                    error: function (request, status, error) {
+                        $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+                    }
+                });
+            },
+            LoginBugger: function (inputModel) {
+                $('.sc_bugger-element #pleaseWaitDialog').modal('show');
+                $.ajax({
+                    url: SC_BUGGER.Config.LoginBuggerUrl,
+                    type: "post",
+                    async: false,
+                    data: (inputModel),
+                    success: function (result) {
+                        if (result != "False") {
+                            $('.sc_bugger-element-modal.sc-bugger-login-modal').modal('hide');
+                            $("#invalid-user-alret").addClass("sc_bugger-hide");
+                        }
+                        else {
+                            $('.sc_bugger-element-modal.sc-bugger-login-modal').modal('show');
+                            $("#invalid-user-alret").removeClass("sc_bugger-hide");
+                        }
+                        $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
                     }
                 });
             },
             GetError: function (inputModel) {
+                $('.sc_bugger-element #pleaseWaitDialog').modal('show');
                 $.ajax({
                     url: SC_BUGGER.Config.GetErrorUrl,
                     type: "post",
@@ -696,13 +829,14 @@ var SC_BUGGER = (function () {
                                 ErrorTitle: response.ErrorTitle,
                                 screenShotDetail: response.ErrorDetail
                             };
-                            SC_BUGGER.GlobalVariables.Browser.OldBugElement = $(errorObj);
+                            SC_BUGGER.GlobalVariables.Browser.OldBugElement = $(errorObj.Selector);
                             SC_BUGGER.FunctionalMethods.MarkErrorwithPopup(errorObj);
                         }
-                       
+                        $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
                     },
                     error: function (response) {
                         console.log(response);
+                        $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
                     }
 
 

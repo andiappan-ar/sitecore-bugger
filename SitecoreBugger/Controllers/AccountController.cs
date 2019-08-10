@@ -1,4 +1,5 @@
-﻿using SitecoreBugger.Site.Security.Repository;
+﻿using SitecoreBugger.Site.Model.Global;
+using SitecoreBugger.Site.Security.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,25 @@ namespace SitecoreBugger.Site.Controllers
         // GET: Account
         public ActionResult Login()
         {
-            Tester.Testmethod();
+            ViewBag.IsLoginFailed = true;
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(Login login)
+        {
+            if(_BuggerAccount.Login(login))
+            {
+                return RedirectToAction("Index", "DashBoard");              
+            }
+            else
+            {
+                ViewBag.IsLoginFailed = false;
+                
+            }
+
+            return View();
+
         }
 
         public ActionResult ForgotPassword()

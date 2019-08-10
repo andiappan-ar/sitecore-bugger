@@ -20,13 +20,13 @@ namespace SitecoreBugger.Site.Security.Repository
 {
     public static class AuthenticationModule
     {
-        private static string communicationKey = SitecoreSecurityConstants.communicationKey;  
-        private static string tokenIssuer = SitecoreSecurityConstants.tokenIssuer;
-        private static string appliesToAddress = SitecoreSecurityConstants.appliesToAddress;
-        private static string signatureAlgo = SitecoreSecurityConstants.signatureAlgo;
-        private static string digestAlgo = SitecoreSecurityConstants.digestAlgo;
+        private static string communicationKey = SecurityConstants.communicationKey;  
+        private static string tokenIssuer = SecurityConstants.tokenIssuer;
+        private static string appliesToAddress = SecurityConstants.appliesToAddress;
+        private static string signatureAlgo = SecurityConstants.signatureAlgo;
+        private static string digestAlgo = SecurityConstants.digestAlgo;
 
-        private static DateTime ExpiryTime = SitecoreSecurityConstants.ExpiryTime;
+        private static DateTime ExpiryTime = SecurityConstants.ExpiryTime;
 
         // The Method is used to generate token for user
         public static string GenerateTokenForUser(UserDetailsModel userDetailsModel)
@@ -39,32 +39,22 @@ namespace SitecoreBugger.Site.Security.Repository
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
-                {
-                  new Claim(SitecoreSecurityConstants.Claim_Email,GetStringOrEmpty(userDetailsModel.Email)),
-                  new Claim(SitecoreSecurityConstants.Claim_UserName,GetStringOrEmpty(userDetailsModel.UserName)),
-                  new Claim(SitecoreSecurityConstants.Claim_FirstName,GetStringOrEmpty(userDetailsModel.FirstName)),
-                  new Claim(SitecoreSecurityConstants.Claim_LastName,GetStringOrEmpty(userDetailsModel.LastName)),
-                  new Claim(SitecoreSecurityConstants.Claim_Country,GetStringOrEmpty(userDetailsModel.Country)),                
-                  new Claim(SitecoreSecurityConstants.Claim_RecieveFurtherCommunication,GetStringOrEmpty(userDetailsModel.RecieveFurtherCommunication)),
-                  new Claim(SitecoreSecurityConstants.Claim_ActivationKey,GetStringOrEmpty(userDetailsModel.ActivationKey)),
-                  new Claim(SitecoreSecurityConstants.Claim_Speciality,GetStringOrEmpty(userDetailsModel.Speciality)),
-                  new Claim(SitecoreSecurityConstants.Claim_FurtherProcessing,GetStringOrEmpty(userDetailsModel.FurtherProcessing)),
-                  new Claim(SitecoreSecurityConstants.Claim_AcceptedTnC,GetStringOrEmpty(userDetailsModel.AcceptedTnC)),
-                  new Claim(SitecoreSecurityConstants.Claim_Id,GetStringOrEmpty(userDetailsModel.Id)),
-                  new Claim(SitecoreSecurityConstants.Claim_ZipCode,GetStringOrEmpty(userDetailsModel.ZipCode)),
-                  new Claim(SitecoreSecurityConstants.Claim_RegisteredWebinars,GetStringOrEmpty(userDetailsModel.RegisteredWebinars)),
-                  new Claim(SitecoreSecurityConstants.Claim_Token,GetStringOrEmpty(userDetailsModel.Token)),
+                {         
+                  new Claim(SecurityConstants.Claim_Id,GetStringOrEmpty(Convert.ToString(userDetailsModel.UserId))),               
+                  new Claim(SecurityConstants.Claim_UserName,GetStringOrEmpty(userDetailsModel.UserName)),
+                  new Claim(SecurityConstants.Claim_RoleId,GetStringOrEmpty(Convert.ToString(userDetailsModel.RoleId)))                  
                 }),
 
                 //TokenIssuerName = tokenIssuer,
                 //AppliesToAddress = appliesToAddress,
                 //Lifetime = new Lifetime(DateTime.UtcNow, ExpiryTime),
-                Expires = SitecoreSecurityConstants.ExpiryTime,
+                Expires = SecurityConstants.ExpiryTime,
                 SigningCredentials = new SigningCredentials(signingKey, signatureAlgo , digestAlgo)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
+            AddTokenToCookie(tokenString);
             //var claim = GetClaim(tokenString);
             return tokenString;
 
@@ -72,23 +62,13 @@ namespace SitecoreBugger.Site.Security.Repository
 
         public static IClaimsIdentity PopulateUserIdentity(JwtSecurityToken userPayloadToken)
         {
-            string UserName = GetClaimString(userPayloadToken, SitecoreSecurityConstants.Claim_UserName);
+            string UserName = GetClaimString(userPayloadToken, SecurityConstants.Claim_UserName);
 
             return new IClaimsIdentity(UserName) {
-               
-                Email = GetClaimString(userPayloadToken, SitecoreSecurityConstants.Claim_Email),
-                UserName = GetClaimString(userPayloadToken, SitecoreSecurityConstants.Claim_UserName),
-                FirstName = GetClaimString(userPayloadToken, SitecoreSecurityConstants.Claim_FirstName),
-                LastName = GetClaimString(userPayloadToken, SitecoreSecurityConstants.Claim_LastName),
-                Country = GetClaimString(userPayloadToken, SitecoreSecurityConstants.Claim_Country),
-                RecieveFurtherCommunication = GetClaimString(userPayloadToken, SitecoreSecurityConstants.Claim_RecieveFurtherCommunication),
-                ActivationKey = GetClaimString(userPayloadToken, SitecoreSecurityConstants.Claim_ActivationKey),
-                Speciality = GetClaimString(userPayloadToken, SitecoreSecurityConstants.Claim_Speciality),
-                FurtherProcessing = GetClaimString(userPayloadToken, SitecoreSecurityConstants.Claim_FurtherProcessing),
-                AcceptedTnC = GetClaimString(userPayloadToken, SitecoreSecurityConstants.Claim_AcceptedTnC),
-                Id = GetClaimString(userPayloadToken, SitecoreSecurityConstants.Claim_Id),
-                ZipCode = GetClaimString(userPayloadToken, SitecoreSecurityConstants.Claim_ZipCode),
-                Token = GetClaimString(userPayloadToken, SitecoreSecurityConstants.Claim_Token),
+
+                UserId = GetClaimString(userPayloadToken, SecurityConstants.Claim_Id),
+                UserName = GetClaimString(userPayloadToken, SecurityConstants.Claim_UserName),
+                RoleId = GetClaimString(userPayloadToken, SecurityConstants.Claim_RoleId)                        
             };
 
         }
@@ -126,7 +106,7 @@ namespace SitecoreBugger.Site.Security.Repository
             JwtSecurityToken userPayloadToken = new JwtSecurityToken(token);
 
             var identity = PopulateUserIdentity(userPayloadToken);
-            string[] roles = { SitecoreSecurityConstants.roles_ALL };
+            string[] roles = { SecurityConstants.roles_ALL };
             var genericPrincipal = new GenericPrincipal(identity, roles);
             Thread.CurrentPrincipal = genericPrincipal;
             var authenticationIdentity = Thread.CurrentPrincipal.Identity as IClaimsIdentity;
@@ -182,7 +162,7 @@ namespace SitecoreBugger.Site.Security.Repository
 
         public static string GetToken()
         {
-            var tokenCookie = HttpContext.Current.Request.Cookies[SitecoreSecurityConstants.ALXN_COM_JWTAUTH];
+            var tokenCookie = HttpContext.Current.Request.Cookies[SecurityConstants.SC_BUGGER_JWTAUTH];
 
             if(tokenCookie == null)
             {
@@ -196,10 +176,10 @@ namespace SitecoreBugger.Site.Security.Repository
 
         public static void RemoveToken()
         {
-            if (HttpContext.Current.Request.Cookies[SitecoreSecurityConstants.ALXN_COM_JWTAUTH] != null)
+            if (HttpContext.Current.Request.Cookies[SecurityConstants.SC_BUGGER_JWTAUTH] != null)
             {
-                HttpCookie currentUserCookie = HttpContext.Current.Request.Cookies[SitecoreSecurityConstants.ALXN_COM_JWTAUTH];
-                HttpContext.Current.Response.Cookies.Remove(SitecoreSecurityConstants.ALXN_COM_JWTAUTH);
+                HttpCookie currentUserCookie = HttpContext.Current.Request.Cookies[SecurityConstants.SC_BUGGER_JWTAUTH];
+                HttpContext.Current.Response.Cookies.Remove(SecurityConstants.SC_BUGGER_JWTAUTH);
                 currentUserCookie.Expires = DateTime.Now.AddDays(-10);
                 currentUserCookie.Value = null;
                 HttpContext.Current.Response.SetCookie(currentUserCookie);
@@ -209,12 +189,12 @@ namespace SitecoreBugger.Site.Security.Repository
 
         public static void AddTokenToCookie(string token)
         {
-            HttpCookie cookie = HttpContext.Current.Request.Cookies[SitecoreSecurityConstants.ALXN_COM_JWTAUTH];
+            HttpCookie cookie = HttpContext.Current.Request.Cookies[SecurityConstants.SC_BUGGER_JWTAUTH];
 
             if (cookie == null)
             {
                 // no cookie found, create it
-                cookie = new HttpCookie(SitecoreSecurityConstants.ALXN_COM_JWTAUTH);
+                cookie = new HttpCookie(SecurityConstants.SC_BUGGER_JWTAUTH);
                 cookie.Value = token;               
             }
             else

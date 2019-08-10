@@ -183,6 +183,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business\Account\Account.cs" />
     <Compile Include="Business\Bugger\BuggerBusiness.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApiScBuggerController.cs" />
@@ -190,14 +191,15 @@
     <Compile Include="Controllers\BuggerController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Data\Helper\Helper.cs" />
-    <Compile Include="Data\Model\MasterData.cs" />
+    <Compile Include="Filter\BuggerAuthorizeFilter.cs" />
     <Compile Include="Model\Global\Error.cs" />
     <Compile Include="Model\Global\ErrorFilter.cs" />
     <Compile Include="Model\Global\ErrorIdList.cs" />
     <Compile Include="Model\Global\ErrorStatus.cs" />
+    <Compile Include="Model\Global\Login.cs" />
+    <Compile Include="Model\Global\MasterData.cs" />
     <Compile Include="Model\Global\Project.cs" />
     <Compile Include="Model\Global\User.cs" />
-    <Compile Include="Data\Repository\Connections.cs" />
     <Compile Include="Data\Repository\Core.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -205,12 +207,14 @@
     <Compile Include="Model\Error.cs" />
     <Compile Include="Model\Global\ValuePair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\AuthServer\Helper\SitecoreSecurityConstants.cs" />
+    <Compile Include="Security\AuthServer\Helper\SecurityConstants.cs" />
     <Compile Include="Security\AuthServer\Model\IClaimsIdentity.cs" />
     <Compile Include="Security\AuthServer\Model\UserDetailsModel.cs" />
     <Compile Include="Security\AuthServer\Repository\AuthenticationModule.cs" />
     <Compile Include="Security\AuthServer\Repository\Tester.cs" />
-    <Compile Include="Security\SitecoreBugger\Core.cs" />
+    <Compile Include="Security\SitecoreBugger\Account.cs" />
+    <Compile Include="Security\SitecoreBugger\Bugger.cs" />
+    <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +231,7 @@
     </Content>
     <Content Include="MockedError.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Scripts\sc-bugger-dashboard.js" />
     <Content Include="Scripts\sc-bugger-main.js" />
     <Content Include="tooltip.html" />
     <Content Include="Web.config">
@@ -252,8 +257,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Business\Account\" />
-    <Folder Include="Security\Sitecore\" />
     <Folder Include="Views\ApiScBugger\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>

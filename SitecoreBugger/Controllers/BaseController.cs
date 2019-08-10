@@ -1,4 +1,5 @@
-﻿using SitecoreBugger.Site.Business.Bugger;
+﻿using SitecoreBugger.Site.Business.Account;
+using SitecoreBugger.Site.Business.Bugger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace SitecoreBugger.Site.Controllers
     public class BaseController : Controller
     {
         public BuggerBusiness _BuggerBusiness = new BuggerBusiness();
+        public Account _BuggerAccount = new Account();
     }
 }

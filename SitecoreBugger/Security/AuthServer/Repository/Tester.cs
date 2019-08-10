@@ -13,13 +13,8 @@ namespace SitecoreBugger.Site.Security.Repository
             // Get username and password
             UserDetailsModel user = new UserDetailsModel()
             {
-                Id = "001",
-                FirstName = "Andi",
-                Country = "India",
-                Email = "andsinindia@gmail.com",
-                LastName = "AR",
-                Fullname = "Andiappan",
-                ZipCode = "600028"
+                UserId = 1,
+                UserName = "Andi"              
             };
             // Generate token using user meta data
 

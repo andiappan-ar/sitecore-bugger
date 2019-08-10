@@ -11,7 +11,7 @@
 @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>*@
 <div class="sc_bugger-element row">
     <!--User details-->
-    <input id="user-info" type="hidden" uid="@masterData.user.UserId" rid="@masterData.user.RoleId" pid="@masterData.currentProject.ProjectId" a-uid="" />
+    <input id="user-info" type="hidden" uid="@masterData.user.UserId" rid="@masterData.user.RoleId" pid="@masterData.currentProject.ProjectId" a-uid="" cookie-key="@SitecoreBugger.Site.Security.Helper.Constants.SecurityConstants.SC_BUGGER_JWTAUTH" />
 
     <!--Error detail modal-->
     <div class="sc_bugger-element-modal sc_bugger-element modal error-detail-modal buger-element" tabindex="-1" role="dialog">
@@ -108,7 +108,7 @@
                             <div class="form-group">
                                 <label class="" for="filter-error-status">Assighned to:</label>
                                 <select class="form-control" id="filter-a-user-id">
-                                    <option value="" >Select</option>
+                                    <option value="">Select</option>
                                     @foreach (User val in masterData.UserList)
                                     {
                                         <option value="@val.UserId" r-id="@val.RoleId">@val.UserName</option>
@@ -164,47 +164,42 @@
         </div>
     </div>
     <!--Main modal-->
-    <div class="sc_bugger-element-modal modal main-modal buger-element" tabindex="-1" role="dialog">
+    <div class="sc_bugger-element-modal modal main-modal sc-bugger-login-modal buger-element" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header sc_bugger-element-background-color">
-                    <h4 class="modal-title">Home</h4>
+                    <h4 class="modal-title">Login</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body sc_bugger-element-background-color-light">
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Projects</label>
-                        <select class="form-control" id="errorType">
-                            <option value="Sample.com">Sample.com</option>
-                            <option value="Design.com">Design.com</option>
-                        </select>
+                    <br />
+                    <div class="alert alert-warning" role="alert">
+                        Please login to bugger.
                     </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Errors</label>
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="list-group" id="list-tab" role="tablist">
-                                    <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">
-                                        Home
-                                        <button class="btn btn-primary"><i class="fa fa-close"></i></button>
-                                    </a>
-                                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Profile</a>
-                                    <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Messages</a>
-                                    <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Settings</a>
-                                </div>
-                            </div>
-                            <div class="col-8">
-                                <div class="tab-content" id="nav-tabContent">
-                                    <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">...</div>
-                                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
-                                    <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
-                                    <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
-                                </div>
-                            </div>
+
+                    <div id="invalid-user-alret" class="sc_bugger-hide alert alert-danger" role="alert">
+                        Invalid user or password.
+                    </div>
+                    <form ID="sc_bugger-login-form" class="sc_bugger-form-validator" is-valid-form="false" novalidate>
+                        <div class="form-group">
+                            <label for="UserName" class="text-info">Username:</label><br>
+                            <input type="text" name="UserName" id="UserName" class="form-control rounded-0" required>
+                            <div class="invalid-feedback">Please fill out this field.</div>
                         </div>
-                    </div>
+
+                        <div class="form-group">
+                            <label for="Password" class="text-info">Password:</label><br>
+                            <input type="password" name="Password" id="Password" class="form-control rounded-0" required>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <input id="login-form-sc-bugger" type="submit" name="submit" class="btn btn-md btn-primary  rounded-0" value="submit">
+                        </div>
+                    </form>
+
                 </div>
                 <div class="modal-footer sc_bugger-element-background-color">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -242,9 +237,21 @@
             @*<a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-settings"><i class="fa fa-cog"></i></a>*@
             <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-error-detail"><i class="fa fa-pencil-square-o"></i></a>
             <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color sc_bugger-disabled" id="sc_bugger-save-error-confirm"><i class="fa fa-floppy-o"></i></a>
-            <a href="#" class="main-icon"><i id="sc_bugger-bug-icon-b" class="fa fa-bug"></i></a>
+            <a href="javascript:void(0)" class="main-icon"><i id="sc_bugger-bug-icon-b" class="fa fa-bug"></i></a>
         </div>
 
     </div>
+
+    <!--Loader spinning wheel-->
+    <div class="modal hide text-white " id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false" data-html2canvas-ignore="true">
+        <div class="modal-header" data-html2canvas-ignore="true">
+            <h1 data-html2canvas-ignore="true">Please Wait</h1>
+        </div>
+        <div class="modal-body" data-html2canvas-ignore="true">          
+            <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status" data-html2canvas-ignore="true">
+            </div>            
+        </div>
+    </div>
+
 </div>
 <script src="~/Scripts/sc-bugger-main.js"></script>

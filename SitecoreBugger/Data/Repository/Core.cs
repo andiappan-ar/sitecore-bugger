@@ -1,11 +1,11 @@
-﻿using SitecoreBugger.Site.Data.Model;
-using SitecoreBugger.Site.Model.Global;
+﻿using SitecoreBugger.Site.Model.Global;
 using System.Data;
 using System.Data.SqlClient;
 using SitecoreBugger.Site.Data.Helper;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using SitecoreBugger.Site.Utilities;
 
 namespace SitecoreBugger.Site.Data.Repository
 {
@@ -15,7 +15,7 @@ namespace SitecoreBugger.Site.Data.Repository
         {
             MasterData result = new MasterData();
 
-            using (SqlConnection sqlcon = new SqlConnection(Connections.CS))
+            using (SqlConnection sqlcon = new SqlConnection(Settings.CS))
             {
                 using (SqlCommand cmd = new SqlCommand("SP_GetMasterData", sqlcon))
                 {
@@ -46,7 +46,7 @@ namespace SitecoreBugger.Site.Data.Repository
         {
             List<ErrorIdList> result = new List<ErrorIdList>();
 
-            using (SqlConnection sqlcon = new SqlConnection(Connections.CS))
+            using (SqlConnection sqlcon = new SqlConnection(Settings.CS))
             {
                 using (SqlCommand cmd = new SqlCommand("SP_GetErrorId", sqlcon))
                 {
@@ -72,7 +72,7 @@ namespace SitecoreBugger.Site.Data.Repository
         {
             List<Error> result = new List<Error>();
 
-            using (SqlConnection sqlcon = new SqlConnection(Connections.CS))
+            using (SqlConnection sqlcon = new SqlConnection(Settings.CS))
             {
                 using (SqlCommand cmd = new SqlCommand("SP_GetError", sqlcon))
                 {
@@ -127,7 +127,7 @@ namespace SitecoreBugger.Site.Data.Repository
         {
             List<ErrorStatus> result = new List<ErrorStatus>();
 
-            using (SqlConnection sqlcon = new SqlConnection(Connections.CS))
+            using (SqlConnection sqlcon = new SqlConnection(Settings.CS))
             {
                 using (SqlCommand cmd = new SqlCommand("SP_SaveError", sqlcon))
                 {
@@ -166,7 +166,7 @@ namespace SitecoreBugger.Site.Data.Repository
         {
             List<ErrorStatus> result = new List<ErrorStatus>();
 
-            using (SqlConnection sqlcon = new SqlConnection(Connections.CS))
+            using (SqlConnection sqlcon = new SqlConnection(Settings.CS))
             {
                 using (SqlCommand cmd = new SqlCommand("SP_SaveError", sqlcon))
                 {
@@ -193,6 +193,32 @@ namespace SitecoreBugger.Site.Data.Repository
                             da.Fill(ds);
 
                             result = ds.Tables[0].ToListof<ErrorStatus>();
+                        }
+                    }
+                }
+            }
+
+            return result.FirstOrDefault();
+        }
+
+        public static User GetUser(int userId)
+        {
+            List<User> result = new List<User>();
+
+            using (SqlConnection sqlcon = new SqlConnection(Settings.CS))
+            {
+                using (SqlCommand cmd = new SqlCommand("SP_GetUser", sqlcon))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@UserId", SqlDbType.Int).Value = userId;
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        using (DataSet ds = new DataSet())
+                        {
+                            da.Fill(ds);
+
+                            result = ds.Tables[0].ToListof<User>();
                         }
                     }
                 }

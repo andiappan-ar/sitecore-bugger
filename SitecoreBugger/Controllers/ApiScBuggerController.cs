@@ -22,8 +22,11 @@ namespace SitecoreBugger.Site.Controllers
 
         [HttpPost]
         public JsonResult GetError(ErrorFilter errorFilter)
-        {          
-            return Json(_BuggerBusiness.GetError(errorFilter));
+        {
+            var error = _BuggerBusiness.GetError(errorFilter);
+            error.FirstOrDefault().ScreenShot = null;
+            error.FirstOrDefault().ScreenShotB64 = null;
+            return Json(error);
         }
 
 
@@ -41,7 +44,20 @@ namespace SitecoreBugger.Site.Controllers
           
         }
 
-    
+        [HttpPost]
+        public bool LoginUser(Login login)
+        {
+            if (_BuggerAccount.Login(login))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+
+            }
+
+        }
 
 
     }

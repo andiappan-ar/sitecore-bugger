@@ -1,4 +1,4 @@
-﻿using SitecoreBugger.Site.Data.Model;
+﻿
 using SitecoreBugger.Site.Data.Repository;
 using SitecoreBugger.Site.Model.Global;
 using SitecoreBugger.Site.Utilities;
@@ -16,9 +16,9 @@ namespace SitecoreBugger.Site.Business.Bugger
     {
         public MasterData GetMasterRecords()
         {
-            var masterR = Core.GetMasterRecords(SitecoreBuggerCoder.Core.GetUser());
+            var masterR = Core.GetMasterRecords(SitecoreBuggerCoder.Bugger.GetUser());
 
-            masterR.currentProject = SitecoreBuggerCoder.Core.GetProject();
+            masterR.currentProject = SitecoreBuggerCoder.Bugger.GetProject();
 
             return masterR;
         }
@@ -64,6 +64,11 @@ namespace SitecoreBugger.Site.Business.Bugger
 
             return Utility.GetExcelSheetMemoryStream(dataTable);
 
+        }
+
+        public User GetUser(int userId)
+        {
+            return Core.GetUser(userId);
         }
 
 
