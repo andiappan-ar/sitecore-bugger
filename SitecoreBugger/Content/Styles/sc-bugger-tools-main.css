@@ -1,4 +1,12 @@
-﻿
+﻿.sc_bugger-element *{
+    z-index: 2147483647 !important;
+  
+}
+
+#sc_bugger-icon-bar a, #sc_bugger-icon-bar a i{  
+    /*position:absolute;*/
+}
+
 .sc_bugger-label {
     color: blue;
 }

@@ -76,14 +76,14 @@ var SC_BUGGER = (function () {
                             var validation = Array.prototype.filter.call(forms, function (form) {
                                 form.addEventListener('submit', function (event) {
                                     if (form.checkValidity() === false) {
-                                        
+
                                         $sc_bugger_jq(this).attr("is-valid-form", false);
                                     }
                                     else {
                                         $sc_bugger_jq(this).attr("is-valid-form", true);
                                     }
                                     event.preventDefault();
-                                      event.stopPropagation();
+                                    event.stopPropagation();
                                     form.classList.add('was-validated');
                                 }, false);
                             });
@@ -97,24 +97,28 @@ var SC_BUGGER = (function () {
                     });
 
                     //Login form submit
-                    $sc_bugger_jq("#sc_bugger-login-form").submit(function () {
-                        if ($sc_bugger_jq(this)[0].checkValidity()==true) {
+                    $sc_bugger_jq("#sc_bugger-login-form").submit(function (event) {
+                        if ($sc_bugger_jq(this)[0].checkValidity() == true) {
                             var inputModel = {
                                 UserName: $sc_bugger_jq("#sc_bugger-login-form #UserName").val(),
                                 Password: $sc_bugger_jq("#sc_bugger-login-form #Password").val()
                             }
                             SC_BUGGER.ApiMethods.LoginBugger(inputModel);
-                        }                      
+                        }
+                        else {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
                     });
 
-                   
 
-                        $sc_bugger_jq('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
-                            if ($sc_bugger_jq('.modal:visible').length) { // check whether parent modal is opend after child modal close
-                                $sc_bugger_jq('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
-                            }
-                        });
-                   
+
+                    $sc_bugger_jq('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+                        if ($sc_bugger_jq('.modal:visible').length) { // check whether parent modal is opend after child modal close
+                            $sc_bugger_jq('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+                        }
+                    });
+
                 }
             },
             ModalEvents: function () {
@@ -148,14 +152,14 @@ var SC_BUGGER = (function () {
                         DeviceDetails: JSON.stringify(SC_BUGGER.GlobalVariables.Browser.BasicDetails),
                         Uri: SC_BUGGER.UtilityMethods.RemoveURLParameter(window.location.href, SC_BUGGER.Settings.QueryString_SC_B_ID),
                         //Uri: window.location.href,
-                        screenShotDetail:$sc_bugger_jq("#screenShotDetail").val()
+                        //screenShotDetail: $sc_bugger_jq("#screenShotDetail").val()
                     };
 
                     // Validation
                     if (SC_BUGGER.ValidationEvents.ValidateMarkError() == "true") {
 
                         SC_BUGGER.FunctionalMethods.MarkErrorwithPopup(SC_BUGGER.GlobalVariables.Element.ErrorGlobal);
-                      
+
                         $sc_bugger_jq('.sc_bugger-element-modal.error-detail-modal').modal('hide');
                         SC_BUGGER.EventListeners.Body.UnbindBuggerBodyEvents();
                         $sc_bugger_jq("#sc_bugger-save-error-confirm").removeClass("sc_bugger-disabled");
@@ -185,8 +189,8 @@ var SC_BUGGER = (function () {
                             ErrorDetail: $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal #errorDetail").val(),
                             Selector: SC_BUGGER.GlobalVariables.Browser.CurrentBugElement.getPath(),
                             DeviceDetails: JSON.stringify(SC_BUGGER.GlobalVariables.Browser.BasicDetails),
-                            Uri: SC_BUGGER.UtilityMethods.RemoveURLParameter(window.location.href, SC_BUGGER.Settings.QueryString_SC_B_ID),                            
-                            screenShotDetail: $sc_bugger_jq("#screenShotDetail").val()
+                            Uri: SC_BUGGER.UtilityMethods.RemoveURLParameter(window.location.href, SC_BUGGER.Settings.QueryString_SC_B_ID),
+                            //screenShotDetail: $sc_bugger_jq("#screenShotDetail").val()
                         };
 
                         SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShotB64 = (isUpdateScreenshot == true) ? $sc_bugger_jq('#error-screen-shot').attr("src") : null;
@@ -213,7 +217,7 @@ var SC_BUGGER = (function () {
                 $sc_bugger_jq(".form-group-screenshot-div").removeClass("sc_bugger-hide");
                 // Make all save elements non required
                 $sc_bugger_jq(".sc_bugger-element #main-form-save-elements #errorDetail,#errorType,#errorSeverity,#filter-error-status,#filter-a-user-id").removeAttr("required");
-               
+
 
                 //Remove old element
                 if (SC_BUGGER.GlobalVariables.Browser.OldBugElement != null) {
@@ -335,7 +339,7 @@ var SC_BUGGER = (function () {
                 $sc_bugger_jq("#sc_bugger-error-detail").click(function () {
                     // Show and hide action buttons
                     $sc_bugger_jq("#sc_bugger-submit-error").addClass("sc_bugger-hide");
-                    $sc_bugger_jq("#sc_bugger-save-error").removeClass("sc_bugger-hide");                    
+                    $sc_bugger_jq("#sc_bugger-save-error").removeClass("sc_bugger-hide");
                     SC_BUGGER.EventListeners.Body.InitBuggerBodyEvents();
                 });
 
@@ -361,9 +365,9 @@ var SC_BUGGER = (function () {
                     var isUserLogined = false;
 
                     if (SC_BUGGER.UtilityMethods.GetCookie($sc_bugger_jq("#user-info").attr("cookie-key")) != null) {
-                       
-                            isUserLogined = true;
-                       
+
+                        isUserLogined = true;
+
                     }
 
                     if (isUserLogined) {
@@ -374,7 +378,7 @@ var SC_BUGGER = (function () {
                         // Login popup show
                         $sc_bugger_jq('.sc_bugger-element-modal.sc-bugger-login-modal').modal('show');
                     }
-                    
+
                 });
 
             },
@@ -403,9 +407,28 @@ var SC_BUGGER = (function () {
                                 reader.onloadend = function () { // set image data as background of div
                                     //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
                                     //$sc_bugger_jq("#error-screen-shot").css("background-image", "url(" + this.result + ")");
-                                    $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", this.result);
-                                    SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = this.result;
-                                    $sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot", true);
+
+                                    var stringLength = this.result.length - 'data:image/png;base64,'.length;
+
+                                    var sizeInBytes = 4 * Math.ceil((stringLength / 3)) * 0.5624896334383812;
+                                    var sizeInKb = sizeInBytes / 1000;
+
+                                    if (sizeInKb <= 700) {                                     
+
+                                        $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", this.result);
+                                        SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = this.result;
+                                        $sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot", true);
+
+                                    }
+                                    else {
+                                        alert("Uploaded image size is too big.its should be less than a 700 KB.");
+
+                                        $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", null);
+                                        SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = null;
+                                        //$sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot", false);
+                                    }
+
+                                   
                                 }
                             }
 
@@ -426,14 +449,14 @@ var SC_BUGGER = (function () {
                         "data-html": "true",
                         "data-placement": "bottom",
                         "title": "<span class='glyphicon glyphicon-remove'> <strong>" + errorObj.ErrorTitle + "</strong></span>",
-                        "data-content": errorObj.screenShotDetail,
+                        "data-content": errorObj.ErrorDetail,
                     });
 
                 SC_BUGGER.EventListeners.InitiateToolTip();
             }
         },
         UtilityMethods: {
-            GetCookie: function(name) {
+            GetCookie: function (name) {
                 var dc = document.cookie;
                 var prefix = name + "=";
                 var begin = dc.indexOf("; " + prefix);
@@ -451,8 +474,8 @@ var SC_BUGGER = (function () {
                 // because unescape has been deprecated, replaced with decodeURI
                 //return unescape(dc.substring(begin + prefix.length, end));
                 return decodeURI(dc.substring(begin + prefix.length, end));
-            } ,
-            GetParameterByName:function(name, url) {
+            },
+            GetParameterByName: function (name, url) {
                 if (!url) url = window.location.href;
                 name = name.replace(/[\[\]]/g, '\\$&');
                 var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -461,7 +484,7 @@ var SC_BUGGER = (function () {
                 if (!results[2]) return '';
                 return decodeURIComponent(results[2].replace(/\+/g, ' '));
             },
-            RemoveURLParameter: function(url, parameter) {
+            RemoveURLParameter: function (url, parameter) {
                 //prefer to use l.search if you have a location/link object
                 var urlparts = url.split('?');
                 if (urlparts.length >= 2) {
@@ -500,7 +523,7 @@ var SC_BUGGER = (function () {
             GetScreenShot: function () {
                 // window.scrollTo(0, 0);
 
-              
+
 
                 var target_container = SC_BUGGER.GlobalVariables.Browser.CurrentBugElement.get(0);
                 var objJ = {
@@ -508,11 +531,6 @@ var SC_BUGGER = (function () {
                     //useCORS: true,
                     proxy: SC_BUGGER.Config.Html2CanvasProxyUrl,
                     //logging: true //Enable log (use Web Console for get Errors and Warings)
-
-                    useCORS: true,
-                    taintTest: false,
-                    allowTaint: false,
-
 
                 };
 
@@ -527,15 +545,34 @@ var SC_BUGGER = (function () {
                     //string = LZString.decompress(compressed);
                     //alert("Size of decompressed sample is: "+string.length);
 
-                    SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = img;
+                    var stringLength = img.length - 'data:image/png;base64,'.length;
 
-                    $sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot", true);
-                    $sc_bugger_jq(".sc_bugger-screen-shot-div").removeClass("sc_bugger-hide");
-                    $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot);
-                    $sc_bugger_jq('.sc_bugger-element-modal.error-detail-modal').modal('show');
-                    $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal").css("z-index", $sc_bugger_jq(".popover").css("z-index") + 1);
+                    var sizeInBytes = 4 * Math.ceil((stringLength / 3)) * 0.5624896334383812;
+                    var sizeInKb = sizeInBytes / 1000;
+
+                    if (sizeInKb <= 700) {
+
+                        SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = img;
+
+                        $sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot", true);
+                        $sc_bugger_jq(".sc_bugger-screen-shot-div").removeClass("sc_bugger-hide");
+                        $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot);
+                        $sc_bugger_jq('.sc_bugger-element-modal.error-detail-modal').modal('show');
+                        $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal").css("z-index", $sc_bugger_jq(".popover").css("z-index") + 1);                      
+
+                    }
+                    else {
+                        alert("Generated image size is too big. Please mark single element instead of whole section.\n\n OR \n\nUpload ur own screen shot with size is less than a 700 KB.");
+                        $sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot", false);
+                        $sc_bugger_jq(".sc_bugger-screen-shot-div").removeClass("sc_bugger-hide");
+                        $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", null);
+                        $sc_bugger_jq('.sc_bugger-element-modal.error-detail-modal').modal('show');
+                        $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal").css("z-index", $sc_bugger_jq(".popover").css("z-index") + 1);
+                    }
 
                     $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+
+                  
 
                 });
 
@@ -827,10 +864,11 @@ var SC_BUGGER = (function () {
                             var errorObj = {
                                 Selector: response.Selector,
                                 ErrorTitle: response.ErrorTitle,
-                                screenShotDetail: response.ErrorDetail
+                                ErrorDetail: response.ErrorDetail
                             };
                             SC_BUGGER.GlobalVariables.Browser.OldBugElement = $sc_bugger_jq(errorObj.Selector);
                             SC_BUGGER.FunctionalMethods.MarkErrorwithPopup(errorObj);
+                            $sc_bugger_jq(errorObj.Selector)[0].scrollIntoView();
                         }
                         $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
                     },

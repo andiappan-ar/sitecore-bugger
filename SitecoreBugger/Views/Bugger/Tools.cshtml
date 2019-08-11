@@ -36,27 +36,29 @@
                             <div class="invalid-feedback">Please fill out this field.</div>
                         </div>
 
-                        <!--Screen shot description-->
-                        <div class="form-group form-group-screenshot-div">
-                            <label class="" for="screenShotDetail">Add screen-shot description.</label>
-                            <textarea class="form-control" id="screenShotDetail" rows="3" placeholder="Add screen shot description here." required></textarea>
+                        <!--Error detail-->
+                        <div class="form-group">
+                            <label class="" for="errorDetail">Detailed error description (Html allowed)</label>
+                            <textarea class="form-control" id="errorDetail" rows="3" placeholder="Detailed error description"  required></textarea>
                             <div class="valid-feedback">
 
                             </div>
                             <div class="invalid-feedback">Please fill out this field.</div>
                         </div>
 
-                        <div id="main-form-save-elements" class="sc_bugger-hide">
-
-                            <!--Error detail-->
-                            <div class="form-group">
-                                <label class="" for="errorDetail">Detailed error description (Html allowed)</label>
-                                <textarea class="form-control" id="errorDetail" rows="3"></textarea>
+                        <!--Screen shot description-->
+                        @*<div class="form-group form-group-screenshot-div">
+                                <label class="" for="screenShotDetail">Add screen-shot description.</label>
+                                <textarea class="form-control" id="screenShotDetail" rows="3" placeholder="Add screen shot description here." required></textarea>
                                 <div class="valid-feedback">
 
                                 </div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
+                            </div>*@
+
+                        <div id="main-form-save-elements" class="">
+
+
 
                             <!--Error type-->
                             <div class="form-group">
@@ -139,7 +141,7 @@
                             <div class="form-group sc_bugger-screen-shot-div sc_bugger-hide ">
                                 <div class="custom-file">
                                     <input id="sc_bugger-upload-screenshot" accept="image/*" type="file" class="custom-file-input" is-updated-creenshot="false">
-                                    <label class="custom-file-label" for="validatedCustomFile">Upload screen shot...</label>
+                                    <label class="custom-file-label" for="validatedCustomFile">Upload screen shot... < 700 KB </label>
                                     <div class="invalid-feedback">Example invalid custom file feedback</div>
                                 </div>
                                 <figure class="figure">
@@ -163,7 +165,7 @@
             </div>
         </div>
     </div>
-    <!--Main modal-->
+    <!--Login modal-->
     <div class="sc_bugger-element-modal modal main-modal sc-bugger-login-modal buger-element" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -235,7 +237,7 @@
             <a href="/sc-bugger/dashboard/index" target="_blank" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-dashboard"><i class="fa fa-home"></i></a>
             @*<a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-main"><i class="fa fa-home"></i></a>*@
             @*<a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-settings"><i class="fa fa-cog"></i></a>*@
-            <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-error-detail"><i class="fa fa-pencil-square-o"></i></a>
+            <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color" id="sc_bugger-error-detail"><i class="fa fa-plus"></i></a>
             <a href="#" class="sub-icon sc_bugger-hide sc_bugger-element-background-color sc_bugger-disabled" id="sc_bugger-save-error-confirm"><i class="fa fa-floppy-o"></i></a>
             <a href="javascript:void(0)" class="main-icon"><i id="sc_bugger-bug-icon-b" class="fa fa-bug"></i></a>
         </div>
@@ -247,9 +249,9 @@
         <div class="modal-header" data-html2canvas-ignore="true">
             <h1 data-html2canvas-ignore="true">Please Wait</h1>
         </div>
-        <div class="modal-body" data-html2canvas-ignore="true">          
+        <div class="modal-body" data-html2canvas-ignore="true">
             <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status" data-html2canvas-ignore="true">
-            </div>            
+            </div>
         </div>
     </div>
 

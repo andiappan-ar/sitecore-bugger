@@ -1,4 +1,4 @@
-﻿var SC_DASHBOARD = (function () {
+﻿﻿var SC_DASHBOARD = (function () {
     return {
         Config: {
             GetErrorUrl: "/sc-bugger/DashBoard/GetError",
@@ -53,7 +53,7 @@
                     SC_DASHBOARD.EventListeners.FormEvents.BootstrapSubmitFOrmValidationEvents();
                     SC_DASHBOARD.EventListeners.DashBoardEvents.NavigationEvents();
                     SC_DASHBOARD.EventListeners.FilterEvents();
-                   
+
                     SC_DASHBOARD.EventListeners.ListEvents();
                     SC_DASHBOARD.EventListeners.File.UploadScreenshot();
                     //SC_DASHBOARD.ApiMethods.GetError();
@@ -115,7 +115,7 @@
                 $sc_bugger_jq('#filter-error-view').on('change', function () {
                     SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView = this.value;
 
-                    SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName = $sc_bugger_jq("#filter-error-view option:selected").text();                   
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName = $sc_bugger_jq("#filter-error-view option:selected").text();
 
                 });
 
@@ -153,13 +153,13 @@
                         }
 
                     }
-                 
+
                 });
 
                 $sc_bugger_jq("#sc_bugger-submit-error").on('click', function () {
 
                     $sc_bugger_jq("#sc_bugger-form-mark-error").submit();
-                   
+
 
                 });
 
@@ -184,7 +184,7 @@
                                     else {
                                         $sc_bugger_jq(this).attr("is-valid-form", true);
                                     }
-                                  
+
                                     form.classList.add('was-validated');
                                 }, false);
                             });
@@ -273,7 +273,7 @@
                 },
                 GetIssueModel: function () {
 
-                   
+
 
                 },
                 RefreshIssueList: function () {
@@ -499,9 +499,9 @@ the text field element and an array of possible autocompleted values:*/
                     data: (SC_DASHBOARD.GlobalVariables.GlobalFilter),
                     success: function (response) {
                         $sc_bugger_jq("#issue-list-card-details").html("");
-                        $sc_bugger_jq("#issue-list-card-details").html(response);    
+                        $sc_bugger_jq("#issue-list-card-details").html(response);
 
-                         $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+                        $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
                     },
                     error: function (response) {
                         console.log(response);
