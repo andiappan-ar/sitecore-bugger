@@ -47,9 +47,9 @@
 
                 SC_DASHBOARD.FunctionalMethods.ActivateAutoComplete();
             },
-            //Selector : $(document)
+            //Selector : $sc_bugger_jq(document)
             DocumentReadyEvent: function () {
-                $(document).ready(function () {
+                $sc_bugger_jq(document).ready(function () {
                     SC_DASHBOARD.EventListeners.FormEvents.BootstrapSubmitFOrmValidationEvents();
                     SC_DASHBOARD.EventListeners.DashBoardEvents.NavigationEvents();
                     SC_DASHBOARD.EventListeners.FilterEvents();
@@ -61,91 +61,91 @@
             },
             DashBoardEvents: {
                 NavigationEvents: function () {
-                    $('#sidebarCollapse').on('click', function () {
-                        $('#sidebar').toggleClass('active');
+                    $sc_bugger_jq('#sidebarCollapse').on('click', function () {
+                        $sc_bugger_jq('#sidebar').toggleClass('active');
                     });
                 }
             },
             FilterEvents: function () {
                 // Disable all filter except project.
-                $("#filter-error-list,#filter-myitems,#filter-error-type,#filter-error-severity,#filter-error-status,#filter-search").attr("disabled", "disabled");
+                $sc_bugger_jq("#filter-error-list,#filter-myitems,#filter-error-type,#filter-error-severity,#filter-error-status,#filter-search").attr("disabled", "disabled");
 
                 //Project filter change event
-                $('#filter-project-list').change(function () {
-                    SC_DASHBOARD.GlobalVariables.GlobalFilter.ProjectId = $(this).val();
+                $sc_bugger_jq('#filter-project-list').change(function () {
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.ProjectId = $sc_bugger_jq(this).val();
                     SC_DASHBOARD.ApiMethods.GetErrorIds();
-                    $("#filter-error-list,#filter-myitems,#filter-error-type,#filter-error-severity,#filter-error-status,#filter-search").removeAttr("disabled");
+                    $sc_bugger_jq("#filter-error-list,#filter-myitems,#filter-error-type,#filter-error-severity,#filter-error-status,#filter-search").removeAttr("disabled");
                 });
 
                 //Issue id change event
-                $('#filter-error-list').change(function () {
-                    SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorId = $(this).val();
+                $sc_bugger_jq('#filter-error-list').change(function () {
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorId = $sc_bugger_jq(this).val();
                 });
 
                 // Is my item, check event
-                $('#filter-myitems').change(function () {
+                $sc_bugger_jq('#filter-myitems').change(function () {
                     SC_DASHBOARD.GlobalVariables.GlobalFilter.IsMyItem = this.checked;
-                    SC_DASHBOARD.GlobalVariables.GlobalFilter.UserId = $("#user-info").attr("uid");
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.UserId = $sc_bugger_jq("#user-info").attr("uid");
                 });
 
-                $('#filter-error-type').on('change', function () {
-                    var option_all = $("#filter-error-type option:selected").map(function () {
-                        return $(this).val();
+                $sc_bugger_jq('#filter-error-type').on('change', function () {
+                    var option_all = $sc_bugger_jq("#filter-error-type option:selected").map(function () {
+                        return $sc_bugger_jq(this).val();
                     }).get().join(',');
 
                     SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorType = option_all;
                 });
 
-                $('#filter-error-severity').on('change', function () {
-                    var option_all = $("#filter-error-severity option:selected").map(function () {
-                        return $(this).val();
+                $sc_bugger_jq('#filter-error-severity').on('change', function () {
+                    var option_all = $sc_bugger_jq("#filter-error-severity option:selected").map(function () {
+                        return $sc_bugger_jq(this).val();
                     }).get().join(',');
 
                     SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorSeverity = option_all;
                 });
 
-                $('#filter-error-status').on('change', function () {
-                    var option_all = $("#filter-error-status option:selected").map(function () {
-                        return $(this).val();
+                $sc_bugger_jq('#filter-error-status').on('change', function () {
+                    var option_all = $sc_bugger_jq("#filter-error-status option:selected").map(function () {
+                        return $sc_bugger_jq(this).val();
                     }).get().join(',');
 
                     SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorStatus = option_all;
                 });
 
-                $('#filter-error-view').on('change', function () {
+                $sc_bugger_jq('#filter-error-view').on('change', function () {
                     SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView = this.value;
 
-                    SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName = $("#filter-error-view option:selected").text();                   
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName = $sc_bugger_jq("#filter-error-view option:selected").text();                   
 
                 });
 
-                $('#filter-clear i').on('click', function () {
-                    $('#filter-error-type,#filter-error-severity,#filter-error-status,#filter-main-search-issue,#filter-error-list').val("");
+                $sc_bugger_jq('#filter-clear i').on('click', function () {
+                    $sc_bugger_jq('#filter-error-type,#filter-error-severity,#filter-error-status,#filter-main-search-issue,#filter-error-list').val("");
                     SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorId = null;
-                    $("#filter-myitems").prop("checked", false);
+                    $sc_bugger_jq("#filter-myitems").prop("checked", false);
                 });
 
-                $('#filter-search').on('click', function () {
+                $sc_bugger_jq('#filter-search').on('click', function () {
                     SC_DASHBOARD.ApiMethods.GetError();
                 });
 
-                $("#export-error").on('click', function () {
+                $sc_bugger_jq("#export-error").on('click', function () {
                     SC_DASHBOARD.ApiMethods.GetExcelReport();
                 });
 
-                $("#sc_bugger-form-mark-error").submit(function (event) {
-                    if ($(this)[0].checkValidity() == true) {
-                        var isUpdateScreenshot = ($("#sc_bugger-upload-screenshot").attr("is-updated-creenshot") == "true");
+                $sc_bugger_jq("#sc_bugger-form-mark-error").submit(function (event) {
+                    if ($sc_bugger_jq(this)[0].checkValidity() == true) {
+                        var isUpdateScreenshot = ($sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot") == "true");
 
                         if (SC_DASHBOARD.EventListeners.FormEvents.ValidationEvents.ValidateMarkError() == "true") {
                             var inputModel = {
-                                ErrorId: $("#errorID").val(),
-                                ErrorTitle: $("#errorTitle").val(),
-                                ErrorDetail: $("#errorDetail").val(),
-                                ErrorSeverityId: $("#errorSeverity").val(),
-                                ErrorTypeId: $("#errorType").val(),
-                                ErrorStatusId: $("#errorStatus").val(),
-                                ScreenShotB64: (isUpdateScreenshot == true) ? $('#error-screen-shot').attr("src") : null,
+                                ErrorId: $sc_bugger_jq("#errorID").val(),
+                                ErrorTitle: $sc_bugger_jq("#errorTitle").val(),
+                                ErrorDetail: $sc_bugger_jq("#errorDetail").val(),
+                                ErrorSeverityId: $sc_bugger_jq("#errorSeverity").val(),
+                                ErrorTypeId: $sc_bugger_jq("#errorType").val(),
+                                ErrorStatusId: $sc_bugger_jq("#errorStatus").val(),
+                                ScreenShotB64: (isUpdateScreenshot == true) ? $sc_bugger_jq('#error-screen-shot').attr("src") : null,
                                 UpdateScreenshot: isUpdateScreenshot
                             };
 
@@ -156,9 +156,9 @@
                  
                 });
 
-                $("#sc_bugger-submit-error").on('click', function () {
+                $sc_bugger_jq("#sc_bugger-submit-error").on('click', function () {
 
-                    $("#sc_bugger-form-mark-error").submit();
+                    $sc_bugger_jq("#sc_bugger-form-mark-error").submit();
                    
 
                 });
@@ -179,10 +179,10 @@
                                     if (form.checkValidity() === false) {
                                         event.preventDefault();
                                         event.stopPropagation();
-                                        $(this).attr("is-valid-form", false);
+                                        $sc_bugger_jq(this).attr("is-valid-form", false);
                                     }
                                     else {
-                                        $(this).attr("is-valid-form", true);
+                                        $sc_bugger_jq(this).attr("is-valid-form", true);
                                     }
                                   
                                     form.classList.add('was-validated');
@@ -192,44 +192,44 @@
                     })();
 
                     // fiLEiNPUT BIND EVENTS
-                    $(".custom-file-input").on("change", function () {
-                        var fileName = $(this).val().split("\\").pop();
-                        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                    $sc_bugger_jq(".custom-file-input").on("change", function () {
+                        var fileName = $sc_bugger_jq(this).val().split("\\").pop();
+                        $sc_bugger_jq(this).siblings(".custom-file-label").addClass("selected").html(fileName);
                     });
                 },
                 ValidationEvents: {
                     ValidateMarkError: function () {
 
-                        $('#sc_bugger-form-mark-error #hidden-submit').click();
-                        return $('#sc_bugger-form-mark-error').attr("is-valid-form");
+                        $sc_bugger_jq('#sc_bugger-form-mark-error #hidden-submit').click();
+                        return $sc_bugger_jq('#sc_bugger-form-mark-error').attr("is-valid-form");
                     }
                 }
             },
             ListEvents: function () {
-                $(document).on("click", "#issue-list-card-details .card .card-header #edit-error", function () {
-                    $('.sc_bugger-element-modal.error-detail-modal').modal('show');
+                $sc_bugger_jq(document).on("click", "#issue-list-card-details .card .card-header #edit-error", function () {
+                    $sc_bugger_jq('.sc_bugger-element-modal.error-detail-modal').modal('show');
 
-                    // var editableData = SC_DASHBOARD.Issues.All.filter(element => element.ErrorId == $(this).closest(".card").attr("id"))[0];
+                    // var editableData = SC_DASHBOARD.Issues.All.filter(element => element.ErrorId == $sc_bugger_jq(this).closest(".card").attr("id"))[0];
 
-                    var parentCard = $(this).closest(".card").find(".all-values");
-                    var parentCardImage = $(this).closest(".card").find("img");
+                    var parentCard = $sc_bugger_jq(this).closest(".card").find(".all-values");
+                    var parentCardImage = $sc_bugger_jq(this).closest(".card").find("img");
 
-                    $("#errorID").val(parentCard.attr("err-id"));
-                    $("#errorTitle").val(parentCard.attr("err-title"));
-                    $("#errorDetail").val(parentCard.attr("err-detail"));
-                    $("#errorType").val(parentCard.attr("err-type"));
-                    $("#errorSeverity").val(parentCard.attr("err-severity"));
-                    $("#errorStatus").val(parentCard.attr("err-status"));
-                    $("#error-screen-shot").attr("src", parentCardImage.attr("src"));
+                    $sc_bugger_jq("#errorID").val(parentCard.attr("err-id"));
+                    $sc_bugger_jq("#errorTitle").val(parentCard.attr("err-title"));
+                    $sc_bugger_jq("#errorDetail").val(parentCard.attr("err-detail"));
+                    $sc_bugger_jq("#errorType").val(parentCard.attr("err-type"));
+                    $sc_bugger_jq("#errorSeverity").val(parentCard.attr("err-severity"));
+                    $sc_bugger_jq("#errorStatus").val(parentCard.attr("err-status"));
+                    $sc_bugger_jq("#error-screen-shot").attr("src", parentCardImage.attr("src"));
 
                     var tempPara = [];
-                    jQuery.each(JSON.parse(parentCard.attr("devide-detail")), function (name, value) {
+                    $sc_bugger_jq.each(JSON.parse(parentCard.attr("devide-detail")), function (name, value) {
                         if (name != "uaMatch") {
-                            tempPara.push($("<p></p>").text(value.name + " : " + value.value + ".\n"));
+                            tempPara.push($sc_bugger_jq("<p></p>").text(value.name + " : " + value.value + ".\n"));
                         }
                     });
 
-                    $("#browser-detail").append(tempPara);
+                    $sc_bugger_jq("#browser-detail").append(tempPara);
 
                 });
 
@@ -237,9 +237,9 @@
             ,
             File: {
                 UploadScreenshot: function () {
-                    $(function () {
-                        $(document).on("change", "#sc_bugger-upload-screenshot", function () {
-                            var uploadFile = $(this);
+                    $sc_bugger_jq(function () {
+                        $sc_bugger_jq(document).on("change", "#sc_bugger-upload-screenshot", function () {
+                            var uploadFile = $sc_bugger_jq(this);
                             var files = !!this.files ? this.files : [];
                             if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
 
@@ -249,10 +249,10 @@
 
                                 reader.onloadend = function () { // set image data as background of div
                                     //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
-                                    //$("#error-screen-shot").css("background-image", "url(" + this.result + ")");
-                                    $(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", this.result);
+                                    //$sc_bugger_jq("#error-screen-shot").css("background-image", "url(" + this.result + ")");
+                                    $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal #error-screen-shot").attr("src", this.result);
 
-                                    $("#sc_bugger-upload-screenshot").attr("is-updated-creenshot", true);
+                                    $sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot", true);
                                 }
                             }
 
@@ -278,15 +278,15 @@
                 },
                 RefreshIssueList: function () {
 
-                    SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView = $('#filter-error-view').val();
-                    SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName = $("#filter-error-view option:selected").text();
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView = $sc_bugger_jq('#filter-error-view').val();
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName = $sc_bugger_jq("#filter-error-view option:selected").text();
 
 
                     var currentIssueList = SC_DASHBOARD.Issues.All;
 
                     var listElement = [];
 
-                    $.each(currentIssueList, function (i, _issue) {
+                    $sc_bugger_jq.each(currentIssueList, function (i, _issue) {
 
                         // Frame json
                         var cardViewTemplateFields = {
@@ -346,21 +346,21 @@
                                 break;
                         }
 
-                        listElement.push($(templateString));
+                        listElement.push($sc_bugger_jq(templateString));
                     });
 
                     // Heading
-                    $("#issue-list-view-type-head").text(SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName);
+                    $sc_bugger_jq("#issue-list-view-type-head").text(SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName);
                     // List
-                    $("#issue-list-card-details").html("");
-                    $("#issue-list-card-details").append(listElement);
+                    $sc_bugger_jq("#issue-list-card-details").html("");
+                    $sc_bugger_jq("#issue-list-card-details").append(listElement);
 
                     // Detailed view class
                     if (SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView == "detail") {
-                        $("#issue-list-card-details").addClass("list-group");
+                        $sc_bugger_jq("#issue-list-card-details").addClass("list-group");
                     }
                     else {
-                        $("#issue-list-card-details").removeClass("list-group");
+                        $sc_bugger_jq("#issue-list-card-details").removeClass("list-group");
                     }
 
 
@@ -491,29 +491,29 @@ the text field element and an array of possible autocompleted values:*/
         ,
         ApiMethods: {
             GetError: function () {
-                $('.sc_bugger-element #pleaseWaitDialog').modal('show');
-                $.ajax({
+                $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('show');
+                $sc_bugger_jq.ajax({
                     url: SC_DASHBOARD.Config.GetErrorUrl,
                     type: "post",
                     async: false,
                     data: (SC_DASHBOARD.GlobalVariables.GlobalFilter),
                     success: function (response) {
-                        $("#issue-list-card-details").html("");
-                        $("#issue-list-card-details").html(response);    
+                        $sc_bugger_jq("#issue-list-card-details").html("");
+                        $sc_bugger_jq("#issue-list-card-details").html(response);    
 
-                         $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+                         $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
                     },
                     error: function (response) {
                         console.log(response);
-                        $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+                        $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
                     }
 
 
                 });
             },
             SaveError: function (inputModel) {
-                $('.sc_bugger-element #pleaseWaitDialog').modal('show');
-                $.ajax({
+                $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('show');
+                $sc_bugger_jq.ajax({
                     url: SC_DASHBOARD.Config.SaveErrorUrl,
                     type: "post",
                     async: false,
@@ -522,59 +522,59 @@ the text field element and an array of possible autocompleted values:*/
                     success: function (response) {
                         if (response.IsSuccess) {
                             SC_DASHBOARD.ApiMethods.GetError();
-                            $('.sc_bugger-element-modal.error-detail-modal').modal('hide');
+                            $sc_bugger_jq('.sc_bugger-element-modal.error-detail-modal').modal('hide');
                         }
 
-                        $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+                        $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
                     },
                     error: function (response) {
                         console.log(response);
-                        $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+                        $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
                     }
 
 
                 });
             },
             GetErrorIds: function () {
-                $('.sc_bugger-element #pleaseWaitDialog').modal('show');
-                $.ajax({
+                $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('show');
+                $sc_bugger_jq.ajax({
                     url: SC_DASHBOARD.Config.GetErrorIdsUrl,
                     type: "post",
                     async: false,
                     data: (SC_DASHBOARD.GlobalVariables.GlobalFilter),
                     success: function (response) {
                         SC_DASHBOARD.Issues.AllIds = response;
-                        $('#filter-error-list').empty();
+                        $sc_bugger_jq('#filter-error-list').empty();
 
                         if (SC_DASHBOARD.Issues.AllIds.length > 0) {
-                            $('#filter-error-list').append('<option selected="selected" value="">Search issue by Id.</option>')
-                            $.each(SC_DASHBOARD.Issues.AllIds, function (key, value) {
-                                $('#filter-error-list')
-                                    .append($("<option></option>")
+                            $sc_bugger_jq('#filter-error-list').append('<option selected="selected" value="">Search issue by Id.</option>')
+                            $sc_bugger_jq.each(SC_DASHBOARD.Issues.AllIds, function (key, value) {
+                                $sc_bugger_jq('#filter-error-list')
+                                    .append($sc_bugger_jq("<option></option>")
                                         .attr("value", value.ErrorId)
                                         .text(value.ErrorId));
                             });
                         }
                         else {
-                            $('#filter-error-list').append('<option selected="selected">No values found.</option>')
+                            $sc_bugger_jq('#filter-error-list').append('<option selected="selected">No values found.</option>')
                         }
 
-                        $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+                        $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
 
                     },
                     error: function (response) {
-                        $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+                        $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
                         console.log(response);
                     }
                 });
             }
             ,
             GetExcelReport: function () {
-                $('.sc_bugger-element #pleaseWaitDialog').modal('show');
+                $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('show');
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', SC_DASHBOARD.Config.GetExcelReportUrl, true);
                 xhr.responseType = 'blob';
-                //$.each(SERVER.authorization(), function (k, v) {
+                //$sc_bugger_jq.each(SERVER.authorization(), function (k, v) {
                 //    xhr.setRequestHeader(k, v);
                 //});
                 xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
@@ -591,7 +591,7 @@ the text field element and an array of possible autocompleted values:*/
                     } else {
                         alert('Unable to download excel.')
                     }
-                    $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+                    $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
                 };
                 xhr.send(JSON.stringify(SC_DASHBOARD.GlobalVariables.GlobalFilter));
 
