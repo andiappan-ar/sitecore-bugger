@@ -26,8 +26,10 @@
                 UserId: null,
                 ErrorStatus: null,
                 Date: null,
-                PageSize: null,
-                PageNumber: null,
+                PageSize: 5,
+                PageNumber: 1,
+                TotalRecords: null,
+                TotalNoOfPages: null,
                 FilterView: "card",
                 Meta: {
                     ViewTypeDisplayName: null
@@ -55,8 +57,7 @@
                     SC_DASHBOARD.EventListeners.FilterEvents();
 
                     SC_DASHBOARD.EventListeners.ListEvents();
-                    SC_DASHBOARD.EventListeners.File.UploadScreenshot();
-                    //SC_DASHBOARD.ApiMethods.GetError();
+                    SC_DASHBOARD.EventListeners.File.UploadScreenshot();                   
                 });
             },
             DashBoardEvents: {
@@ -68,13 +69,13 @@
             },
             FilterEvents: function () {
                 // Disable all filter except project.
-                $sc_bugger_jq("#filter-error-list,#filter-myitems,#filter-error-type,#filter-error-severity,#filter-error-status,#filter-search").attr("disabled", "disabled");
+                $sc_bugger_jq("#filter-error-list,#filter-myitems,#filter-error-type,#filter-error-severity,#filter-error-status,#filter-search,#filter-error-view,#filter-error-page-size,.card-pagination").attr("disabled", "disabled");
 
                 //Project filter change event
                 $sc_bugger_jq('#filter-project-list').change(function () {
                     SC_DASHBOARD.GlobalVariables.GlobalFilter.ProjectId = $sc_bugger_jq(this).val();
                     SC_DASHBOARD.ApiMethods.GetErrorIds();
-                    $sc_bugger_jq("#filter-error-list,#filter-myitems,#filter-error-type,#filter-error-severity,#filter-error-status,#filter-search").removeAttr("disabled");
+                    $sc_bugger_jq("#filter-error-list,#filter-myitems,#filter-error-type,#filter-error-severity,#filter-error-status,#filter-search,#filter-error-view,#filter-error-page-size,.card-pagination").removeAttr("disabled");
                 });
 
                 //Issue id change event
@@ -112,10 +113,23 @@
                     SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorStatus = option_all;
                 });
 
+                $sc_bugger_jq('#filter-error-page-size').on('change', function () {
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.PageSize = $sc_bugger_jq(this).val();
+                    // Reset page number counts logic
+                    //Pagination calculations  
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber = 1;
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.TotalNoOfPages = Math.ceil(SC_DASHBOARD.GlobalVariables.GlobalFilter.TotalRecords / SC_DASHBOARD.GlobalVariables.GlobalFilter.PageSize); 
+
+                    SC_DASHBOARD.ApiMethods.GetError();
+
+                });
+
                 $sc_bugger_jq('#filter-error-view').on('change', function () {
                     SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView = this.value;
 
                     SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName = $sc_bugger_jq("#filter-error-view option:selected").text();
+
+                    SC_DASHBOARD.ApiMethods.GetError();
 
                 });
 
@@ -125,12 +139,41 @@
                     $sc_bugger_jq("#filter-myitems").prop("checked", false);
                 });
 
+                $sc_bugger_jq('.card-pagination').on('click', function () {
+
+                    var thisElement = $sc_bugger_jq(this).attr("id");
+
+                    switch (thisElement) {
+                        case "prev-page":
+                            if (SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber == 1) {
+                                $sc_bugger_jq(this).attr("disabled", true);
+                            }
+                            else {
+                                SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber = SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber - 1;
+                                SC_DASHBOARD.ApiMethods.GetError();
+                            }
+                            break;
+                        case "next-page":
+                            if (SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber == SC_DASHBOARD.GlobalVariables.GlobalFilter.TotalNoOfPages) {
+                                $sc_bugger_jq(this).attr("disabled", true);
+                            }
+                            else {
+                                SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber = SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber + 1;
+                                SC_DASHBOARD.ApiMethods.GetError();
+                            }
+                            break;
+                    }
+
+
+                });
+
+
                 $sc_bugger_jq('#filter-search').on('click', function () {
                     SC_DASHBOARD.ApiMethods.GetError();
                 });
 
-                $sc_bugger_jq("#export-error").on('click', function () {
-                    SC_DASHBOARD.ApiMethods.GetExcelReport();
+                $sc_bugger_jq(".export-error-excel").on('click', function () {
+                    SC_DASHBOARD.ApiMethods.GetExcelReport($sc_bugger_jq(this));
                 });
 
                 $sc_bugger_jq("#sc_bugger-form-mark-error").submit(function (event) {
@@ -502,6 +545,9 @@ the text field element and an array of possible autocompleted values:*/
                         $sc_bugger_jq("#issue-list-card-details").html(response);
 
                         $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+
+                        // Set focuss
+                        $sc_bugger_jq("#issue-list-card-details")[0].scrollIntoView();
                     },
                     error: function (response) {
                         console.log(response);
@@ -547,13 +593,18 @@ the text field element and an array of possible autocompleted values:*/
                         $sc_bugger_jq('#filter-error-list').empty();
 
                         if (SC_DASHBOARD.Issues.AllIds.length > 0) {
-                            $sc_bugger_jq('#filter-error-list').append('<option selected="selected" value="">Search issue by Id.</option>')
+                            $sc_bugger_jq('#filter-error-list').append('<option selected="selected" value="">Search issue by Id.</option>');
+
                             $sc_bugger_jq.each(SC_DASHBOARD.Issues.AllIds, function (key, value) {
                                 $sc_bugger_jq('#filter-error-list')
                                     .append($sc_bugger_jq("<option></option>")
                                         .attr("value", value.ErrorId)
                                         .text(value.ErrorId));
                             });
+
+                            //Pagination calculations
+                            SC_DASHBOARD.GlobalVariables.GlobalFilter.TotalRecords = SC_DASHBOARD.Issues.AllIds.length;
+                            SC_DASHBOARD.GlobalVariables.GlobalFilter.TotalNoOfPages = Math.ceil(SC_DASHBOARD.GlobalVariables.GlobalFilter.TotalRecords / SC_DASHBOARD.GlobalVariables.GlobalFilter.PageSize); 
                         }
                         else {
                             $sc_bugger_jq('#filter-error-list').append('<option selected="selected">No values found.</option>')
@@ -569,8 +620,18 @@ the text field element and an array of possible autocompleted values:*/
                 });
             }
             ,
-            GetExcelReport: function () {
+            GetExcelReport: function (elementThis) {
                 $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('show');
+                var tempPageDetails = {
+                    PageNumber: SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber,
+                    PageSize: SC_DASHBOARD.GlobalVariables.GlobalFilter.PageSize
+                };
+
+                if (elementThis.attr("id") == "export-error-all") {
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber = null;
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.PageSize = null;
+                }
+
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', SC_DASHBOARD.Config.GetExcelReportUrl, true);
                 xhr.responseType = 'blob';
@@ -579,7 +640,6 @@ the text field element and an array of possible autocompleted values:*/
                 //});
                 xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
                 xhr.onload = function (e) {
-
                     if (this.status == 200) {
                         var blob = new Blob([this.response], { type: 'application/vnd.ms-excel' });
                         var downloadUrl = URL.createObjectURL(blob);
@@ -588,9 +648,16 @@ the text field element and an array of possible autocompleted values:*/
                         a.download = "data.xls";
                         document.body.appendChild(a);
                         a.click();
+                       
                     } else {
                         alert('Unable to download excel.')
                     }
+
+                    if (elementThis.attr("id") == "export-error-all") {
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber = tempPageDetails.PageNumber;
+                        SC_DASHBOARD.GlobalVariables.GlobalFilter.PageSize = tempPageDetails.PageSize;
+                    }
+
                     $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
                 };
                 xhr.send(JSON.stringify(SC_DASHBOARD.GlobalVariables.GlobalFilter));

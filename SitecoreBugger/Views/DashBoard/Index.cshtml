@@ -110,6 +110,7 @@
             <button class="btn btn-primary rounded-0" type="button" data-toggle="collapse" data-target="#filtercollapseExample" aria-expanded="false" aria-controls="filtercollapseExample">
                 Collapse <i class="fa fa-filter" aria-hidden="true"></i>
             </button>
+            <br />
             <div class="collapse show " id="filtercollapseExample">
                 <div class="card card-body sc_bugger-element-background-color rounded-0">
                     <form id="edit-err-form-bc" class="sc_bugger-form-validator needs-validation" action="#" is-valid-form="false" novalidate>
@@ -221,20 +222,44 @@
             <div class="card card-body sc_bugger-element-background-color rounded-0">
                 <div class="row">
                     <div class="col">
-                        <button id="export-error" class="btn btn-primary float-right rounded-0" type="button" data-toggle="collapse"
+                        <button id="export-error" class="export-error-excel btn btn-primary float-right rounded-0" type="button" data-toggle="collapse"
                                 data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                             <i class="fa fa-file-excel-o" aria-hidden="true"></i>
                         </button>
+                        <button id="export-error-all" class="export-error-excel btn btn-primary float-right rounded-0" type="button" data-toggle="collapse"
+                                data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            All
+                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                        </button>
                     </div>
+                  
                 </div>
                 <br />
                 <div class="row">
                     <div class="col">
+                        <label for="errorTitle">View type</label>
                         <select id="filter-error-view" class="browser-default custom-select colorful-select dropdown-success rounded-0">
                             <option value="card" selected>Card view</option>
                             <option value="detail">Detailed view</option>
                             <option value="mini">Mini view</option>
                         </select>
+                    </div>
+                    <div class="col">
+                        <label for="errorTitle">Page size</label>
+                        <select id="filter-error-page-size" class="browser-default custom-select colorful-select dropdown-success rounded-0">
+                            <option value="5" selected>5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="errorTitle"><< >></label>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li id="prev-page" class="page-item card-pagination"><button class="page-link btn btn-primary rounded-0" href="javascript:void(0)">Previous</button></li>                               
+                                <li id="next-page" class="page-item card-pagination"><button class="page-link btn btn-primary rounded-0" href="javascript:void(0)">Next</button></li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
                 <br />
