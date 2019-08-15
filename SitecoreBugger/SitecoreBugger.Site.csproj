@@ -219,6 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\AccountBgm.png" />
+    <Content Include="Content\Styles\bootstrap-sc-bugger.css" />
     <Content Include="Content\Styles\Login.css" />
     <Content Include="Content\Styles\sc-bugger-tools-main.css" />
     <Content Include="Content\Styles\sc-bugger-dashboard.css" />
@@ -231,6 +232,9 @@
     </Content>
     <Content Include="MockedError.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Scripts\plugins\bootstrap.js" />
+    <Content Include="Scripts\plugins\html2canvas.js" />
+    <Content Include="Scripts\plugins\popper.js" />
     <Content Include="Scripts\sc-bugger-dashboard.js" />
     <Content Include="Scripts\sc-bugger-main.js" />
     <Content Include="tooltip.html" />

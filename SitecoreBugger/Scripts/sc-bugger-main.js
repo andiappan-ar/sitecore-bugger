@@ -111,7 +111,45 @@ var SC_BUGGER = (function () {
                         }
                     });
 
+                    //Mark error form submit
+                    $sc_bugger_jq("#sc_bugger-form-mark-error").submit(function (event) {
 
+                        SC_BUGGER.GlobalVariables.Element.ErrorGlobal = {
+                            ProjectId: $sc_bugger_jq(".sc_bugger-element #user-info").attr("pid"),
+                            ErrorTitle: $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal #errorTitle").val(),
+                            OwnerUserId: $sc_bugger_jq(".sc_bugger-element #user-info").attr("uid"),
+                            AssigneeUserId: $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal #filter-a-user-id").val(),
+                            ErrorTypeId: $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal #errorType").val(),
+                            ErrorSeverityId: $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal #errorSeverity").val(),
+                            ErrorStatusId: $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal #filter-error-status").val(),
+                            ErrorDetail: $sc_bugger_jq(".sc_bugger-element-modal.error-detail-modal #errorDetail").val(),
+                            Selector: SC_BUGGER.GlobalVariables.Browser.CurrentBugElement.getPath(),
+                            DeviceDetails: JSON.stringify(SC_BUGGER.GlobalVariables.Browser.BasicDetails),
+                            Uri: SC_BUGGER.UtilityMethods.RemoveURLParameter(window.location.href, SC_BUGGER.Settings.QueryString_SC_B_ID),
+                            //Uri: window.location.href,
+                            //screenShotDetail: $sc_bugger_jq("#screenShotDetail").val()
+                        };
+
+                        if ($sc_bugger_jq(this)[0].checkValidity() == true) {
+                          
+
+                            SC_BUGGER.FunctionalMethods.MarkErrorwithPopup(SC_BUGGER.GlobalVariables.Element.ErrorGlobal);
+
+                            $sc_bugger_jq('.sc_bugger-element-modal.error-detail-modal').modal('hide');
+                            SC_BUGGER.EventListeners.Body.UnbindBuggerBodyEvents();
+                            $sc_bugger_jq("#sc_bugger-save-error-confirm").removeClass("sc_bugger-disabled");
+
+                            // Make all save elements visible
+                            $sc_bugger_jq(".sc_bugger-element #main-form-save-elements").removeClass("sc_bugger-hide");
+                            $sc_bugger_jq(".form-group-screenshot-div").addClass("sc_bugger-hide");
+                            // Make all save elements required
+                            $sc_bugger_jq(".sc_bugger-element #main-form-save-elements #errorDetail,#errorType,#errorSeverity,#filter-error-status,#filter-a-user-id").attr("required", true);
+                        }
+                        else {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                    });
 
                     $sc_bugger_jq('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
                         if ($sc_bugger_jq('.modal:visible').length) { // check whether parent modal is opend after child modal close
@@ -227,74 +265,55 @@ var SC_BUGGER = (function () {
                     SC_BUGGER.GlobalVariables.Browser.OldBugElement.removeAttr("data-toggle", "data-html", "data-placement", "title", "data-content");
 
                 }
-            },
-            CompressImage: function (base64, maxWidth, maxHeight) {
-
-                // Max size for thumbnail
-                if (typeof (maxWidth) === 'undefined') var maxWidth = 500;
-                if (typeof (maxHeight) === 'undefined') var maxHeight = 500;
-
-                // Create and initialize two canvas
-                var canvas = document.createElement("canvas");
-                var ctx = canvas.getContext("2d");
-                var canvasCopy = document.createElement("canvas");
-                var copyContext = canvasCopy.getContext("2d");
-
-                // Create original image
-                var img = new Image();
-                img.src = base64;
-
-                // Determine new ratio based on max size
-                var ratio = 1;
-                if (img.width > maxWidth)
-                    ratio = maxWidth / img.width;
-                else if (img.height > maxHeight)
-                    ratio = maxHeight / img.height;
-
-                // Draw original image in second canvas
-                canvasCopy.width = img.width;
-                canvasCopy.height = img.height;
-                copyContext.drawImage(img, 0, 0);
-
-                // Copy and resize second canvas to first canvas
-                canvas.width = img.width * ratio;
-                canvas.height = img.height * ratio;
-                ctx.drawImage(canvasCopy, 0, 0, canvasCopy.width, canvasCopy.height, 0, 0, canvas.width, canvas.height);
-
-                return canvas.toDataURL();
-
-            },
+            },          
             //Selector : $sc_bugger_jq("body")
             Body: {
 
                 InitBuggerBodyEvents: function () {
 
-                    $sc_bugger_jq('body').css({ 'cursor': 'crosshair' });
+                    var $unitBodyElement = $sc_bugger_jq('body').not(".sc_bugger-element *");
+
+                    $unitBodyElement.css({ 'cursor': 'crosshair' });
 
                     //MOuse move event
-                    $sc_bugger_jq("body").on("sc_bugger.body.mousemove", function (event, evt) {
+                    $unitBodyElement.on("sc_bugger.body.mousemove", function (event, evt) {
                         if (!SC_BUGGER.FunctionalMethods.IsBuggerelement(evt.target)) {
                             $sc_bugger_jq(evt.target).addClass("sc_bugger-bgm-re");
+                            //Handle click event
+                            if ($sc_bugger_jq(evt.target).attr("sc_bugger-onclick") == undefined) {
+                                var tempClickValue = jQuery.extend({}, { "val": $sc_bugger_jq(evt.target).attr("onclick") });
+                                $sc_bugger_jq(evt.target).attr("sc_bugger-onclick", tempClickValue.val);
+                                $sc_bugger_jq(evt.target).attr("onclick", "return false;");
+                            }
+                           
+                           
                             // console.log($sc_bugger_jq(evt.target).getPath());
                         }
                     });
-                    $sc_bugger_jq("body").on("mousemove touchstart", function (evt) {
-                        $sc_bugger_jq("body").trigger("sc_bugger.body.mousemove", evt);
+                    $unitBodyElement.on("mousemove touchstart", function (evt) {
+                        $unitBodyElement.trigger("sc_bugger.body.mousemove", evt);
                     });
 
                     //MOuse out event
-                    $sc_bugger_jq("body").on("sc_bugger.body.mouseout", function (event, evt) {
+                    $unitBodyElement.on("sc_bugger.body.mouseout", function (event, evt) {
                         if (!SC_BUGGER.FunctionalMethods.IsBuggerelement(evt.target)) {
-                            $sc_bugger_jq(evt.target).removeClass("sc_bugger-bgm-re");
+
+                            if (!$sc_bugger_jq(evt.target).hasClass("sc_bugger-bgm-re")) {
+                              
+                            }
+                            $sc_bugger_jq(evt.target).removeClass("sc_bugger-bgm-re");    
+                            //Handle click event                                
+                            $sc_bugger_jq(evt.target).attr("onclick", $sc_bugger_jq(evt.target).attr("sc_bugger-onclick"));
+                            $sc_bugger_jq(evt.target).removeAttr("sc_bugger-onclick");
                         }
                     });
-                    $sc_bugger_jq("body").on("mouseout touchend", function (evt) {
-                        $sc_bugger_jq("body").trigger("sc_bugger.body.mouseout", evt);
+                    $unitBodyElement.on("mouseout touchend", function (evt) {
+                        $unitBodyElement.trigger("sc_bugger.body.mouseout", evt);
                     });
 
 
                     //Click event
-                    $sc_bugger_jq("body").on("sc_bugger.body.click", function (event, evt) {
+                    $unitBodyElement.on("sc_bugger.body.click", function (event, evt) {
                         if (!SC_BUGGER.FunctionalMethods.IsBuggerelement(evt.target)) {
 
                             $sc_bugger_jq(".sc_bugger-screen-shot-div").addClass("sc_bugger-hide");
@@ -310,15 +329,17 @@ var SC_BUGGER = (function () {
                             SC_BUGGER.GlobalVariables.Browser.OldBugElement = SC_BUGGER.GlobalVariables.Browser.CurrentBugElement;
                         }
                     });
-                    $sc_bugger_jq('body').click(function (evt) {
-                        $sc_bugger_jq("body").trigger("sc_bugger.body.click", evt);
+                    $unitBodyElement.click(function (evt) {
+                        $unitBodyElement.trigger("sc_bugger.body.click", evt);
                     });
                 },
                 UnbindBuggerBodyEvents: function () {
-                    $sc_bugger_jq('body').css({ 'cursor': '' });
-                    $sc_bugger_jq('body').unbind('sc_bugger.body.mousemove');
-                    $sc_bugger_jq('body').unbind('sc_bugger.body.mouseout');
-                    $sc_bugger_jq('body').unbind('sc_bugger.body.click');
+                    var $unitBodyElement = $sc_bugger_jq('body').not(".sc_bugger-element *");
+
+                    $unitBodyElement.css({ 'cursor': '' });
+                    $unitBodyElement.unbind('sc_bugger.body.mousemove');
+                    $unitBodyElement.unbind('sc_bugger.body.mouseout');
+                    $unitBodyElement.unbind('sc_bugger.body.click');
                 }
 
             },
@@ -443,14 +464,15 @@ var SC_BUGGER = (function () {
                 return $sc_bugger_jq(elementTarget).parents('.sc_bugger-element').length;
             },
             MarkErrorwithPopup: function (errorObj) {
-                $sc_bugger_jq(errorObj.Selector).addClass("sc_bugger-popover red-tooltip sc_bugger-bgm-error")
+                $sc_bugger_jq(errorObj.Selector)
                     .attr({
                         "data-toggle": "popover",
                         "data-html": "true",
                         "data-placement": "bottom",
                         "title": "<span class='glyphicon glyphicon-remove'> <strong>" + errorObj.ErrorTitle + "</strong></span>",
                         "data-content": errorObj.ErrorDetail,
-                    });
+                    })
+                    .addClass("sc_bugger-popover red-tooltip sc_bugger-bgm-error");
 
                 SC_BUGGER.EventListeners.InitiateToolTip();
             }

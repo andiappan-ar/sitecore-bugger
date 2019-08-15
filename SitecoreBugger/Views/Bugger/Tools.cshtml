@@ -6,8 +6,32 @@
     var masterData = (new BuggerBusiness()).GetMasterRecords();
 }
 
+
+
+<!--Style-->
+@*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">*@
+<link href="~/Content/Styles/bootstrap-sc-bugger.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--Script-->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    var thisforOURPlugin = $.fn.jquery;
+</script>
+<script src="~/Scripts/plugins/html2canvas.js"></script>
+<script src="~/Scripts/plugins/popper.js"></script>
+<script src="~/Scripts/plugins/bootstrap.js"></script>
+
+
+<script type="text/javascript">
+    var $sc_bugger_jq = $.noConflict(true);
+    var afterNoCOnflictOfMine = $.fn.jquery;
+</script>
+
 <!--handle conflict styles and scripts-->
 <link href="~/Content/Styles/sc-bugger-tools-main.css" rel="stylesheet" />
+
+
 @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>*@
 <div class="sc_bugger-element row">
     <!--User details-->
@@ -39,7 +63,7 @@
                         <!--Error detail-->
                         <div class="form-group">
                             <label class="" for="errorDetail">Detailed error description (Html allowed)</label>
-                            <textarea class="form-control" id="errorDetail" rows="3" placeholder="Detailed error description"  required></textarea>
+                            <textarea class="form-control" id="errorDetail" rows="3" placeholder="Detailed error description" required></textarea>
                             <div class="valid-feedback">
 
                             </div>
