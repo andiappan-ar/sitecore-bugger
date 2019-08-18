@@ -33,7 +33,8 @@ namespace SitecoreBugger.Site.Data.Repository
                             result.ErrorStatus =  ds.Tables[2].ToListof<ValuePair>();
                             result.ErrorType =  ds.Tables[3].ToListof<ValuePair>();                           
                             result.UserList =  (ds.Tables[4].ToListof<User>());
-                            result.user =  (ds.Tables[4].ToListof<User>()).FirstOrDefault();
+                            result.user =  (ds.Tables[5].ToListof<User>()).FirstOrDefault();
+                            result.Roles =  (ds.Tables[6].ToListof<ValuePair>());
                         }
                     }
                 }

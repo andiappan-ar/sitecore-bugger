@@ -20,5 +20,10 @@ namespace SitecoreBugger.Site.Business.Account
         {
             return AuthenticationModule.TokenValidation(AuthenticationModule.GetToken());
         }
+
+        public bool SignUp(RegisterUser registerUser)
+        {
+            return Security_Bugger.Account.SignUp(registerUser);
+        }
     }
 }

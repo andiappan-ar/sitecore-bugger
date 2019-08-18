@@ -39,8 +39,18 @@ namespace SitecoreBugger.Site.Controllers
             return View();
         }
 
-        public ActionResult signup()
+        public ActionResult SignUp(RegisterUser registerUser)
         {
+            if (_BuggerAccount.SignUp(registerUser))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                ViewBag.IsLoginFailed = false;
+
+            }
+
             return View();
         }
     }

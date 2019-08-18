@@ -29,6 +29,23 @@ namespace SitecoreBugger.Site.Security.SitecoreBugger
             return result;
         }
 
+        public static bool SignUp(RegisterUser reguser)
+        {
+            bool result = false;
+            // Validate user in sitecore
+            if (true)
+            {
+                // Get Bugger user id from sitecore user profile
+                int userId = 2;
+                // Get User details from bugger                
+                User usr = (new BuggerBusiness()).GetUser(userId);
+
+                result = GenerateToken(usr);
+            }
+
+            return result;
+        }
+
         public static bool GenerateToken(User user)
         {
             UserDetailsModel securityModel = new UserDetailsModel()

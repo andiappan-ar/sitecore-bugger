@@ -14,5 +14,6 @@ namespace SitecoreBugger.Site.Model.Global
         public List<ValuePair> ErrorSeverity { get; set; }
         public List<ValuePair> ErrorStatus { get; set; }
         public List<ValuePair> ErrorType { get; set; }
+        public List<ValuePair> Roles { get; set; }
     }
 }
