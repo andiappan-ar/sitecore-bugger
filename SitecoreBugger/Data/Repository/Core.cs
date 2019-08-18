@@ -20,7 +20,7 @@ namespace SitecoreBugger.Site.Data.Repository
                 using (SqlCommand cmd = new SqlCommand("SP_GetMasterData", sqlcon))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@UserId", SqlDbType.Int).Value = user.UserId;
+                    cmd.Parameters.Add("@UserId", SqlDbType.Int).Value = CheckDBNUll(user.UserId);
 
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
@@ -181,7 +181,7 @@ namespace SitecoreBugger.Site.Data.Repository
                     cmd.Parameters.Add("@ErrorTypeId", SqlDbType.Int).Value = error.ErrorTypeId;
                     cmd.Parameters.Add("@ErrorStatusId", SqlDbType.Int).Value = error.ErrorStatusId;
                     cmd.Parameters.Add("@OwnerUserId", SqlDbType.Int).Value = DBNull.Value;
-                    cmd.Parameters.Add("@AssigneeUserId", SqlDbType.Int).Value = DBNull.Value;
+                    cmd.Parameters.Add("@AssigneeUserId", SqlDbType.Int).Value = CheckDBNUll(error.AssigneeUserId);
                     cmd.Parameters.Add("@ProjectId", SqlDbType.Int).Value = DBNull.Value;
                     cmd.Parameters.Add("@Screenshot", SqlDbType.VarBinary).Value = CheckDBObj(error.UpdateScreenshot, error.ScreenShot);
                     cmd.Parameters.Add("@UpdateScreenshot", SqlDbType.Bit).Value = error.UpdateScreenshot;
@@ -202,16 +202,16 @@ namespace SitecoreBugger.Site.Data.Repository
             return result.FirstOrDefault();
         }
 
-        public static User GetUser(int userId)
+        public static LoginUserValidation GetUser(string email)
         {
-            List<User> result = new List<User>();
+            List<LoginUserValidation> result = new List<LoginUserValidation>();
 
             using (SqlConnection sqlcon = new SqlConnection(Settings.CS))
             {
                 using (SqlCommand cmd = new SqlCommand("SP_GetUser", sqlcon))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@UserId", SqlDbType.Int).Value = userId;
+                    cmd.Parameters.Add("@Email", SqlDbType.VarChar).Value = email;
 
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
@@ -219,7 +219,7 @@ namespace SitecoreBugger.Site.Data.Repository
                         {
                             da.Fill(ds);
 
-                            result = ds.Tables[0].ToListof<User>();
+                            result = ds.Tables[0].ToListof<LoginUserValidation>();
                         }
                     }
                 }
@@ -255,6 +255,37 @@ namespace SitecoreBugger.Site.Data.Repository
             }
 
             return result.FirstOrDefault(); 
+        }
+
+        public static User RegisterUser(RegisterUser registerUser)
+        {
+            List<User> result = new List<User>();
+
+            using (SqlConnection sqlcon = new SqlConnection(Settings.CS))
+            {
+                using (SqlCommand cmd = new SqlCommand("SP_RegisterUser", sqlcon))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@UserName", SqlDbType.NVarChar).Value = registerUser.UserName;
+                    cmd.Parameters.Add("@RoleId", SqlDbType.Int).Value = registerUser.RoleId;
+                    cmd.Parameters.Add("@PasswordHash", SqlDbType.NVarChar).Value = registerUser.PasswordHash;
+                    cmd.Parameters.Add("@PasswordSalt", SqlDbType.NVarChar).Value = registerUser.PasswordSalt;
+                    cmd.Parameters.Add("@Email", SqlDbType.NVarChar).Value = registerUser.Email;
+                   
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        using (DataSet ds = new DataSet())
+                        {
+                            da.Fill(ds);
+
+                            result = ds.Tables[0].ToListof<User>();
+                        }
+                    }
+                }
+            }
+
+            return result.FirstOrDefault();
         }
 
         public static object CheckDBObj(bool val,object objVal)

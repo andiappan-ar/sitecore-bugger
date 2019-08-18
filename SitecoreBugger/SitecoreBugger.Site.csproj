@@ -185,11 +185,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Business\Account\Account.cs" />
     <Compile Include="Business\Bugger\BuggerBusiness.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ApiScBuggerController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\BuggerController.cs" />
-    <Compile Include="Controllers\DashBoardController.cs" />
+    <Compile Include="Controllers\SCBAccountController.cs" />
+    <Compile Include="Controllers\SCBApiController.cs" />
+    <Compile Include="Controllers\SCBBaseController.cs" />
+    <Compile Include="Controllers\SCBToolsController.cs" />
+    <Compile Include="Controllers\SCBDashBoardController.cs" />
     <Compile Include="Data\Helper\Helper.cs" />
     <Compile Include="Filter\BuggerAuthorizeFilter.cs" />
     <Compile Include="Model\Global\Error.cs" />
@@ -207,6 +207,7 @@
     <Compile Include="Model\Error.cs" />
     <Compile Include="Model\Global\ValuePair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\AuthServer\Helper\PasswordHelper.cs" />
     <Compile Include="Security\AuthServer\Helper\SecurityConstants.cs" />
     <Compile Include="Security\AuthServer\Model\IClaimsIdentity.cs" />
     <Compile Include="Security\AuthServer\Model\UserDetailsModel.cs" />
@@ -218,11 +219,13 @@
     <Compile Include="Utilities\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Images\AccountBgm.png" />
-    <Content Include="Content\Styles\bootstrap-sc-bugger.css" />
-    <Content Include="Content\Styles\Login.css" />
-    <Content Include="Content\Styles\sc-bugger-tools-main.css" />
-    <Content Include="Content\Styles\sc-bugger-dashboard.css" />
+    <Content Include="Content\SCB\Images\AccountBgm.png" />
+    <Content Include="Content\SCB\Styles\bootstrap-sc-bugger.css" />
+    <Content Include="Content\SCB\Styles\bootstrap.min.css" />
+    <Content Include="Content\SCB\Styles\font-awesome.min.css" />
+    <Content Include="Content\SCB\Styles\Login.css" />
+    <Content Include="Content\SCB\Styles\sc-bugger-tools-main.css" />
+    <Content Include="Content\SCB\Styles\sc-bugger-dashboard.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="sc-bugger-main.js" />
@@ -232,11 +235,12 @@
     </Content>
     <Content Include="MockedError.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <Content Include="Scripts\plugins\bootstrap.js" />
-    <Content Include="Scripts\plugins\html2canvas.js" />
-    <Content Include="Scripts\plugins\popper.js" />
-    <Content Include="Scripts\sc-bugger-dashboard.js" />
-    <Content Include="Scripts\sc-bugger-main.js" />
+    <Content Include="Scripts\SCB\plugins\bootstrap.js" />
+    <Content Include="Scripts\SCB\plugins\html2canvas.js" />
+    <Content Include="Scripts\SCB\plugins\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\SCB\plugins\popper.js" />
+    <Content Include="Scripts\SCB\sc-bugger-dashboard.js" />
+    <Content Include="Scripts\SCB\sc-bugger-main.js" />
     <Content Include="tooltip.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -248,21 +252,21 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Layout\_Main.cshtml" />
-    <Content Include="Views\Bugger\TestPage.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Bugger\Tools.cshtml" />
-    <Content Include="Views\Layout\_Account.cshtml" />
-    <Content Include="Views\DashBoard\Index.cshtml" />
-    <Content Include="Views\DashBoard\report.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\signup.cshtml" />
-    <Content Include="Views\DashBoard\GetError.cshtml" />
+    <Content Include="Views\SCBLayout\_TestMain.cshtml" />
+    <Content Include="Views\SCBTools\TestPage.cshtml" />
+    <Content Include="Views\SCBAccount\Login.cshtml" />
+    <Content Include="Views\SCBTools\Tools.cshtml" />
+    <Content Include="Views\SCBLayout\_Account.cshtml" />
+    <Content Include="Views\SCBDashBoard\Index.cshtml" />
+    <Content Include="Views\SCBDashBoard\report.cshtml" />
+    <Content Include="Views\SCBAccount\ForgotPassword.cshtml" />
+    <Content Include="Views\SCBAccount\signup.cshtml" />
+    <Content Include="Views\SCBDashBoard\GetError.cshtml" />
+    <Content Include="Views\SCBDashBoard\P_FilterAndResults.cshtml" />
+    <Content Include="Views\SCBDashBoard\P_SideNavBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ApiScBugger\" />
-    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

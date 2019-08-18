@@ -1,0 +1,215 @@
+﻿@using SitecoreBugger.Site.Model.Global;
+@model MasterData
+
+<!-- Filter section and results  -->
+<div id="content" class="offset-1--">
+    <nav class="navbar navbar-expand-lg sc_bugger-element-background-color">
+        <div class="container-fluid">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary rounded-0">
+                <i class="fa fa-arrows-h"></i>
+            </button>
+            <button class="btn btn-dark d-inline-block d-lg-none ml-auto rounded-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-align-justify"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">
+                            <!--User details-->
+                            <input id="user-info" type="hidden" uid="@Model.user.UserId" rid="@Model.user.RoleId" pid="@Model.currentProject.ProjectId" a-uid="" cookie-key="@SitecoreBugger.Site.Security.Helper.Constants.SecurityConstants.SC_BUGGER_JWTAUTH" />
+                            <i class="fa fa-user-circle">
+                                @Model.user.UserName
+                            </i>
+
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a id="log-out" class="nav-link" href="javascript:void(0)"> <i class="fa fa-power-off" aria-hidden="true"></i></a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <h2>Dashboard</h2>
+    <hr />
+    <div class="container-fluid">
+
+        <button class="btn btn-primary rounded-0" type="button" data-toggle="collapse" data-target="#filtercollapseExample" aria-expanded="false" aria-controls="filtercollapseExample">
+            Collapse <i class="fa fa-filter" aria-hidden="true"></i>
+        </button>
+        <br />
+        <div class="collapse show " id="filtercollapseExample">
+            <div class="card card-body sc_bugger-element-background-color rounded-0">
+                <form id="edit-err-form-bc" class="sc_bugger-form-validator needs-validation" action="#" is-valid-form="false" novalidate>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-check-label" for="gridCheck">
+                                    Select project
+                                </label>
+                                <!--Project details-->
+                                <select id="filter-project-list" class="browser-default custom-select colorful-select rounded-0 btn-lg">
+                                    <option value="" selected>Select project</option>
+                                    @foreach (Project val in Model.project)
+                                    {
+                                    <option value="@val.ProjectId" url="@val.Url">@val.ProjectName</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col">
+                                <!--Project details-->
+                                @*<a href="#" id="go-to-project" target="_blank">Go to project =></a>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-panel rounded border card card-body sc_bugger-element-background-color">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="autocomplete">
+                                        <label class="form-label" for="gridCheck">
+                                            Search issue by Id
+                                        </label>
+                                        <select id="filter-error-list" class="browser-default custom-select colorful-select rounded-0 btn-lg">
+                                            <option value="">Search issue by Id</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <button id="filter-clear" class="btn btn-primary  float-right rounded-0" type="button">
+                                        <i class="fa fa-undo"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-check">
+                            <div class="row">
+                                <div class="col">
+                                    <input class="form-check-input" type="checkbox" id="filter-myitems">
+                                    <label class="form-check-label" for="gridCheck">
+                                        My items
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <label class="form-check-label" for="gridCheck">
+                                        Error type:
+                                    </label>
+                                    <select id="filter-error-type" class="browser-default custom-select colorful-select dropdown-success rounded-0" multiple>
+                                        @foreach (ValuePair val in Model.ErrorType)
+                                        {
+                                        <option value="@val.EId">@val.EDisplayName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label class="form-check-label" for="gridCheck">
+                                        Error severity:
+                                    </label>
+                                    <select id="filter-error-severity" class="browser-default custom-select colorful-select dropdown-success rounded-0" multiple>
+                                        @foreach (ValuePair val in Model.ErrorSeverity)
+                                        {
+                                        <option value="@val.EId">@val.EDisplayName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label class="form-check-label" for="gridCheck">
+                                        Error status:
+                                    </label>
+                                    <select id="filter-error-status" class="browser-default custom-select colorful-select dropdown-success rounded-0" multiple>
+                                        @foreach (ValuePair val in Model.ErrorStatus)
+                                        {
+                                        <option value="@val.EId">@val.EDisplayName</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="hidden-submit" class="sc_bugger-hide" type="submit">Submit form</button>
+                </form>
+                <br />
+                <button id="filter-search" type="button" class="btn btn-primary rounded-0" data-dismiss="modal">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+    <hr />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h4>Error lists</h4>
+            </div>
+        </div>
+        <br />
+        <div id="card-container" class="card card-body sc_bugger-element-background-color rounded-0 sc_bugger-disabled">
+            <div class="row">
+                <div class="col">
+                    <button id="export-error" class="export-error-excel btn btn-primary float-right rounded-0" type="button" data-toggle="collapse"
+                            data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                    </button>
+                    <button id="export-error-all" class="export-error-excel btn btn-primary float-right rounded-0" type="button" data-toggle="collapse"
+                            data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        All
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+            </div>
+            <br />
+            <div class="row">
+                <div class="col">
+                    <label for="errorTitle">View type</label>
+                    <select id="filter-error-view" class="browser-default custom-select colorful-select dropdown-success rounded-0">
+                        <option value="card" selected>Card view</option>
+                        <option value="detail">Detailed view</option>
+                        <option value="mini">Mini view</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="errorTitle">Page size</label>
+                    <select id="filter-error-page-size" class="browser-default custom-select colorful-select dropdown-success rounded-0">
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="errorTitle"><< >></label>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li id="prev-page" class="page-item card-pagination"><button class="page-link btn btn-primary rounded-0" href="javascript:void(0)">Previous</button></li>
+                            <li id="next-page" class="page-item card-pagination"><button class="page-link btn btn-primary rounded-0" href="javascript:void(0)">Next</button></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col">
+                    <h2 id="issue-list-view-type-head" style="display:none"></h2>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div id="issue-list-card-details" class="card-columns">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

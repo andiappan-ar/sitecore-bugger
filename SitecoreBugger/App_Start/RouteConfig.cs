@@ -16,7 +16,7 @@ namespace SitecoreBugger.Site
             routes.MapRoute(
                 name: "Default",
                 url: "sc-bugger/{controller}/{action}/{id}",
-                defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
+                defaults: new { controller = "SCBAccount", action = "Login", id = UrlParameter.Optional }
             );
         }
     }

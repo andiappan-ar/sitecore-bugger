@@ -1,0 +1,123 @@
+﻿@using SitecoreBugger.Site.Model.Global;
+@using SitecoreBugger.Site.Business.Bugger;
+@{
+
+
+    ViewBag.Title = "Sign-up";
+    Layout = "~/Views/SCBLayout/_Account.cshtml";
+    var masterData = (new BuggerBusiness()).GetMasterRecords();
+}
+
+@model Login
+
+<link href="~/Content/SCB/Styles/Login.css" rel="stylesheet" />
+
+<div id="login">
+
+    <h3 class="text-center text-white pt-5">
+        <blockquote class="blockquote text-center">
+            <h1 class="">Sitecore Bugger</h1>
+            <footer class=" blockquote-footer">Rich experience <cite title="Source Title">sitecore project bug management.</cite></footer>
+        </blockquote>
+    </h3>
+
+
+    <div class="container">
+
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div id="login-box" class="col-md-12">
+                    <form id="reg-form" class="form sc_bugger-form-validator" action="" method="post" novalidate>
+                        <br />
+                        <h3 class="text-center text-info">Sign up</h3>
+                        @if (!ViewBag.IsRegistration)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                User already exist.
+                            </div>
+                            <br />
+                        }
+
+                        <!--Username-->
+                        <div class="form-group">
+                            <label for="UserName" class="text-info">Username:</label><br>
+                            <input type="text" name="UserName" id="UserName" class="form-control rounded-0" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+
+                        <!--Email-->
+                        <div class="form-group">
+                            <label for="Email" class="text-info">Email:</label><br>
+                            <input type="email" name="Email" id="Email" class="form-control rounded-0" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">Please enter valid email address.</div>
+                        </div>
+
+                        <!--Password-->
+                        <div class="form-group">
+                            <label for="Password" class="text-info">Password:</label><br>
+                            <input type="password" name="Password" id="Password" class="form-control rounded-0" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+
+                        <!--Roles-->
+                        <div class="form-group">
+                            <label class="text-info" for="exampleFormControlSelect1">Error type</label>
+                            <select name="RoleId" class="form-control" id="RoleId" required>
+                                <option value="">Select</option>
+                                @foreach (ValuePair val in masterData.Roles)
+                                {
+                                    <option value="@val.EId">@val.EDisplayName</option>
+                                }
+                            </select>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-md btn-primary  rounded-0" value="Register">
+                        </div>
+
+                        <br />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('sc_bugger-form-validator');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        $(this).attr("is-valid-form", false);
+                    }
+                    else {
+                        $(this).attr("is-valid-form", true);
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>

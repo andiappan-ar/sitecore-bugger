@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SitecoreBugger.Site.Security.Helper.Constants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -9,8 +10,9 @@ namespace SitecoreBugger.Site.Security.AuthServer.Helper
 {
     public static class PasswordHelper
     {
-        public static string CreateSalt(int size)
+        public static string CreateSalt()
         {
+            int size = SecurityConstants.PasswordSalt_Size;
             //Generate a cryptographic random number.
             RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
             byte[] buff = new byte[size];
@@ -27,10 +29,13 @@ namespace SitecoreBugger.Site.Security.AuthServer.Helper
             return Convert.ToBase64String(hash);
         }
 
-        public static bool AreEqual(string plainTextInput, string hashedInput, string salt)
+        public static bool ValidatePassword(string plainTextInput, string hashedInput, string salt)
         {
             string newHashedPin = GenerateHash(plainTextInput, salt);
             return newHashedPin.Equals(hashedInput);
         }
+
+
+        
     }
 }

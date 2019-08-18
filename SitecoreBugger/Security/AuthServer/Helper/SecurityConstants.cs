@@ -30,6 +30,7 @@ namespace SitecoreBugger.Site.Security.Helper.Constants
         public static string Claim_Token = "Token";
 
 
-
+        //Password
+        public static int PasswordSalt_Size = 32;
     }
 }

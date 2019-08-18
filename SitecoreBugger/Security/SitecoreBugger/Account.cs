@@ -1,11 +1,14 @@
 ﻿using SitecoreBugger.Site.Business.Bugger;
+using SitecoreBugger.Site.Data.Repository;
 using SitecoreBugger.Site.Model.Global;
+using SitecoreBugger.Site.Security.AuthServer.Helper;
 using SitecoreBugger.Site.Security.Model;
 using SitecoreBugger.Site.Security.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using BusinessAccount = SitecoreBugger.Site.Business.Account;
 
 namespace SitecoreBugger.Site.Security.SitecoreBugger
 {
@@ -15,15 +18,16 @@ namespace SitecoreBugger.Site.Security.SitecoreBugger
         public static bool Login(Login login)
         {
             bool result = false;
-            // Validate user in sitecore
-            if (login.UserName == "andi" && login.Password == "b")
-            {
-                // Get Bugger user id from sitecore user profile
-                int userId = 2;
-                // Get User details from bugger                
-                User usr = (new BuggerBusiness()).GetUser(userId);
+            LoginUserValidation loginUser = Core.GetUser(login.Email);
 
-                result = GenerateToken(usr);
+            // Verify User found
+            if (loginUser.UserId != 0)
+            {
+                //Verify password
+                if (PasswordHelper.ValidatePassword(login.Password, loginUser.PasswordHash, loginUser.PasswordSalt))
+                {
+                    result = GenerateToken(loginUser);
+                }
             }
 
             return result;
@@ -32,27 +36,28 @@ namespace SitecoreBugger.Site.Security.SitecoreBugger
         public static bool SignUp(RegisterUser reguser)
         {
             bool result = false;
-            // Validate user in sitecore
-            if (true)
-            {
-                // Get Bugger user id from sitecore user profile
-                int userId = 2;
-                // Get User details from bugger                
-                User usr = (new BuggerBusiness()).GetUser(userId);
 
-                result = GenerateToken(usr);
+            // Hashing password
+            reguser.PasswordSalt = PasswordHelper.CreateSalt();
+            reguser.PasswordHash = PasswordHelper.GenerateHash(reguser.Password, reguser.PasswordSalt);
+
+            User usr = Core.RegisterUser(reguser);
+
+            if (usr != null)
+            {
+                result = true;
             }
 
             return result;
         }
 
-        public static bool GenerateToken(User user)
+        public static bool GenerateToken(LoginUserValidation user)
         {
             UserDetailsModel securityModel = new UserDetailsModel()
             {
                 UserId = user.UserId,
                 UserName = user.UserName,
-                RoleId = user.RoleId                
+                RoleId = user.RoleId
             };
 
             var isLogined = !string.IsNullOrEmpty(AuthenticationModule.GenerateTokenForUser(securityModel));

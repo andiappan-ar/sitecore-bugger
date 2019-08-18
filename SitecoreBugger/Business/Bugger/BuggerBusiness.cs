@@ -16,7 +16,7 @@ namespace SitecoreBugger.Site.Business.Bugger
     {
         public MasterData GetMasterRecords()
         {
-            var masterR = Core.GetMasterRecords(SitecoreBuggerCoder.Bugger.GetUser());
+            var masterR = Core.GetMasterRecords(SitecoreBuggerCoder.Bugger.GetUserFromToken());
 
             masterR.currentProject = SitecoreBuggerCoder.Bugger.GetProject();
 
@@ -98,10 +98,7 @@ namespace SitecoreBugger.Site.Business.Bugger
 
         }
 
-        public User GetUser(int userId)
-        {
-            return Core.GetUser(userId);
-        }
+      
 
 
     }
