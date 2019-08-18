@@ -46,8 +46,7 @@
         EventListeners: {
             Init: function () {
                 SC_DASHBOARD.EventListeners.DocumentReadyEvent();
-
-                SC_DASHBOARD.FunctionalMethods.ActivateAutoComplete();
+               
             },
             //Selector : $sc_bugger_jq(document)
             DocumentReadyEvent: function () {
@@ -146,21 +145,31 @@
                     switch (thisElement) {
                         case "prev-page":
                             if (SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber == 1) {
-                                $sc_bugger_jq(this).attr("disabled", true);
+                                $sc_bugger_jq(this).addClass("sc_bugger-disabled");
+                                $sc_bugger_jq(this).find("button").addClass("sc_bugger-disabled");
                             }
                             else {
                                 SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber = SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber - 1;
                                 SC_DASHBOARD.ApiMethods.GetError();
+                                $sc_bugger_jq(this).removeClass("sc_bugger-disabled");
+                                $sc_bugger_jq(this).find("button").removeClass("sc_bugger-disabled");
                             }
+                            $sc_bugger_jq("#next-page").removeClass("sc_bugger-disabled");
+                            $sc_bugger_jq("#next-page").find("button").removeClass("sc_bugger-disabled");
                             break;
                         case "next-page":
                             if (SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber == SC_DASHBOARD.GlobalVariables.GlobalFilter.TotalNoOfPages) {
-                                $sc_bugger_jq(this).attr("disabled", true);
+                                $sc_bugger_jq(this).addClass("sc_bugger-disabled");
+                                $sc_bugger_jq(this).find("button").addClass("sc_bugger-disabled");
                             }
                             else {
                                 SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber = SC_DASHBOARD.GlobalVariables.GlobalFilter.PageNumber + 1;
                                 SC_DASHBOARD.ApiMethods.GetError();
+                                $sc_bugger_jq(this).removeClass("sc_bugger-disabled");
+                                $sc_bugger_jq(this).find("button").removeClass("sc_bugger-disabled");
                             }
+                            $sc_bugger_jq("#prev-page").removeClass("sc_bugger-disabled");
+                            $sc_bugger_jq("#prev-page").find("button").removeClass("sc_bugger-disabled");
                             break;
                     }
 
@@ -177,10 +186,10 @@
                 });
 
                 $sc_bugger_jq("#sc_bugger-form-mark-error").submit(function (event) {
-                    if ($sc_bugger_jq(this)[0].checkValidity() == true) {
-                        var isUpdateScreenshot = ($sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot") == "true");
 
-                        if (SC_DASHBOARD.EventListeners.FormEvents.ValidationEvents.ValidateMarkError() == "true") {
+                    if (SC_DASHBOARD.EventListeners.FormEvents.ValidationEvents.ValidateMarkError()) {
+                        if ($sc_bugger_jq(this)[0].checkValidity() == true) {
+                            var isUpdateScreenshot = ($sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot") == "true");
                             var inputModel = {
                                 ErrorId: $sc_bugger_jq("#errorID").val(),
                                 ErrorTitle: $sc_bugger_jq("#errorTitle").val(),
@@ -194,7 +203,14 @@
 
                             SC_DASHBOARD.ApiMethods.SaveError(inputModel);
                         }
-
+                        else {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                    }                 
+                    else {
+                        event.preventDefault();
+                        event.stopPropagation();
                     }
 
                 });
@@ -305,231 +321,10 @@
             }
         },
         FunctionalMethods: {
-            ActivateAutoComplete: function () {
-                /*initiate the autocomplete function on the "filter-main-search-issue" element, and pass along the countries array as possible autocomplete values:*/
-
-                //SC_DASHBOARD.UtilityMethods.AutoCompleteEvents(document.getElementById("filter-main-search-issue"), SC_DASHBOARD.Issues.AllIds);
-            },
-            IssueList: {
-                TempServerCall: function () {
-
-                },
-                GetIssueModel: function () {
-
-
-
-                },
-                RefreshIssueList: function () {
-
-                    SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView = $sc_bugger_jq('#filter-error-view').val();
-                    SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName = $sc_bugger_jq("#filter-error-view option:selected").text();
-
-
-                    var currentIssueList = SC_DASHBOARD.Issues.All;
-
-                    var listElement = [];
-
-                    $sc_bugger_jq.each(currentIssueList, function (i, _issue) {
-
-                        // Frame json
-                        var cardViewTemplateFields = {
-                            id: _issue.ErrorId,
-                            idFramed: " id='" + _issue.ErrorId + "' ",
-                            ScreenShot: _issue.ScreenShot,
-                            ErrorTitle: _issue.ErrorTitle,
-                            ErrorDetail: _issue.ErrorDetail,
-                            Date: _issue.Date,
-                            SeverityColor: " " + SC_DASHBOARD.UtilityMethods.GetSeverityColor(_issue.ErrorSeverity) + " ",
-                        };
-
-                        var templateString = null;
-
-
-
-                        switch (SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView) {
-                            case "card":
-                                templateString = `<div` + cardViewTemplateFields.idFramed + `class="card` + cardViewTemplateFields.SeverityColor + `">
-                                                            <div class="card-header">` + cardViewTemplateFields.id + `
-                                                        <a id="edit-error" href="javascript:void(0)" class="float-right text-primary" ><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                                                        <a id="remove-error" href="javascript:void(0)" class="float-right text-primary  mr-2" ><i class="fa fa-trash fa-2x"></i></a>
-                                                        </div>
-                                                                <img class="card-img-top" src="` + cardViewTemplateFields.ScreenShot + `">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title">` + cardViewTemplateFields.ErrorTitle + `</h5>
-                                                                    <p class="">` + cardViewTemplateFields.ErrorDetail + `</p>
-                                                                    <p class="card-text"><small class="text-muted">` + cardViewTemplateFields.Date + `</small></p>
-                                                                </div>
-                                                            </div>`;
-                                break;
-                            case "detail":
-                                templateString = `<div ` + cardViewTemplateFields.idFramed + `class="card` + cardViewTemplateFields.SeverityColor + `w-2000">
-                                                        <div class="card-header">` + cardViewTemplateFields.id + `
-                                                         <a id="edit-error" href="javascript:void(0)" class="float-right text-primary" ><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                                                        <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2" ><i class="fa fa-trash fa-2x"></i></a>
-                                                        </div>
-                                                        <img class="card-img-top" src="` + cardViewTemplateFields.ScreenShot + `">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">` + cardViewTemplateFields.ErrorTitle + `</h5>
-                                                            <p class="card-text">` + cardViewTemplateFields.ErrorDetail + `</p>
-                                                            <p class="card-text"><small class="text-muted">` + cardViewTemplateFields.Date + `</small></p>
-                                                        </div>
-                                                    </div>`;
-                                break;
-                            case "mini":
-                                templateString = `<div ` + cardViewTemplateFields.idFramed + `class="card text-white ` + cardViewTemplateFields.SeverityColor + ` ">
-                                                        <div class="card-header">` + cardViewTemplateFields.id + `
-                                                         <a id="edit-error" href="javascript:void(0)" class="float-right text-primary" ><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                                                        <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2" ><i class="fa fa-trash fa-2x"></i></a>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">` + cardViewTemplateFields.ErrorTitle + `</h5>
-                                                            <p class="card-text">` + cardViewTemplateFields.ErrorDetail + `</p>
-                                                        </div>
-                                                    </div>`;
-                                break;
-                        }
-
-                        listElement.push($sc_bugger_jq(templateString));
-                    });
-
-                    // Heading
-                    $sc_bugger_jq("#issue-list-view-type-head").text(SC_DASHBOARD.GlobalVariables.GlobalFilter.Meta.ViewTypeDisplayName);
-                    // List
-                    $sc_bugger_jq("#issue-list-card-details").html("");
-                    $sc_bugger_jq("#issue-list-card-details").append(listElement);
-
-                    // Detailed view class
-                    if (SC_DASHBOARD.GlobalVariables.GlobalFilter.FilterView == "detail") {
-                        $sc_bugger_jq("#issue-list-card-details").addClass("list-group");
-                    }
-                    else {
-                        $sc_bugger_jq("#issue-list-card-details").removeClass("list-group");
-                    }
-
-
-                }
-            }
-
+          
         },
         UtilityMethods: {
-            AutoCompleteEvents: function (inp, arr) {
-                /*the autocomplete function takes two arguments,
-the text field element and an array of possible autocompleted values:*/
-                var currentFocus;
-                /*execute a function when someone writes in the text field:*/
-                inp.addEventListener("input", function (e) {
-                    var a, b, i, val = this.value;
-                    /*close any already open lists of autocompleted values*/
-                    closeAllLists();
-                    if (!val) { return false; }
-                    currentFocus = -1;
-                    /*create a DIV element that will contain the items (values):*/
-                    a = document.createElement("DIV");
-                    a.setAttribute("id", this.id + "autocomplete-list");
-                    a.setAttribute("class", "autocomplete-items");
-                    /*append the DIV element as a child of the autocomplete container:*/
-                    this.parentNode.appendChild(a);
-                    /*for each item in the array...*/
-                    for (i = 0; i < arr.length; i++) {
-                        /*check if the item starts with the same letters as the text field value:*/
-
-                        if (arr[i].ErrorId.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                            /*create a DIV element for each matching element:*/
-                            b = document.createElement("DIV");
-                            /*make the matching letters bold:*/
-                            b.innerHTML = "<strong>" + arr[i].ErrorId.substr(0, val.length) + "</strong>";
-                            b.innerHTML += arr[i].ErrorId.substr(val.length);
-                            /*insert a input field that will hold the current array item's value:*/
-                            b.innerHTML += "<input type='hidden' value='" + arr[i].ErrorId + "'>";
-                            /*execute a function when someone clicks on the item value (DIV element):*/
-                            b.addEventListener("click", function (e) {
-                                /*insert the value for the autocomplete text field:*/
-                                inp.value = this.getElementsByTagName("input")[0].value;
-                                /*close the list of autocompleted values,
-                                (or any other open lists of autocompleted values:*/
-                                closeAllLists();
-                            });
-                            a.appendChild(b);
-                        }
-                    }
-                });
-                /*execute a function presses a key on the keyboard:*/
-                inp.addEventListener("keydown", function (e) {
-                    var x = document.getElementById(this.id + "autocomplete-list");
-                    if (x) x = x.getElementsByTagName("div");
-                    if (e.keyCode == 40) {
-                        /*If the arrow DOWN key is pressed,
-                        increase the currentFocus variable:*/
-                        currentFocus++;
-                        /*and and make the current item more visible:*/
-                        addActive(x);
-                    } else if (e.keyCode == 38) { //up
-                        /*If the arrow UP key is pressed,
-                        decrease the currentFocus variable:*/
-                        currentFocus--;
-                        /*and and make the current item more visible:*/
-                        addActive(x);
-                    } else if (e.keyCode == 13) {
-                        /*If the ENTER key is pressed, prevent the form from being submitted,*/
-                        e.preventDefault();
-                        if (currentFocus > -1) {
-                            /*and simulate a click on the "active" item:*/
-                            if (x) x[currentFocus].click();
-                        }
-                    }
-                });
-                function addActive(x) {
-                    /*a function to classify an item as "active":*/
-                    if (!x) return false;
-                    /*start by removing the "active" class on all items:*/
-                    removeActive(x);
-                    if (currentFocus >= x.length) currentFocus = 0;
-                    if (currentFocus < 0) currentFocus = (x.length - 1);
-                    /*add class "autocomplete-active":*/
-                    x[currentFocus].classList.add("autocomplete-active");
-                }
-                function removeActive(x) {
-                    /*a function to remove the "active" class from all autocomplete items:*/
-                    for (var i = 0; i < x.length; i++) {
-                        x[i].classList.remove("autocomplete-active");
-                    }
-                }
-                function closeAllLists(elmnt) {
-                    /*close all autocomplete lists in the document,
-                    except the one passed as an argument:*/
-                    var x = document.getElementsByClassName("autocomplete-items");
-                    for (var i = 0; i < x.length; i++) {
-                        if (elmnt != x[i] && elmnt != inp) {
-                            x[i].parentNode.removeChild(x[i]);
-                        }
-                    }
-                }
-                /*execute a function when someone clicks in the document:*/
-                document.addEventListener("click", function (e) {
-                    closeAllLists(e.target);
-                });
-            }
-            ,
-            GetSeverityColor: function (severity) {
-                switch (severity) {
-                    case "4":
-                        return SC_DASHBOARD.Settings.CSS.SeverityColor.Critical;
-                        break;
-                    case "3":
-                        return SC_DASHBOARD.Settings.CSS.SeverityColor.High;
-                        break;
-                    case "2":
-                        return SC_DASHBOARD.Settings.CSS.SeverityColor.Medium;
-                        break;
-                    case "1":
-                        return SC_DASHBOARD.Settings.CSS.SeverityColor.Low;
-                        break;
-                    default:
-                        return SC_DASHBOARD.Settings.CSS.SeverityColor.Low;
-                        break;
-                }
-
-            }
+      
         }
         ,
         ApiMethods: {
@@ -541,6 +336,7 @@ the text field element and an array of possible autocompleted values:*/
                     async: false,
                     data: (SC_DASHBOARD.GlobalVariables.GlobalFilter),
                     success: function (response) {
+                        $sc_bugger_jq("#card-container").removeClass("sc_bugger-disabled");
                         $sc_bugger_jq("#issue-list-card-details").html("");
                         $sc_bugger_jq("#issue-list-card-details").html(response);
 
@@ -562,19 +358,19 @@ the text field element and an array of possible autocompleted values:*/
                 $sc_bugger_jq.ajax({
                     url: SC_DASHBOARD.Config.SaveErrorUrl,
                     type: "post",
-                    async: false,
+                    //async: false,
                     //processData: false,
                     data: (inputModel),
                     success: function (response) {
                         if (response.IsSuccess) {
-                            SC_DASHBOARD.ApiMethods.GetError();
+                           // SC_DASHBOARD.ApiMethods.GetError();
                             $sc_bugger_jq('.sc_bugger-element-modal.error-detail-modal').modal('hide');
                         }
 
                         $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
                     },
                     error: function (response) {
-                        console.log(response);
+                        alert(error);
                         $sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
                     }
 

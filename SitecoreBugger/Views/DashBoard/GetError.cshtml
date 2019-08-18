@@ -1,4 +1,5 @@
 ﻿@using SitecoreBugger.Site.Model.Global;
+@using SitecoreBugger.Site.Utilities;
 @model List<Error>
 @{
     Layout = null;
@@ -10,29 +11,35 @@
 {
     foreach (Error err in Model)
     {
-        bool isImageFound = (err.ScreenShot != null);
+        bool isImageFound = (err.ScreenShotId != null);
+        string gotoUrl = string.Empty;
+
+        if (!string.IsNullOrEmpty(err.Uri))
+        {
+            //var gotoUri = AddParameterToUri(new Uri(err.Uri), "sc-b-eid", err.ErrorId.ToString());
+            //gotoUrl = gotoUri.ur
+            gotoUrl = ((new Uri(err.Uri)).Query.Length > 0) ? err.Uri + "&sc-b-eid=" + err.ErrorId : err.Uri + "?sc-b-eid=" + err.ErrorId;
+        }
+
 
         switch (errFilter.FilterView)
         {
 
-
             case "card":
                 <div id="sc-bugger-each-id-@err.ErrorId" class="card  rounded-0 @GetSeverityColor(err.ErrorSeverityId.ToString())">
-                    <input type="hidden" class="all-values" 
+                    <input type="hidden" class="all-values"
                            err-title="@err.ErrorTitle" err-detail="@err.ErrorDetail" err-devicedetail=""
                            err-id="@err.ErrorId" err-severity="@err.ErrorSeverityId" err-type="@err.ErrorTypeId" err-status="@err.ErrorStatusId"
-                           devide-detail="@err.DeviceDetails" 
-                           />
+                           devide-detail="@err.DeviceDetails" />
                     <div class="card-header">
                         @err.ErrorId
-                        <a id="edit-error" href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                        <a id="remove-error" href="javascript:void(0)" class="float-right text-primary  mr-2"><i class="fa fa-trash fa-2x"></i></a>
-                        <a id="goto-error" href="@err.Uri&sc-b-eid=@err.ErrorId" target="_blank" class="float-right text-primary  mr-2"><i class="fa fa-external-link fa-2x"></i></a>
+                        <a id="edit-error" href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o fa-2x"></i></a>                        
+                        <a id="goto-error" href="@gotoUrl" target="_blank" class="float-right text-primary  mr-2"><i class="fa fa-external-link fa-2x"></i></a>
                     </div>
 
                     @if (isImageFound)
                     {
-                        <img class="card-img-top" src="data:image/png;base64,@System.Convert.ToBase64String(err.ScreenShot)">
+                        <img class="card-img-top" src="@Settings.ScreenSHotURLPrefix@err.ErrorId">
                     }
 
                     <div class="card-body">
@@ -51,13 +58,12 @@
                     <div class="card-header">
                         @err.ErrorId
                         <a id="edit-error" href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                        <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2"><i class="fa fa-trash fa-2x"></i></a>
-                        <a id="goto-error" href="@err.Uri&sc-b-eid=@err.ErrorId" target="_blank" class="float-right text-primary  mr-2"><i class="fa fa-external-link fa-2x"></i></a>
+                        <a id="goto-error" href="@gotoUrl" target="_blank" class="float-right text-primary  mr-2"><i class="fa fa-external-link fa-2x"></i></a>
                     </div>
 
                     @if (isImageFound)
                     {
-                        <img class="card-img-top" src="data:image/png;base64,@System.Convert.ToBase64String(err.ScreenShot)">
+                        <img class="card-img-top" src="@Settings.ScreenSHotURLPrefix@err.ErrorId">
                     }
                     <div class="card-body">
                         <h5 class="card-title">@err.ErrorTitle</h5>
@@ -75,8 +81,7 @@
                     <div class="card-header">
                         @err.ErrorId
                         <a id="edit-error" href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                        <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2"><i class="fa fa-trash fa-2x"></i></a>
-                        <a id="goto-error" href="@err.Uri&sc-b-eid=@err.ErrorId" target="_blank" class="float-right text-primary  mr-2"><i class="fa fa-external-link fa-2x"></i></a>
+                        <a id="goto-error" href="@gotoUrl" target="_blank" class="float-right text-primary  mr-2"><i class="fa fa-external-link fa-2x"></i></a>
                     </div>
 
                     <div class="card-body">
@@ -94,8 +99,7 @@
                     <div class="card-header">
                         @err.ErrorId
                         <a id="edit-error" href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                        <a id="remove-error" href="javascript:void(0)" class="float-right text-primary mr-2"><i class="fa fa-trash fa-2x"></i></a>
-                        <a id="goto-error" href="@err.Uri&sc-b-eid=@err.ErrorId" target="_blank" class="float-right text-primary  mr-2"><i class="fa fa-external-link fa-2x"></i></a>
+                        <a id="goto-error" href="@gotoUrl" target="_blank" class="float-right text-primary  mr-2"><i class="fa fa-external-link fa-2x"></i></a>
                     </div>
 
                     <div class="card-body">
@@ -133,6 +137,9 @@
         }
         return result;
     }
+
+  
+
 }
 
 

@@ -343,3 +343,13 @@ a.article:hover {
         .modal-content {
           height: 99%;
         }*/
+
+.wrapper * {
+    border-radius: 0 !important;
+}
+
+.sc_bugger-disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: grey;
+}

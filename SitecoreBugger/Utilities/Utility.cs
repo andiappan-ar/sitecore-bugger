@@ -51,19 +51,31 @@ namespace SitecoreBugger.Site.Utilities
 
             DataTable table = new DataTable();
 
-            foreach (PropertyDescriptor prop in properties)
+            string[] skipColumn = new string[]{ "Selector", "UpdateScreenshot", "ScreenShotId", "ScreenShotB64", "ScreenShotB64"
+                ,"ErrorSeverityId","ErrorTypeId","ErrorStatusId","OwnerUserId","AssigneeUserId","ProjectId" };
 
-                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            foreach (PropertyDescriptor prop in properties)
+            {
+                if (!skipColumn.Contains(prop.Name, StringComparer.OrdinalIgnoreCase))
+                {
+                    table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+                }
+               
+                
+            }
+           
 
             foreach (T item in data)
-
             {
-
                 DataRow row = table.NewRow();
 
                 foreach (PropertyDescriptor prop in properties)
-
-                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                {
+                    if (!skipColumn.Contains(prop.Name, StringComparer.OrdinalIgnoreCase))
+                    {
+                        row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                    }
+                }
 
                 table.Rows.Add(row);
 

@@ -23,5 +23,25 @@ namespace SitecoreBugger.Site.Model.Global
         public string ScreenShotB64 { get; set; }
         public string DeviceDetails { get; set; }
         public bool UpdateScreenshot { get; set; }
+
+        public int? ScreenShotId { get; set; }
+
+        //Excel report columns
+        public string E_ScreenShotUrl { get; set; }
+        public string E_ErrorSeverity { get; set; }
+        public string E_ErrorType { get; set; }
+        public string E_ErrorStatus { get; set; }
+        public string E_OwnerUser { get; set; }
+        public string E_AssigneeUser { get; set; }
+        public string E_Project { get; set; }
+
+    }
+
+    public class ErrorScreenShot
+    {
+        public bool ISScreenShotAvail { get; set; }
+        public int ScreenShotId { get; set; }
+        public byte[] ScreenShot { get; set; }
+
     }
 }

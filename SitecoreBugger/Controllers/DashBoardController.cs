@@ -5,9 +5,10 @@ using System.Web.Mvc;
 
 namespace SitecoreBugger.Site.Controllers
 {
-    [BuggerAuthorizeFilter]
+  
     public class DashBoardController : BaseController
     {
+        [BuggerAuthorizeFilter]
         // GET: DashBoard
         public ActionResult Index()
         {
@@ -15,6 +16,7 @@ namespace SitecoreBugger.Site.Controllers
             return View(masterRecord);
         }
 
+        [BuggerAuthorizeFilter]
         [HttpPost]
         public ActionResult GetError(ErrorFilter errorFilter)
         {
@@ -22,6 +24,21 @@ namespace SitecoreBugger.Site.Controllers
             return View(_BuggerBusiness.GetError(errorFilter));
         }
 
+        
+        public ActionResult GetErrorScreenShot(int errorId)
+        {
+            var screenShot = _BuggerBusiness.GetErrorScreenShot(errorId);
+            byte[] photoBack = null;
+
+            if (screenShot.ISScreenShotAvail)
+            {
+                photoBack = screenShot.ScreenShot;
+            }
+
+            return File(photoBack, "image/png");
+        }
+
+        [BuggerAuthorizeFilter]
         // GET: DashBoard
         public ActionResult report()
         {

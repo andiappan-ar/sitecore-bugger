@@ -73,10 +73,10 @@
                     if (form.checkValidity() === false) {
                         event.preventDefault();
                         event.stopPropagation();
-                        $(this).attr("is-valid-form", false);
+                        $sc_bugger_jq(this).attr("is-valid-form", false);
                     }
                     else {
-                        $(this).attr("is-valid-form", true);
+                        $sc_bugger_jq(this).attr("is-valid-form", true);
                     }
                     form.classList.add('was-validated');
                 }, false);

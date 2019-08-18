@@ -1,11 +1,15 @@
-﻿.sc_bugger-element *{
-    z-index: 2147483647 !important;
-  
+﻿.sc_bugger-element-bottom-z-inedexed {
+    z-index: 2147483646 !important;
 }
 
-#sc_bugger-icon-bar a, #sc_bugger-icon-bar a i{  
-    /*position:absolute;*/
+.sc_bugger-element *:not(.sc_bugger-element-bottom-z-inedexed) {
+    z-index: 2147483647 !important;
 }
+
+.sc_bugger-element * {
+    border-radius: 0 !important;
+}
+
 
 .sc_bugger-label {
     color: blue;
@@ -20,12 +24,12 @@
 }
 
 /*Bootstrap styles*/
-.popover-header {
+.sc_bugger-element .popover-header {
     background-color: rgba(255, 0, 0, 0.9);
     color: #FFF;
 }
 
-.popover-body {
+.sc_bugger-element .popover-body {
     background-color: rgba(255, 0, 0, 0.9);
     color: #FFF;
 }
@@ -51,8 +55,8 @@
     position: fixed;
     width: 60px;
     height: 60px;
-    bottom: 40px;
-    right: 40px;
+    bottom: 20px;
+    right: 20px;
     color: #FFF;
     text-align: center;
 }
@@ -87,12 +91,16 @@
 }
 
 .sc_bugger-element-background-color {
-    background-color: #30b579;
-    color: white;
+    background-color: #30b579 !important;
+    color: white !important;
+}
+
+button.sc_bugger-element-background-color, a.sc_bugger-element-background-color:hover {
+    background-color: black !important;
 }
 
 .sc_bugger-icon-bar-active {
-    background-color: #4CAF50;
+    background-color: #4CAF50 !important;
 }
 
 .sc_bugger-hide {
@@ -133,4 +141,38 @@
 
 .sc_bugger-element.modal label {
     font-weight: bold;
+}
+
+.sc_bugger-element #sc-bugger-overlay, .sc_bugger-element #pleaseWaitDialog {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    cursor: no-drop;
+}
+
+.sc_bugger-element .modal {
+    overflow-y: auto;
+}
+
+/*Alert box styles*/
+
+.sc_bugger-element .sc-alert-message {
+    left: 0;
+    margin: auto; /*// Centers alert component position: absolute;*/
+    /*// So that it will display relative to the entire page right: 0;*/   
+    top: 1em;
+    width: 80%;   
+}
+
+.sc-bugger-cross-hair-cursor {
+    cursor:crosshair;
+}
+
+.sc-bugger-nodrop-cursor {
+    cursor: no-drop;
 }

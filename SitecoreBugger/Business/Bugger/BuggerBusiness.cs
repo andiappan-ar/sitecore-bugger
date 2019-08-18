@@ -32,9 +32,26 @@ namespace SitecoreBugger.Site.Business.Bugger
         {
             var result = Core.GetError(errorFilter);
 
-            foreach (Error err in result)
+            //foreach (Error err in result)
+            //{
+            //    err.ScreenShot = Utility.Decompress(err.ScreenShot);
+            //}
+
+            return result;
+        }
+
+        public ErrorScreenShot GetErrorScreenShot(int ErrorId)
+        {
+            var result = Core.GetErrorScreenShot(ErrorId);
+
+            if (result.ScreenShot != null && result.ScreenShot.Length > 0)
             {
-                err.ScreenShot = Utility.Decompress(err.ScreenShot);
+                result.ScreenShot = Utility.Decompress(result.ScreenShot);
+                result.ISScreenShotAvail = true;
+            }
+            else {
+                result.ISScreenShotAvail = false;
+
             }
 
             return result;
@@ -58,7 +75,22 @@ namespace SitecoreBugger.Site.Business.Bugger
 
         public MemoryStream GetExcelReport(ErrorFilter errorFilter)
         {
+            var masterRecord = GetMasterRecords();
+
             var result = Core.GetError(errorFilter);
+
+            // ScreenshotUrlFrameUp
+
+            foreach(Error err in result)
+            {
+                err.E_ScreenShotUrl = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.PathAndQuery, "")  + Settings.ScreenSHotURLPrefix + err.ErrorId;
+                err.E_Project = masterRecord.project.Where(x => x.ProjectId.Equals(err.ProjectId)).FirstOrDefault().ProjectName;
+                err.E_ErrorSeverity = masterRecord.ErrorSeverity.Where(x => x.EId.Equals(err.ErrorSeverityId)).FirstOrDefault().EDisplayName;
+                err.E_ErrorType = masterRecord.ErrorType.Where(x => x.EId.Equals(err.ErrorTypeId)).FirstOrDefault().EDisplayName;
+                err.E_ErrorStatus = masterRecord.ErrorStatus.Where(x => x.EId.Equals(err.ErrorStatusId)).FirstOrDefault().EDisplayName;
+                err.E_AssigneeUser = masterRecord.UserList.Where(x => x.UserId.Equals(err.AssigneeUserId)).FirstOrDefault().UserName;
+                err.E_OwnerUser = masterRecord.UserList.Where(x => x.UserId.Equals(err.OwnerUserId)).FirstOrDefault().UserName;
+            }
 
             var dataTable = Utility.ConvertToDataTable<Error>(result);
 

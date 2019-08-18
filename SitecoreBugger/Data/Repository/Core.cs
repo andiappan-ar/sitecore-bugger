@@ -227,6 +227,35 @@ namespace SitecoreBugger.Site.Data.Repository
             return result.FirstOrDefault();
         }
 
+        public static ErrorScreenShot GetErrorScreenShot(int ErrorId)
+        {
+            List<ErrorScreenShot> result = new List<ErrorScreenShot>();
+
+            using (SqlConnection sqlcon = new SqlConnection(Settings.CS))
+            {
+                using (SqlCommand cmd = new SqlCommand("SP_GetImageByErrorId", sqlcon))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@ErrorId", SqlDbType.Int).Value = CheckDBNUll(ErrorId);
+                  
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        using (DataSet ds = new DataSet())
+                        {
+                            da.Fill(ds);
+
+                            result = ds.Tables[0].ToListof<ErrorScreenShot>();
+
+                            
+                        }
+                    }
+                }
+            }
+
+            return result.FirstOrDefault(); 
+        }
+
         public static object CheckDBObj(bool val,object objVal)
         {
             if (!val)
