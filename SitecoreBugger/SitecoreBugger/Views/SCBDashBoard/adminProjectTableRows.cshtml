@@ -1,0 +1,60 @@
+﻿@using SitecoreBugger.Site.Model.Global;
+@model List<Project>
+
+<!--Generate all row-->
+@foreach (Project proj in Model)
+{
+    string isActivated = (proj.IsbuggerActivated) ? "checked" : string.Empty;
+    string isArchived = (proj.IsArchieved) ? "checked" : string.Empty;
+    <tr class="@GetSeverityColor(proj)">
+        <td type="text"><input disabled type="text" class="p-id form-control" name="pid" id="pid" value="@proj.ProjectId"></td>
+        <td type="text"><input disabled type="text" class="p-pname form-control" name="pname" id="pname" value="@proj.ProjectName"></td>
+        <td type="textarea"><textarea disabled type="text" class="p-url form-control" name="purl" id="purl">@proj.Url.Trim()</textarea>
+        <td type="checkbox"><input disabled type="checkbox" class="p-isactive form-control" name="activate" id="activate" @isActivated /></td>
+        <td type="checkbox"><input disabled type="checkbox" class="p-isarchived form-control" name="activate" id="activate" @isArchived /></td>
+        <td>
+            @if (!proj.IsArchieved && proj.IsbuggerActivated)
+            {
+                <button type="button" disabled class="archieve-project btn btn-danger rounded-0">
+                    archieve
+                </button>
+            }
+            else
+            if (proj.IsArchieved)
+            {
+                <button type="button" disabled class="archieve-project btn btn-warning rounded-0">
+                   Re - archieve
+                </button>
+            }
+
+        </td>
+        <td>
+            <a class="add already-add" title="Add" data-toggle="tooltip"><i class="fa fa-plus-circle"></i></a>
+            <a class="edit" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
+            @if (!proj.IsbuggerActivated)
+            {
+                <a class="delete" title="Delete" data-toggle="tooltip"><i class="fa fa-trash-o"></i></a>
+            }
+        </td>
+    </tr>
+}
+
+@functions{
+    public string GetSeverityColor(Project proj)
+    {
+        string result = "";
+        if(proj.IsArchieved)
+        {
+            result = "bg-secondary";
+        }
+        else
+        if (proj.IsbuggerActivated)
+        {
+            result = "bg-success";
+        }
+        return result;
+    }
+
+
+
+}

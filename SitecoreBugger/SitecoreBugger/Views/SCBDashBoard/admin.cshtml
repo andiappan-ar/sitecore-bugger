@@ -1,0 +1,51 @@
+﻿@using SitecoreBugger.Site.Model.Global;
+
+@{
+    ViewBag.Title = "admin";
+    Layout = "~/Views/SCBLayout/SubLayout/_SubLayoutDashboard.cshtml";
+    List<Project> projList = ViewBag.AllProjects;
+}
+
+<link href="~/Content/SCB/Styles/sc-bugger-admin.css" rel="stylesheet" />
+
+<h2>Admin page</h2>
+<hr />
+
+<div class="container-fluid">
+    <div class="table-wrapper-">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2>Project <b>Details</b></h2>
+                </div>
+                <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary add-new rounded-0">
+                        Add Project <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Project Name</th>
+                    <th>Project Url</th>
+                    <th>Is Activate</th>
+                    <th>Is Archieved</th>
+                    <th>Archieve </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{Html.RenderPartial("adminProjectTableRows",projList);}
+            </tbody>
+        </table>
+        <button type="button" disabled id="submit-project" class="btn btn-primary rounded-0">
+            Submit
+        </button>
+    </div>
+</div>
+
+<script src="~/Scripts/SCB/sc-bugger-admin.js"></script>
