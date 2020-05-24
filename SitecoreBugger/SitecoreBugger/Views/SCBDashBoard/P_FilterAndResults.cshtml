@@ -7,7 +7,7 @@
 <hr />
 <div class="container-fluid">
 
-    <button class="btn btn-primary " type="button" data-toggle="collapse" data-target="#filtercollapseExample" aria-expanded="false" aria-controls="filtercollapseExample">
+    <button class="btn sc_bugger-element-primary-button" type="button" data-toggle="collapse" data-target="#filtercollapseExample" aria-expanded="false" aria-controls="filtercollapseExample">
         Collapse <i class="fa fa-filter" aria-hidden="true"></i>
     </button>
     <br />
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <button id="filter-clear" class="btn btn-primary  float-right " type="button">
+                                <button id="filter-clear" class="btn sc_bugger-element-primary-button  float-right " type="button">
                                     <i class="fa fa-undo"></i>
                                 </button>
                             </div>
@@ -108,8 +108,8 @@
                 <button id="hidden-submit" class="sc_bugger-hide" type="submit">Submit form</button>
             </form>
             <br />
-            <button id="filter-search" type="button" class="btn btn-primary " data-dismiss="modal">
-                <i class="fa fa-search" aria-hidden="true"></i>
+            <button id="filter-search" type="button" class="btn sc_bugger-element-primary-button" data-dismiss="modal">
+                <i class="fa fa-search " aria-hidden="true"></i>
             </button>
         </div>
     </div>
@@ -126,22 +126,21 @@
     <div id="card-container" class="card card-body sc_bugger-element-background-color  sc_bugger-disabled">
         <div class="row">
 
-            <div class="col-5">
+            <div class="col-2">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text btn-primary" for="filter-error-view">View type</label>
+                        <label class="input-group-text sc_bugger-element-primary-button" for="filter-error-view">View type</label>
                     </div>
                     <select id="filter-error-view" name="filter-error-view" class="custom-select">
-                        <option value="card" selected>Card view</option>
-                        <option value="detail">Detailed view</option>
+                        <option value="card" selected>Card view</option>                        
                         <option value="mini">Mini view</option>
                     </select>
                 </div>
             </div>
-            <div class="col-2">
+            <div class="col">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text btn-primary" for="filter-error-page-size">page size</label>
+                        <label class="input-group-text sc_bugger-element-primary-button" for="filter-error-page-size">page size</label>
                     </div>
                     <select id="filter-error-page-size" name="filter-error-page-size" class="custom-select">
                         <option value="5" selected>5</option>
@@ -151,31 +150,31 @@
                 </div>
             </div>
 
-            <div class="col-1">
+            <div class="col">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
-                        <li id="prev-page" class="page-item card-pagination"><button class="page-link btn btn-primary " href="javascript:void(0)">Previous</button></li>
-                        <li id="next-page" class="page-item card-pagination"><button class="page-link btn btn-primary " href="javascript:void(0)">Next</button></li>
+                        <li id="prev-page" class="page-item card-pagination"><button class="page-link btn sc_bugger-element-primary-button" href="javascript:void(0)">Previous</button></li>
+                        <li id="next-page" class="page-item card-pagination"><button class="page-link btn sc_bugger-element-primary-button" href="javascript:void(0)">Next</button></li>
                     </ul>
                 </nav>
             </div>
 
-            <div class="col-2">
-                <button id="add-new-error" class="btn btn-primary float-right">
+            <div class="col">
+                <button id="add-new-error" class="btn sc_bugger-element-primary-button float-right">
                     Add new error
                 </button>
             </div>
 
-            <div class="col-1">
-                <button id="export-error" class="export-error-excel btn btn-primary" type="button" data-toggle="collapse"
+            <div class="col">
+                <button id="export-error" class="export-error-excel btn sc_bugger-element-primary-button" type="button" data-toggle="collapse"
                         data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     <i class="fa fa-file-excel-o" aria-hidden="true"></i>
                 </button>
 
             </div>
-            <div class="col-1">
+            <div class="col">
 
-                <button id="export-error-all" class="export-error-excel btn btn-primary" type="button" data-toggle="collapse"
+                <button id="export-error-all" class="export-error-excel btn sc_bugger-element-primary-button" type="button" data-toggle="collapse"
                         data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     All
                     <i class="fa fa-file-excel-o" aria-hidden="true"></i>
@@ -212,13 +211,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body sc_bugger-element-background-color-light ">
+            <div class="modal-body">
                 <form ID="sc_bugger-form-mark-error" class="sc_bugger-form-validator" is-valid-form="false" novalidate>
                     <!--Error Id-->
                     <input type="hidden" id="errorID" />
                     <!--Error title-->
                     <div class="form-group">
-                        <label for="errorTitle">Error title</label>
+                        <label class="" for="errorTitle">Error title</label>
                         <input type="text" class="form-control" id="errorTitle" placeholder="Error title" required>
                         <div class="valid-feedback">
                             Looks good!
@@ -312,7 +311,7 @@
                     <!--Device detail-->
                     <div class="form-group">
                         <p>
-                            <a class="btn btn-primary " data-toggle="collapse" href="#SC-device-collapse" role="button"
+                            <a class="btn sc_bugger-element-inner-primary-button " data-toggle="collapse" href="#SC-device-collapse" role="button"
                                aria-expanded="false" aria-controls="SC-device-collapse">
                                 Device details -
                                 <i class="fa fa-arrows-v" aria-hidden="true"></i>
@@ -327,7 +326,7 @@
                     <!--Sitecore component detail-->
                     <div class="form-group">
                         <p>
-                            <a class="btn btn-primary " data-toggle="collapse" href="#SC-component-collapse" role="button"
+                            <a class="btn sc_bugger-element-inner-primary-button " data-toggle="collapse" href="#SC-component-collapse" role="button"
                                aria-expanded="false" aria-controls="SC-component-collapse">
                                 Sitecore component details -
                                 <i class="fa fa-arrows-v" aria-hidden="true"></i>
@@ -346,7 +345,7 @@
                             <label class="custom-file-label" for="validatedCustomFile">Upload screen shot... < 700 KB </label>
                             <div class="invalid-feedback">Example invalid custom file feedback</div>
                             <input id="sc_bugger-upload-screenshot" accept="image/*" type="file" class="custom-file-input" is-updated-creenshot="false">
-                            <button id="remove-screen-shot" class="btn btn-primary remove-screen-shot" type="button">
+                            <button id="remove-screen-shot" class="btn sc_bugger-element-inner-primary-button remove-screen-shot" type="button">
                                 <i class="fa fa-times" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -360,7 +359,7 @@
                 </form>
             </div>
             <div class="modal-footer sc_bugger-element-background-color ">
-                <button id="sc_bugger-submit-error" type="button" class="btn btn-primary ">Save</button>
+                <button id="sc_bugger-submit-error" type="button" class="btn sc_bugger-element-primary-button ">Save</button>
                 <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -378,7 +377,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body sc_bugger-element-background-color-light ">
+            <div class="modal-body ">
                 <form ID="sc_bugger-add-new-error" class="sc_bugger-form-validator" is-valid-form="false" novalidate>
                   
                     <!--Error title-->

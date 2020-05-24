@@ -107,6 +107,7 @@ namespace SitecoreBugger.Site.Data.Repository
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.Parameters.Add("@ProjectId", SqlDbType.Int).Value = CheckDBNUll(proj.ProjectId);
+                            cmd.Parameters.Add("@SiteDefintionName", SqlDbType.NVarChar).Value = CheckDBNUll_STR(proj.SiteDefintionName);
                             cmd.Parameters.Add("@ProjectName", SqlDbType.NVarChar).Value = CheckDBNUll_STR(proj.ProjectName);
                             cmd.Parameters.Add("@Url", SqlDbType.NVarChar).Value = CheckDBNUll_STR(proj.Url);
                             cmd.Parameters.Add("@IsbuggerActivated", SqlDbType.Bit).Value = proj.IsbuggerActivated;
@@ -285,6 +286,7 @@ namespace SitecoreBugger.Site.Data.Repository
                     cmd.Parameters.Add("@Screenshot", SqlDbType.VarBinary).Value = CheckDBObj(error.UpdateScreenshot, error.ScreenShot);
                     cmd.Parameters.Add("@UpdateScreenshot", SqlDbType.Bit).Value = error.UpdateScreenshot;
                     cmd.Parameters.Add("@DeviceDetails", SqlDbType.NVarChar).Value = DBNull.Value;
+                    cmd.Parameters.Add("@SitecoreComponentDetails", SqlDbType.NVarChar).Value = CheckDBNUll_STR(error.SitecoreComponentDetails);
 
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {

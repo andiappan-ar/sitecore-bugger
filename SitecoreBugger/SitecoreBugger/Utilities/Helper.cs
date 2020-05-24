@@ -181,6 +181,21 @@ namespace SitecoreBugger.Site.Utilities
 
             return memoryStream;
         }
+
+        public static string GetUrlLeftPart(string urlPath)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = (new Uri(urlPath)).GetLeftPart(System.UriPartial.Authority);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteError(ex);
+            }
+
+            return result;
+        }
     
 }
 }

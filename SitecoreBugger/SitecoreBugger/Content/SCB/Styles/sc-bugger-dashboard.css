@@ -64,8 +64,8 @@ span {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    /*background: #30b579;*/
-    background-image: url(https://s1.1zoom.me/big0/255/428779-Kycb.jpg);
+    background: #116466;
+    /*background-image: url(https://s1.1zoom.me/big0/255/428779-Kycb.jpg);*/
     color: #fff;
     transition: all 0.3s;
 }
@@ -117,7 +117,7 @@ span {
 
     #sidebar .sidebar-header {
         padding: 20px;
-        background: #4CAF50;
+        background: #2b554a;
     }
 
         #sidebar .sidebar-header strong {
@@ -137,7 +137,7 @@ span {
     }
 
         #sidebar ul li a:hover {
-            color: #30b579;
+            color: #116466;
             background: #fff;
         }
 
@@ -148,7 +148,7 @@ span {
     #sidebar ul li.active > a,
     a[aria-expanded="true"] {
         color: #fff;
-        background: #4CAF50;
+        background: #2b554a;
     }
 
 a[data-toggle="collapse"] {
@@ -166,7 +166,7 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #4CAF50;
+    background: #2b554a;
 }
 
 ul.CTAs {
@@ -183,12 +183,12 @@ ul.CTAs {
 
 a.download {
     background: #fff;
-    color: #30b579;
+    color: #116466;
 }
 
 a.article,
 a.article:hover {
-    background: #4CAF50 !important;
+    background: #2b554a !important;
     color: #fff !important;
 }
 
@@ -275,7 +275,7 @@ a.article:hover {
 /*bgm custom*/
 
 .sc_bugger-element-background-color {
-    background-color: #30b579;
+    background-color: #116466;
 }
 
 .sc_bugger-hide {
@@ -325,7 +325,7 @@ a.article:hover {
 }
 
 .sc_bugger-element-background-color {
-    background-color: #30b579;
+    background-color: #116466;
     color: white;
 }
 
@@ -352,4 +352,26 @@ a.article:hover {
     pointer-events: none;
     cursor: not-allowed;
     background-color: grey;
+}
+
+.sc_bugger-element-primary-button {
+    background-color: #d9b08c !important;
+    color: #000 !important;
+}
+
+.sc_bugger-element-inner-primary-button {
+    background-color: #43beac !important;
+    color: black !important;
+}
+
+.sc_bugger-element-background-color {    
+    color: #ffcb9a !important;
+}
+
+.sc_bugger-element-background-color-light {
+    color: #ffe5cc !important;
+}
+
+.sc_bugger-element.modal label {
+    font-weight: bold;
 }

@@ -140,6 +140,11 @@
                 $('#filter-clear i').on('click', function () {
                     $('#filter-error-type,#filter-error-severity,#filter-error-status,#filter-main-search-issue,#filter-error-list').val("");
                     SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorId = null;
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorSeverity = null;
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.IsMyItem = null;
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.UserId = null;
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorType = null;
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.ErrorStatus = null;
                     $("#filter-myitems").prop("checked", false);
                 });
 

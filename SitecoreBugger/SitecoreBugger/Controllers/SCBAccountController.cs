@@ -1,5 +1,6 @@
 ﻿using SitecoreBugger.Site.Model.Global;
 using SitecoreBugger.Site.Security.Repository;
+using SitecoreBugger.Site.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,16 +50,36 @@ namespace SitecoreBugger.Site.Controllers
         [HttpPost]
         public ActionResult SignUp(RegisterUser registerUser)
         {
-            if (_BuggerAccount.SignUp(registerUser))
+            if(SignUpCodeVerificationCheck(registerUser))
             {
-                return RedirectToAction("Login", "SCBAccount");
+                if (_BuggerAccount.SignUp(registerUser))
+                {
+                    return RedirectToAction("Login", "SCBAccount");
+                }
+                else
+                {
+                    ViewBag.IsRegistration = false;
+                    ViewBag.RegisterError = "In valid user detail";
+                }
             }
             else
             {
                 ViewBag.IsRegistration = false;
+                ViewBag.RegisterError = "In valid registration code";
             }
 
             return View();
+        }
+
+        private bool SignUpCodeVerificationCheck(RegisterUser registerUser)
+        {
+            bool result = false;
+
+            result = (String.Equals(Settings.GetSitecoreSettings("scb_admin_role_id"), Convert.ToString(registerUser.RoleId)))
+                      ? String.Equals(Settings.GetSitecoreSettings("scb_admin_registration_code"), registerUser.RegistrationCode)
+                      : String.Equals(Settings.GetSitecoreSettings("scb_otheruser_registration_code"), registerUser.RegistrationCode);
+
+            return result;
         }
     }
 }

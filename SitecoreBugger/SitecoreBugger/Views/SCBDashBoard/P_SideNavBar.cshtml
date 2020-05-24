@@ -9,63 +9,37 @@
 <nav id="sidebar" class="position-fixed--">
 
     <div class="sidebar-header">
-        <h3><i id="sc_bugger-bug-icon-b" class="fa fa-bug"></i> Sitecore Bugger</h3>
-        <strong><i id="sc_bugger-bug-icon-b" class="fa fa-bug"></i></strong>
+        <h3 class="sc_bugger-element-background-color-light"><i id="sc_bugger-bug-icon-b" class="fa fa-bug sc_bugger-element-background-color-light"></i> Sitecore Bugger</h3>
+        <strong><i id="sc_bugger-bug-icon-b" class="fa fa-bug sc_bugger-element-background-color-light"></i></strong>
     </div>
 
     <ul class="list-unstyled components">
         <li class="active">
-            <a href="/sc-bugger/scbdashboard/index" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <a href="/sc-bugger/scbdashboard/index" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle sc_bugger-element-background-color-light">
                 <i class="fa fa-home"></i>
                 Home
             </a>
-            <ul class="collapse list-unstyled" id="homeSubmenu">
-                <li>
-                    <a href="#">Home 1</a>
-                </li>
-                <li>
-                    <a href="#">Home 2</a>
-                </li>
-                <li>
-                    <a href="#">Home 3</a>
-                </li>
-            </ul>
+           
         </li>
         <li class="">
-            <a href="/sc-bugger/scbdashboard/index">
+            <a href="/sc-bugger/scbdashboard/index" class="sc_bugger-element-background-color-light">
                 <i class="fa fa-home"></i>
                 Dashboard
             </a>          
         </li>
-        <li>
-            <a href="/sc-bugger/dashboard/report#">
-                <i class="fa fa-bar-chart"></i>
-                Report
-            </a>
-        </li>
+       
 
         @if (usr.RoleId == 4)
         {
             <li>
-                <a href="/sc-bugger/scbdashboard/admin">
+                <a href="/sc-bugger/scbdashboard/admin" class="sc_bugger-element-background-color-light">
                     <i class="fa fa-address-card"></i>
                     Admin
                 </a>
             </li>
         }
 
-        <li>
-            <a href="#">
-                <i class="fa fa-question"></i>
-                FAQ
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-paper-plane"></i>
-                Contact
-            </a>
-        </li>
+       
     </ul>
     <ul class="list-unstyled CTAs">
         <li>

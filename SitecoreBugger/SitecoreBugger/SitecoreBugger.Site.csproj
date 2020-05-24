@@ -47,8 +47,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DocumentFormat.OpenXml, Version=2.9.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
-      <HintPath>..\packages\DocumentFormat.OpenXml.2.9.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -276,7 +276,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\SCBLayout\_TestMain.cshtml" />
-    <Content Include="Views\SCBTools\TestPage.cshtml" />
+    <Content Include="Views\SCBTestSite\TestPage.cshtml" />
     <Content Include="Views\SCBAccount\Login.cshtml" />
     <Content Include="Views\SCBTools\Tools.cshtml" />
     <Content Include="Views\SCBLayout\_AccountAndDashMainLayout.cshtml" />

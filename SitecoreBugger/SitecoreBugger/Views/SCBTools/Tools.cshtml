@@ -43,7 +43,7 @@
                     </div>
                     <div class="modal-body sc_bugger-element-background-color-light">
 
-                        <form ID="sc_bugger-form-mark-error" class="sc_bugger-form-validator" is-valid-form="false" >
+                        <form ID="sc_bugger-form-mark-error" class="sc_bugger-form-validator" is-valid-form="false">
                             <!--Error title-->
                             <div class="form-group">
                                 <label for="errorTitle">Error title</label>
@@ -135,7 +135,7 @@
                                 <!--Device detail-->
                                 <div class="form-group">
                                     <p>
-                                        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
+                                        <a class="btn sc_bugger-element-inner-primary-button" data-toggle="collapse" href="#collapseExample" role="button"
                                            aria-expanded="false" aria-controls="collapseExample">
                                             Device details -
                                             <i class="fa fa-arrows-v" aria-hidden="true"></i>
@@ -154,7 +154,7 @@
                                         <label class="custom-file-label" for="validatedCustomFile">Upload screen shot... < 700 KB </label>
                                         <div class="invalid-feedback">Example invalid custom file feedback</div>
                                         <input id="sc_bugger-upload-screenshot" accept="image/*" type="file" class="custom-file-input" is-updated-creenshot="false">
-                                        <button id="remove-screen-shot" class="btn btn-primary" type="button">
+                                        <button id="remove-screen-shot" class="btn sc_bugger-element-inner-primary-button" type="button">
                                             <i class="fa fa-times" aria-hidden="true"></i>
                                         </button>
                                     </div>
@@ -164,7 +164,7 @@
                                         <figcaption class="figure-caption text-right">Screen shot of an issue.</figcaption>
                                     </figure>
                                 </div>
-                                <button id="hidden-submit" class="sc_bugger-hide" type="submit">Submit form</button>
+                                <button id="hidden-submit" class="sc_bugger-element-primary-button sc_bugger-hide" type="submit">Submit form</button>
 
                             </div>
 
@@ -172,8 +172,8 @@
                         </form>
                     </div>
                     <div class="modal-footer sc_bugger-element-background-color">
-                        <button id="sc_bugger-submit-error" type="button" class="btn btn-primary sc_bugger-hide">Submit</button>
-                        <button id="sc_bugger-save-error" type="button" class="btn btn-primary ">Mark error</button>
+                        <button id="sc_bugger-submit-error" type="button" class="btn sc_bugger-element-primary-button sc_bugger-hide">Submit</button>
+                        <button id="sc_bugger-save-error" type="button" class="btn sc_bugger-element-primary-button ">Mark error</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
@@ -192,13 +192,13 @@
                     <div class="modal-body sc_bugger-element-background-color-light">
                         <br />
                         <div class="alert alert-warning" role="alert">
-                            Please login to bugger.
+                            Please login.
                         </div>
 
                         <div id="invalid-user-alret" class="sc_bugger-hide alert alert-danger" role="alert">
                             Invalid user or password.
                         </div>
-                        <form ID="sc_bugger-login-form" class="sc_bugger-form-validator" is-valid-form="false" >
+                        <form ID="sc_bugger-login-form" class="sc_bugger-form-validator" is-valid-form="false">
                             <div class="form-group">
                                 <label for="UserName" class="text-info">Email:</label><br>
                                 <input type="email" name="Email" id="Email" class="form-control " required>
@@ -212,8 +212,13 @@
                             </div>
 
                             <div class="form-group">
-                                <input id="login-form-sc-bugger" type="submit" name="submit" class="btn btn-md btn-primary  " value="Login">
+                                <input id="login-form-sc-bugger" type="submit" name="submit" class="btn btn-md sc_bugger-element-inner-primary-button" value="Login">
+                            </div>
+
+                            <div class="form-group float-right">
                                 <a href="/sc-bugger/scbaccount/signup">Sign-up</a> |
+                                <a href="/sc-bugger/scbaccount/ForgotPassword">Forgot password</a>
+                                <br />
                             </div>
 
                         </form>
@@ -242,7 +247,7 @@
                         </div>
                     </div>
                     <div class="modal-footer sc_bugger-element-background-color">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -298,11 +303,15 @@
 
 <!--Script-->
 <script src="~/Scripts/SCB/plugins/jquery-3.4.1.min.js"></script>
-    <script src="~/Scripts/SCB/plugins/html2canvas.js"></script>
-    <script src="~/Scripts/SCB/plugins/popper.js"></script>
-    <script src="~/Scripts/SCB/plugins/bootstrap.js"></script>
+<script src="~/Scripts/SCB/plugins/html2canvas.js"></script>
+<script src="~/Scripts/SCB/plugins/popper.js"></script>
+<script src="~/Scripts/SCB/plugins/bootstrap.js"></script>
+
+
 <script type="text/javascript">
-    var $sc_bugger_jq = $.noConflict(true);   
+    var $sc_bugger_jq = $.noConflict(true);
 </script>
 
 <script src="~/Scripts/SCB/sc-bugger-main.js"></script>
+
+

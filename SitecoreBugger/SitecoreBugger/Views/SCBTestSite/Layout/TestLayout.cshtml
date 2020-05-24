@@ -39,9 +39,23 @@
 
     @Html.Sitecore().Placeholder("SCBTestSiteFooter");
 
-    @if (!string.IsNullOrEmpty(Sitecore.Configuration.Settings.GetSetting("scb_enable")))
+    @if (SitecoreBugger.Site.Utilities.Settings.CheckSCBEnabledSite())
     {
         @Html.Partial("~/Views/SCBTools/Tools.cshtml")
+        @*<div id="sc-bugger-holder"></div>
+        <script type="text/javascript">
+            $(function() {
+                   $.ajax({
+                            url: '/sc-bugger/SCBTools/GetSCBTools',
+                            type: 'GET',
+                            cache: false,
+                            data: {  }
+                        }).done(function(result) {
+                                $('#sc-bugger-holder').html(result);
+                        });
+            });
+        </script>*@
+
     }
 
 </body>

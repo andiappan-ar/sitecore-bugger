@@ -1,4 +1,10 @@
-﻿using SC = Sitecore.Configuration;
+﻿using SitecoreBugger.Site.Model.Global;
+using System.Collections.Generic;
+using SC = Sitecore.Configuration;
+using System.Linq;
+using System.Web;
+using System;
+using SitecoreBugger.Site.Business.Bugger;
 
 namespace SitecoreBugger.Site.Utilities
 {
@@ -16,7 +22,16 @@ namespace SitecoreBugger.Site.Utilities
             return (!string.IsNullOrEmpty(SC.Settings.GetSetting("scb_enable")));
         }
 
-        internal static string GetSitecoreSettings(string key)
+        public static bool CheckSCBEnabledSite()
+        {
+           return (!string.IsNullOrEmpty(SC.Settings.GetSetting("scb_enable")))                    
+                    ? (new BuggerBusiness()).GetAllProjects().Any(x =>
+            (Helper.GetUrlLeftPart(x.Url).Equals(
+                Helper.GetUrlLeftPart(HttpContext.Current.Request.Url.AbsoluteUri)) && x.IsbuggerActivated))
+                    : false;
+        }
+
+        public static string GetSitecoreSettings(string key)
         {
             return CheckSCBEnabled() ? SC.Settings.GetSetting(key) : string.Empty;
         }

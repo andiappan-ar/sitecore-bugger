@@ -16,8 +16,7 @@
 
     <h3 class="text-center text-white pt-5">
         <blockquote class="blockquote text-center">
-            <h1 class="">Sitecore Bugger</h1>
-            <footer class=" blockquote-footer">Rich experience <cite title="Source Title">sitecore project bug management.</cite></footer>
+            <h1 class="sc_bugger-base-header"><strong><i id="sc_bugger-bug-icon-b" class="fa fa-bug sc_bugger-element-background-color-light"></i></strong>  Sitecore Bugger</h1>
         </blockquote>
     </h3>
 
@@ -33,7 +32,7 @@
                         @if (!ViewBag.IsRegistration)
                         {
                             <div class="alert alert-danger" role="alert">
-                                User already exist.
+                                @ViewBag.RegisterError
                             </div>
                             <br />
                         }
@@ -78,6 +77,16 @@
                                     <option value="@val.EId">@val.EDisplayName</option>
                                 }
                             </select>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+
+                        <!--Registration code-->
+                        <div class="form-group">
+                            <label for="RegistrationCode" class="text-info">Registration Code:</label><br>
+                            <input type="text" name="RegistrationCode" id="RegistrationCode" class="form-control rounded-0" required>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>

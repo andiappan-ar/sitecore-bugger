@@ -20,11 +20,14 @@ var actions = `<a class="add" title="Add" data-toggle="tooltip"><i class="fa fa-
                     IsbuggerActivated: false,
                         ProjectName: "",
                         ProjectUrl: ""
-                    };
+                };
+
+                var masterSiteDefintionDD = $("#master-sitedefintion-dd").clone().removeClass('sc_bugger-hide').prop('outerHTML');
 
                 var _row = '<tr>' +
                         '<td type="text"><input disabled type="text" class="p-id form-control" name="pid" id="pid" value="' + tempDataItem.ProjectId + '"></td>' +                       
-                        '<td type="text"><input  type="text" class="p-pname form-control" name="pname" id="pname" value="' + tempDataItem.ProjectName + '"></td>' +
+                    '<td type="text"><input  type="text" class="p-pname form-control" name="pname" id="pname" value="' + tempDataItem.ProjectName + '"></td>' +
+                    '<td type="select">' + masterSiteDefintionDD + '</td>' +
                     '<td type="textarea"><textarea  type="text" class="p-url form-control" name="purl" id="purl" >' + tempDataItem.ProjectUrl + '</textarea>' +
                     '<td type="checkbox"><input  type="checkbox" class="p-isactive form-control" name="activate" id="activate"/></td>' +
                     '<td type="checkbox"><input disabled type="checkbox" class="p-isarchived form-control" name="activate" id="activate"/></td>' +
@@ -67,6 +70,7 @@ var actions = `<a class="add" title="Add" data-toggle="tooltip"><i class="fa fa-
                         ProjectId: $(this).parents("tr").find('.p-id').val(),
                         IsbuggerActivated: $(this).parents("tr").find('.p-isactive').prop("checked"),
                         ProjectName: $(this).parents("tr").find('.p-pname').val(),
+                        SiteDefintionName: $(this).parents("tr").find('.p-sname').val(),
                         Url: $(this).parents("tr").find('.p-url').val(),
                         IsArchieved: $(this).parents("tr").find('.p-isarchived').prop("checked"),
                         Type: null

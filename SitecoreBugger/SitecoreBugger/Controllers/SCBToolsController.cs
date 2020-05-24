@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using SitecoreBugger.Site.Utilities;
 using System.Net;
-using System.Security.Cryptography;
-using System.Text;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SitecoreBugger.Site.Controllers
@@ -18,6 +12,16 @@ namespace SitecoreBugger.Site.Controllers
             return View();
         }
 
+        public ActionResult GetSCBTools(string siteName)
+        {
+            if(Settings.CheckSCBEnabledSite())
+            {
+                return View("~/Views/SCBTools/Tools.cshtml");
+            }
+
+            return new EmptyResult();
+        }
+
         public ActionResult ImageProxy(string url)
         {
             WebClient myWebClient = new WebClient();
@@ -26,7 +30,7 @@ namespace SitecoreBugger.Site.Controllers
         }
 
         public ActionResult Tools()
-        {
+        {            
             var masterRecord = _BuggerBusiness.GetMasterRecords();
             return View(masterRecord);
         }

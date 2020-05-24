@@ -1,7 +1,11 @@
 ﻿body {
-    background-color: #30b579;
+    background-color: #116466;
 }
 
 #login-column {
     background-color: white;
+}
+
+.sc_bugger-base-header {
+    color: #ffcb9a !important;
 }
