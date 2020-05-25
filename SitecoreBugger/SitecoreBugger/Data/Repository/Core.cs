@@ -389,6 +389,42 @@ namespace SitecoreBugger.Site.Data.Repository
             return result.FirstOrDefault();
         }
 
+        internal static bool ResetPassword(LoginUserValidation user)
+        {
+            bool result = false;
+
+            try
+            {
+                using (SqlConnection sqlcon = new SqlConnection(Settings.GetCS()))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_ResetPassword", sqlcon))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@UserId", SqlDbType.Int).Value = CheckDBNUll(user.UserId);
+                        cmd.Parameters.Add("@PasswordHash", SqlDbType.NVarChar).Value = CheckDBNUll_STR(user.PasswordHash);
+                        cmd.Parameters.Add("@PasswordSalt", SqlDbType.NVarChar).Value = CheckDBNUll_STR(user.PasswordSalt);
+
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            using (DataSet ds = new DataSet())
+                            {
+                                da.Fill(ds);
+                            }
+                        }
+                    }
+
+                    result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteError(ex);
+            }
+
+            return result;
+        }
+
         internal static object CheckDBObj(bool val, object objVal)
         {
             if (!val || objVal==null)

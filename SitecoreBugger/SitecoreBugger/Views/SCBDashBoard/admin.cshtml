@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "admin";
     Layout = "~/Views/SCBLayout/SubLayout/_SubLayoutDashboard.cshtml";
-    List<Project> projList = ViewBag.AllProjects;
+    List<Project> projList = ViewBag.AllProjects;    
 }
 
 <link href="~/Content/SCB/Styles/sc-bugger-admin.css" rel="stylesheet" />
@@ -19,7 +19,7 @@
                     <h2>Project <b>Details</b></h2>
                 </div>
                 <div class="col-sm-4">
-                    <button type="button" class="btn btn-primary add-new rounded-0">
+                    <button type="button" class="btn sc_bugger-element-primary-button add-new rounded-0">
                         Add Project <i class="fa fa-plus"></i>
                     </button>
                 </div>
@@ -28,7 +28,7 @@
         </div>
         <table class="table table-bordered table-hover">
             <thead>
-                <tr>
+                <tr class="p-3 mb-2 bg-info text-white">
                     <th>Id</th>
                     <th>Project Name</th>
                     <th>Site Name</th>
@@ -40,13 +40,62 @@
                 </tr>
             </thead>
             <tbody>
-                @{Html.RenderPartial("adminProjectTableRows",projList);}
+                @{Html.RenderPartial("adminProjectTableRows", projList);}
             </tbody>
         </table>
-        <button type="button" disabled id="submit-project" class="btn btn-primary rounded-0">
+        <button type="button" disabled id="submit-project" class="btn sc_bugger-element-primary-button rounded-0">
             Submit
         </button>
     </div>
+    <hr />
+    <br />
+    <div class="table-wrapper-">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2>Reset password</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <form id="updatepassword-form" class="form sc_bugger-form-validator" action="" method="post" novalidate>
+
+                    <div class="form-group">
+                        <label class="" for="filter-error-status">User:</label>
+                        <select class="form-control" id="filter-a-user-id">                            
+                            @foreach (User val in Model.UserList)
+                            {
+                                <option value="@val.UserId" r-id="@val.RoleId">@val.UserName</option>
+                            }
+                        </select>
+                        <div class="valid-feedback">
+
+                        </div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Password" class="text-info">Password:</label><br>
+                        <input type="password" name="Password" id="Password" class="form-control rounded-0" required>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-md sc_bugger-element-inner-primary-button  rounded-0" value="Reset password">
+                    </div>
+
+                </form>
+            </div>
+            <div class="col">
+
+            </div>
+        </div>
+
+
+    </div>
+
 </div>
 
 <script src="~/Scripts/SCB/sc-bugger-admin.js"></script>

@@ -20,5 +20,10 @@ namespace SitecoreBugger.Site.Business.Account
         {
             return Security_Bugger.Account.SignUp(registerUser);
         }
+
+        public bool ResetPassword(LoginUserValidation user)
+        {
+            return Security_Bugger.Account.ResetPassword(user);
+        }
     }
 }

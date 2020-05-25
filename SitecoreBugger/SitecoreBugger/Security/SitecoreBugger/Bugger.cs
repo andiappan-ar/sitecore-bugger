@@ -1,6 +1,7 @@
 ﻿using SitecoreBugger.Site.Model.Global;
 using SitecoreBugger.Site.Security.Model;
 using SitecoreBugger.Site.Security.Repository;
+using SitecoreBugger.Site.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,11 @@ namespace SitecoreBugger.Site.Security.SitecoreBugger
 
             return result;
            
+        }
+
+        public static bool CheckAdminUser()
+        {
+            return (GetUserFromToken().RoleId == Convert.ToInt32(Settings.GetSitecoreSettings("scb_admin_role_id")));
         }
 
         public static Project GetProject(List<Project> allProjects)

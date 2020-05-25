@@ -1,5 +1,6 @@
 ﻿using SitecoreBugger.Site.Model.Global;
 using SitecoreBugger.Site.Security.Repository;
+using SitecoreBugger.Site.Security.SitecoreBugger;
 using SitecoreBugger.Site.Utilities;
 using System;
 using System.Collections.Generic;
@@ -81,5 +82,21 @@ namespace SitecoreBugger.Site.Controllers
 
             return result;
         }
+
+        public bool ResetPassword(LoginUserValidation user)
+        {
+            bool result = false;
+
+            if (Bugger.CheckAdminUser())
+            {
+                result =  _BuggerAccount.ResetPassword(user);
+            }
+
+            return result;
+        }
+
     }
+
+   
+
 }

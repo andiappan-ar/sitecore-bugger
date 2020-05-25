@@ -62,5 +62,12 @@ namespace SitecoreBugger.Site.Security.SitecoreBugger
             var isLogined = !string.IsNullOrEmpty(AuthenticationModule.GenerateTokenForUser(securityModel));
             return (isLogined);
         }
+
+        public static bool ResetPassword(LoginUserValidation user)
+        {
+            user.PasswordSalt = PasswordHelper.CreateSalt();
+            user.PasswordHash = PasswordHelper.GenerateHash(user.PasswordHash, user.PasswordSalt);
+            return Core.ResetPassword(user);
+        }
     }
 }

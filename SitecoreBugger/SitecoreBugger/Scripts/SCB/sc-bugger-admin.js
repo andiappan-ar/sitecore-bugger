@@ -321,5 +321,35 @@ var actions = `<a class="add" title="Add" data-toggle="tooltip"><i class="fa fa-
                 return result;
             }
 
+
+            $("#updatepassword-form").on("submit", function () {
+
+                $('.sc_bugger-element #pleaseWaitDialog').modal('show');
+                if ($("#Password").val() != "") {
+                    $.ajax({
+                        url: "/sc-bugger/SCBAccount/ResetPassword",
+                        type: "post",
+                        async: false,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({ "UserId": $("#filter-a-user-id").val(), "PasswordHash": $("#Password").val() }),
+                        success: function (response) {
+                            if (response) {
+                                $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+                                alert("Password reset completed.");
+                            }
+                            else {
+                                alert("Password reset failed.");
+                            }
+
+                        },
+                        error: function (response) {
+                            $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+                            console.log(response);
+                        }
+                    });
+                }
+                $('.sc_bugger-element #pleaseWaitDialog').modal('hide');
+                return false;
+            });
           
         });
