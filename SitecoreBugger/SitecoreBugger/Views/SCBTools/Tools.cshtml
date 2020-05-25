@@ -7,17 +7,12 @@
     var currentProjId = (masterData.currentProject != null) ? masterData.currentProject.ProjectId : 0;
 }
 
-
-
 <!--Style-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="~/Content/SCB/Styles/bootstrap-sc-bugger.css" rel="stylesheet" />
 <link href="~/Content/SCB/Styles/sc-bugger-tools-main.css" rel="stylesheet" />
 
 @*<link href="~/Content/SCB/fonts/fontawesome-free-5.10.1-web/fontawesome-free-5.10.1-web/css/all.min.css" rel="stylesheet" />*@
-
-
-
 
 <div class="sc_bugger-element row">
     <div class="container-fluid">
@@ -43,7 +38,7 @@
                     </div>
                     <div class="modal-body sc_bugger-element-background-color-light">
 
-                        <form ID="sc_bugger-form-mark-error" class="sc_bugger-form-validator" is-valid-form="false">
+                        <form ID="sc_bugger-form-mark-error" class="sc_bugger-form-validator" is-valid-form="false" novalidate>
                             <!--Error title-->
                             <div class="form-group">
                                 <label for="errorTitle">Error title</label>
@@ -198,7 +193,7 @@
                         <div id="invalid-user-alret" class="sc_bugger-hide alert alert-danger" role="alert">
                             Invalid user or password.
                         </div>
-                        <form ID="sc_bugger-login-form" class="sc_bugger-form-validator" is-valid-form="false">
+                        <form ID="sc_bugger-login-form" class="sc_bugger-form-validator" is-valid-form="false" novalidate>
                             <div class="form-group">
                                 <label for="UserName" class="text-info">Email:</label><br>
                                 <input type="email" name="Email" id="Email" class="form-control " required>
@@ -302,11 +297,10 @@
 </div>
 
 <!--Script-->
-<script src="~/Scripts/SCB/plugins/jquery-3.4.1.min.js"></script>
+@*<script src="~/Scripts/SCB/plugins/jquery-3.4.1.min.js"></script>*@
 <script src="~/Scripts/SCB/plugins/html2canvas.js"></script>
 <script src="~/Scripts/SCB/plugins/popper.js"></script>
 <script src="~/Scripts/SCB/plugins/bootstrap.js"></script>
-
 
 <script type="text/javascript">
     var $sc_bugger_jq = $.noConflict(true);

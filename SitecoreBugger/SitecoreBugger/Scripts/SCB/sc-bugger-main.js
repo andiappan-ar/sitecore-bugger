@@ -19,8 +19,8 @@ var SC_BUGGER = (function () {
             Element: {
                 CurrentBugElement: null,
                 OldBugElement: null,
-                GoToElement:null,
-                GoToElementIsUpdated:false,
+                GoToElement: null,
+                GoToElementIsUpdated: false,
                 ErrorGlobal: {
                     ErrorId: null,
                     ErrorTitle: null,
@@ -54,15 +54,15 @@ var SC_BUGGER = (function () {
 
                     // Logger information 
                     $sc_bugger_jq.each($sc_bugger_jq("scbugger-log"), function (index, item) {
-                        $(this).next().attr("is-scbuggerlog-enabled", true);
-                        $(this).next().attr("scbugger-log-id", $(this).attr("id"));
+                        $sc_bugger_jq(this).next().attr("is-scbuggerlog-enabled", true);
+                        $sc_bugger_jq(this).next().attr("scbugger-log-id", $sc_bugger_jq(this).attr("id"));
                     });
 
                     SC_BUGGER.EventListeners.BrowserInformationEvent();
                     SC_BUGGER.EventListeners.BugIconBarEvents();
                     SC_BUGGER.EventListeners.ModalEvents.init();
                     SC_BUGGER.EventListeners.File.UploadScreenshot();
-                    SC_BUGGER.EventListeners.FormEvents.Init();                   
+                    SC_BUGGER.EventListeners.FormEvents.Init();
 
                     if (SC_BUGGER.UtilityMethods.GetParameterByName("sc-b-eid") != ""
                         && SC_BUGGER.UtilityMethods.GetParameterByName("sc-b-eid") != null) {
@@ -75,7 +75,7 @@ var SC_BUGGER = (function () {
                 });
             },
             AlertEvents: {
-                ShowAlert: function (alertType,heading, message,detailedMessage="") {       
+                ShowAlert: function (alertType, heading, message, detailedMessage = "") {
                     var alertTemplate = `<div class="sc-alert-message alert alert-` + alertType + `" role="alert">
                                           <h2 class="alert-heading">` + heading + `!</h2>
                                           <h6>` + message + `</h6>
@@ -85,21 +85,21 @@ var SC_BUGGER = (function () {
 
                     $sc_bugger_jq("#sc-alert-area").append($sc_bugger_jq(alertTemplate));
 
-                    setInterval(function () {
-                        var vis = $sc_bugger_jq(".sc-alert-message").css("visibility");
-                        vis = (!vis || vis == "visible") ? "hidden" : "visible";
-                        $sc_bugger_jq(".sc-alert-message").css("visibility", vis);
-                    }, 300);
+                    //setInterval(function () {
+                    //    var vis = $sc_bugger_jq(".sc-alert-message").css("visibility");
+                    //    vis = (!vis || vis == "visible") ? "hidden" : "visible";
+                    //    $sc_bugger_jq(".sc-alert-message").css("visibility", vis);
+                    //}, 3000);
 
-                    $sc_bugger_jq(".sc-alert-message").delay(3000).fadeOut("slow", function () { $sc_bugger_jq(this).remove(); });
+                    $sc_bugger_jq(".sc-alert-message").delay(3000).fadeOut(function () { $sc_bugger_jq(this).remove(); });
                 }
             },
             FormEvents: {
                 Init: function () {
                     // Example starter JavaScript for disabling form submissions if there are invalid fields
-                    (function () {
+                    $sc_bugger_jq(function () {
                         'use strict';
-                        window.addEventListener('load', function () {
+                        $sc_bugger_jq(document).ready(function () {
                             // Fetch all the forms we want to apply custom Bootstrap validation styles to
                             var forms = document.getElementsByClassName('sc_bugger-form-validator');
                             // Loop over them and prevent submission
@@ -113,12 +113,15 @@ var SC_BUGGER = (function () {
                                     else {
                                         $sc_bugger_jq(this).attr("is-valid-form", true);
                                     }
-                                  
+
                                     form.classList.add('was-validated');
                                 }, false);
                             });
-                        }, false);
-                    })();
+                        });
+                        //window.addEventListener('load', function () {
+
+                        //}, false);
+                    });
 
                     // fiLEiNPUT BIND EVENTS
                     $sc_bugger_jq(".custom-file-input").on("change", function () {
@@ -158,7 +161,7 @@ var SC_BUGGER = (function () {
 
                             SC_BUGGER.FunctionalMethods.MarkErrorwith_PopupOver(SC_BUGGER.GlobalVariables.Element.ErrorGlobal);
 
-                            SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal'));    
+                            SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal'));
                             //$sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal').modal('hide');
                             SC_BUGGER.EventListeners.Body.UnbindBuggerBodyEvents();
                             $sc_bugger_jq("#sc_bugger-save-error-confirm").removeClass("sc_bugger-disabled");
@@ -167,7 +170,7 @@ var SC_BUGGER = (function () {
                             $sc_bugger_jq(".sc_bugger-element #main-form-save-elements").removeClass("sc_bugger-hide");
                             $sc_bugger_jq(".form-group-screenshot-div").addClass("sc_bugger-hide");
                             // Make all save elements required
-                            $sc_bugger_jq(".sc_bugger-element #main-form-save-elements #errorDetail,#errorType,#errorSeverity,#filter-error-status,#filter-a-user-id").attr("required", true);                          
+                            $sc_bugger_jq(".sc_bugger-element #main-form-save-elements #errorDetail,#errorType,#errorSeverity,#filter-error-status,#filter-a-user-id").attr("required", true);
 
                             event.preventDefault();
                             event.stopPropagation();
@@ -186,7 +189,7 @@ var SC_BUGGER = (function () {
 
                 },
                 GetErrorFormFieldsValues: function () {
-                    var isUpdateScreenshot = ($sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot") == "true");    
+                    var isUpdateScreenshot = ($sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot") == "true");
 
                     //Get value from model
                     SC_BUGGER.GlobalVariables.Element.ErrorGlobal = {
@@ -201,14 +204,14 @@ var SC_BUGGER = (function () {
                         Selector: SC_BUGGER.GlobalVariables.Browser.CurrentBugElement.getPath(),
                         DeviceDetails: JSON.stringify(SC_BUGGER.GlobalVariables.Browser.BasicDetails),
                         Uri: SC_BUGGER.UtilityMethods.RemoveURLParameter(window.location.href, SC_BUGGER.Settings.QueryString_SC_B_ID),
-                        SitecoreComponentDetails:null
+                        SitecoreComponentDetails: null
 
                     };
 
                     // Get sitecore component details
                     if (SC_BUGGER.GlobalVariables.Element.ErrorGlobal.Selector != null) {
 
-                        
+
                         var closesparent = $sc_bugger_jq(SC_BUGGER.GlobalVariables.Element.ErrorGlobal.Selector).closest("*[is-scbuggerlog-enabled=true]");
 
                         if (closesparent.length > 0) {
@@ -247,7 +250,7 @@ var SC_BUGGER = (function () {
                 }
             },
             ModalEvents: {
-               init: function() {
+                init: function () {
                     $sc_bugger_jq(document).on('hide.bs.modal', '.sc_bugger-element #sc-error-detail-modal', function () {
                         $sc_bugger_jq("#sc_bugger-save-error-confirm").addClass("sc_bugger-disabled");
                         $sc_bugger_jq("#sc_bugger-icon-bar").removeClass("sc_bugger-hide");
@@ -257,13 +260,13 @@ var SC_BUGGER = (function () {
                         SC_BUGGER.Settings.IsCompressScreenshot = $sc_bugger_jq(this).is(":checked");
                     });
 
-                   //All modal close event
-                   $sc_bugger_jq(document).on('hidden.bs.modal', '.sc_bugger-element .modal:not(#pleaseWaitDialog)', function () {
-                       $sc_bugger_jq("#sc-bugger-overlay").addClass("sc_bugger-hide");
-                   });
+                    //All modal close event
+                    $sc_bugger_jq(document).on('hidden.bs.modal', '.sc_bugger-element .modal:not(#pleaseWaitDialog)', function () {
+                        $sc_bugger_jq("#sc-bugger-overlay").addClass("sc_bugger-hide");
+                    });
 
                 },
-                ShowModel: function(element) {
+                ShowModel: function (element) {
                     element.modal('show');
                     $sc_bugger_jq("#sc-bugger-overlay").removeClass("sc_bugger-hide");
                 },
@@ -287,7 +290,7 @@ var SC_BUGGER = (function () {
                         SC_BUGGER.FunctionalMethods.MarkErrorwith_PopupOver(SC_BUGGER.GlobalVariables.Element.ErrorGlobal);
 
                         //$sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal').modal('hide');
-                        SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal')); 
+                        SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal'));
 
                         SC_BUGGER.EventListeners.Body.UnbindBuggerBodyEvents();
                         $sc_bugger_jq("#sc_bugger-save-error-confirm").removeClass("sc_bugger-disabled");
@@ -302,7 +305,7 @@ var SC_BUGGER = (function () {
                     $sc_bugger_jq("#sc_bugger-submit-error").unbind();
 
                     // Trigger submit function
-                    $sc_bugger_jq("#sc_bugger-submit-error").click(function () {                                         
+                    $sc_bugger_jq("#sc_bugger-submit-error").click(function () {
 
                         SC_BUGGER.EventListeners.FormEvents.GetErrorFormFieldsValues();
 
@@ -312,7 +315,7 @@ var SC_BUGGER = (function () {
                             SC_BUGGER.ApiMethods.SubmitError();
                             SC_BUGGER.EventListeners.RemoveMarkErrorEvent();
                             //$sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal').modal('hide');
-                            SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal')); 
+                            SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal'));
 
                         }
                     });
@@ -336,7 +339,7 @@ var SC_BUGGER = (function () {
                     SC_BUGGER.GlobalVariables.Browser.OldBugElement.removeAttr("data-toggle", "data-html", "data-placement", "title", "data-content");
 
                 }
-            },          
+            },
             //Selector : $sc_bugger_jq("body")
             Body: {
 
@@ -356,12 +359,12 @@ var SC_BUGGER = (function () {
                             $sc_bugger_jq(evt.target).addClass("sc_bugger-bgm-re");
                             //Handle click event
                             if ($sc_bugger_jq(evt.target).attr("sc_bugger-onclick") == undefined) {
-                                var tempClickValue = jQuery.extend({}, { "val": $sc_bugger_jq(evt.target).attr("onclick") });
-                                $sc_bugger_jq(evt.target).attr("sc_bugger-onclick", tempClickValue.val);
-                                $sc_bugger_jq(evt.target).attr("onclick", "return false;");
+                                //var tempClickValue = $sc_bugger_jq.extend({}, { "val": $sc_bugger_jq(evt.target).attr("onclick") });
+                                //$sc_bugger_jq(evt.target).attr("sc_bugger-onclick", tempClickValue.val);
+                                //$sc_bugger_jq(evt.target).attr("onclick", "return false;");
                             }
-                           
-                           
+
+
                             // console.log($sc_bugger_jq(evt.target).getPath());
                         }
                     });
@@ -374,9 +377,9 @@ var SC_BUGGER = (function () {
                         if (!SC_BUGGER.FunctionalMethods.IsBuggerelement(evt.target)) {
 
                             if (!$sc_bugger_jq(evt.target).hasClass("sc_bugger-bgm-re")) {
-                              
+
                             }
-                            $sc_bugger_jq(evt.target).removeClass("sc_bugger-bgm-re");    
+                            $sc_bugger_jq(evt.target).removeClass("sc_bugger-bgm-re");
                             //Handle click event                                
                             $sc_bugger_jq(evt.target).attr("onclick", $sc_bugger_jq(evt.target).attr("sc_bugger-onclick"));
                             $sc_bugger_jq(evt.target).removeAttr("sc_bugger-onclick");
@@ -396,7 +399,7 @@ var SC_BUGGER = (function () {
                             SC_BUGGER.EventListeners.RemoveMarkErrorEvent();
 
                             //$sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal').modal('show').css("z-index", $sc_bugger_jq(".popover").css("z-index") + 1);;
-                            SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal'));                             
+                            SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal'));
 
                             SC_BUGGER.EventListeners.MarkErrorEvent();
 
@@ -426,7 +429,7 @@ var SC_BUGGER = (function () {
 
                 $sc_bugger_jq("#sc_bugger-icon-bar a").click(function () {
                     //$sc_bugger_jq('.sc_bugger-element-modal.modal').modal('hide');
-                    SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element-modal.modal')); 
+                    SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element-modal.modal'));
                     SC_BUGGER.EventListeners.Body.UnbindBuggerBodyEvents();
                     $sc_bugger_jq(".sc_bugger-screen-shot-div").addClass("sc_bugger-hide");
                     $sc_bugger_jq("#sc_bugger-icon-bar .sc_bugger-icon-bar-active").removeClass("sc_bugger-icon-bar-active");
@@ -441,7 +444,7 @@ var SC_BUGGER = (function () {
                     $sc_bugger_jq("#sc_bugger-submit-error").addClass("sc_bugger-hide");
                     $sc_bugger_jq("#sc_bugger-save-error").removeClass("sc_bugger-hide");
                     SC_BUGGER.EventListeners.Body.InitBuggerBodyEvents();
-                });             
+                });
 
                 $sc_bugger_jq("#sc_bugger-save-error-confirm").click(function () {
                     $sc_bugger_jq("#sc_bugger-icon-bar").addClass("sc_bugger-hide");
@@ -453,23 +456,23 @@ var SC_BUGGER = (function () {
                 });
 
                 $sc_bugger_jq("#sc_bugger-settings").click(function () {
-                   // $sc_bugger_jq('.sc_bugger-element-modal.settings-modal').modal('show');
-                    SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element-modal.settings-modal')); 
+                    // $sc_bugger_jq('.sc_bugger-element-modal.settings-modal').modal('show');
+                    SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element-modal.settings-modal'));
                 });
 
                 $sc_bugger_jq("#sc_bugger-error-refresh-goto").click(function () {
                     //Check for goTo scenario check
-                    if (document.location.search.length>0) //If url contains any querystring
+                    if (document.location.search.length > 0) //If url contains any querystring
                     {
                         if (SC_BUGGER.UtilityMethods.GetParameterByName(SC_BUGGER.Settings.QueryString_SC_B_ID) != null) //If url contains goto issue id
                         {
                             // Refresh the page
-                            var newUrl = SC_BUGGER.UtilityMethods.RemoveURLParameter(window.location.href, SC_BUGGER.Settings.QueryString_SC_B_ID);                          
+                            var newUrl = SC_BUGGER.UtilityMethods.RemoveURLParameter(window.location.href, SC_BUGGER.Settings.QueryString_SC_B_ID);
                             window.location.href = SC_BUGGER.UtilityMethods.RemoveURLParameter(window.location.href, SC_BUGGER.Settings.QueryString_SC_B_ID);
                         }
                     }
 
-                });              
+                });
 
                 $sc_bugger_jq("#sc_bugger-icon-bar .main-icon").click(function () {
                     //Check user logined
@@ -479,14 +482,14 @@ var SC_BUGGER = (function () {
                         isUserLogined = true;
                     }
 
-                    if (isUserLogined) {                       
+                    if (isUserLogined) {
 
                         $sc_bugger_jq("#sc_bugger-icon-bar .sub-icon").toggleClass("sc_bugger-hide");
                         $sc_bugger_jq("#sc_bugger-icon-bar").removeClass("sc_bugger-hide");
                     }
                     else {
                         // Login popup show
-                        SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element-modal.sc-bugger-login-modal'));                        
+                        SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element-modal.sc-bugger-login-modal'));
                     }
 
                 });
@@ -495,7 +498,7 @@ var SC_BUGGER = (function () {
             //Selector : $sc_bugger_jq("#browser-detail")
             BrowserInformationEvent: function () {
                 $sc_bugger_jq(".sc_bugger-element #sc-error-detail-modal #browser-detail").append(SC_BUGGER.GlobalVariables.Browser.BasicDetailsHtml);
-            },          
+            },
             //Selector : $sc_bugger_jq(".sc_bugger-popover")
             InitiateToolTip: function () {
                 var tipElement = ($sc_bugger_jq(".sc_bugger-popover").popover("show").data('bs.popover'));
@@ -521,7 +524,7 @@ var SC_BUGGER = (function () {
                                     var sizeInBytes = 4 * Math.ceil((stringLength / 3)) * 0.5624896334383812;
                                     var sizeInKb = sizeInBytes / 1000;
 
-                                    if (sizeInKb <= SC_BUGGER.Settings.ScreenShotSize) {                                     
+                                    if (sizeInKb <= SC_BUGGER.Settings.ScreenShotSize) {
 
                                         $sc_bugger_jq(".sc_bugger-element #sc-error-detail-modal #error-screen-shot").attr("src", this.result);
                                         SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = this.result;
@@ -529,14 +532,14 @@ var SC_BUGGER = (function () {
 
                                     }
                                     else {
-                                        alert("Uploaded image size is too big.its should be less than a " + SC_BUGGER.Settings.ScreenShotSize+" KB.");
+                                        alert("Uploaded image size is too big.its should be less than a " + SC_BUGGER.Settings.ScreenShotSize + " KB.");
 
                                         $sc_bugger_jq(".sc_bugger-element #sc-error-detail-modal #error-screen-shot").attr("src", null);
                                         SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot = null;
                                         //$sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot", false);
                                     }
 
-                                   
+
                                 }
                             }
 
@@ -573,20 +576,20 @@ var SC_BUGGER = (function () {
                                                 <div class="popover-body ">
                                                 </div>
                                         </div>
-                                   </div>`;           
+                                   </div>`;
 
                 $sc_bugger_jq(errorObj.Selector).popover({
-                   
+
                     title: "<span class='glyphicon glyphicon-remove'> <strong class='text-dark'>ErrorDetail:</strong>\n" + errorObj.ErrorTitle + "</span>",
                     content: errorObj.ErrorDetail,
                     template: popoverTemplate,
                     placement: "bottom",
                     html: true,
-                   
+
                 }).addClass("sc_bugger-popover sc_bugger-red-tooltip sc_bugger-bgm-error").popover('show')
                     .off('click');
 
-               // $sc_bugger_jq(errorObj.Selector).unbind();
+                // $sc_bugger_jq(errorObj.Selector).unbind();
 
                 //SC_BUGGER.EventListeners.InitiateToolTip();
             }
@@ -685,8 +688,8 @@ var SC_BUGGER = (function () {
 
                 html2canvas(target_container, objJ).then(function (canvas) {
                     //$sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('show');
-                    SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog')); 
-                    var img = canvas.toDataURL();                   
+                    SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog'));
+                    var img = canvas.toDataURL();
 
                     var stringLength = img.length - SC_BUGGER.Settings.Base64ImageStringType.length;
 
@@ -700,30 +703,30 @@ var SC_BUGGER = (function () {
                         $sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot", true);
                         $sc_bugger_jq(".sc_bugger-screen-shot-div").removeClass("sc_bugger-hide");
                         $sc_bugger_jq(".sc_bugger-element #sc-error-detail-modal #error-screen-shot").attr("src", SC_BUGGER.GlobalVariables.Element.ErrorGlobal.ScreenShot);
-                            
+
                         //$sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal').modal('show');
-                        SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog')); 
+                        SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog'));
                         SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal'));
 
-                        $sc_bugger_jq(".sc_bugger-element #sc-error-detail-modal").css("z-index", $sc_bugger_jq(".popover").css("z-index") + 1);                      
+                        $sc_bugger_jq(".sc_bugger-element #sc-error-detail-modal").css("z-index", $sc_bugger_jq(".popover").css("z-index") + 1);
 
                     }
                     else {
-                        alert("Generated image size is too big. Please mark single element instead of whole section.\n\n OR \n\nUpload ur own screen shot with size is less than a " + SC_BUGGER.Settings.ScreenShotSize+" KB.");
+                        alert("Generated image size is too big. Please mark single element instead of whole section.\n\n OR \n\nUpload ur own screen shot with size is less than a " + SC_BUGGER.Settings.ScreenShotSize + " KB.");
                         $sc_bugger_jq("#sc_bugger-upload-screenshot").attr("is-updated-creenshot", false);
                         $sc_bugger_jq(".sc_bugger-screen-shot-div").removeClass("sc_bugger-hide");
                         $sc_bugger_jq(".sc_bugger-element #sc-error-detail-modal #error-screen-shot").attr("src", null);
-                       
+
                         //$sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal').modal('show');
-                        SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog')); 
-                        SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal'));    
+                        SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog'));
+                        SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element #sc-error-detail-modal'));
 
                         $sc_bugger_jq(".sc_bugger-element #sc-error-detail-modal").css("z-index", $sc_bugger_jq(".popover").css("z-index") + 1);
-                    }                 
-                  
+                    }
+
 
                 });
-              
+
             }
         },
         ExtenionMethods: {
@@ -771,7 +774,7 @@ var SC_BUGGER = (function () {
                             //Class check
                             if ($sc_bugger_jq(firstLevelSelector).attr("class") != undefined) {
                                 //secondLevelSelector = secondLevelSelector + "[class='" + $sc_bugger_jq(firstLevelSelector).attr("class") + "']";
-                                
+
 
                                 var classArray = $sc_bugger_jq(firstLevelSelector).attr("class").split(" ");
 
@@ -780,21 +783,21 @@ var SC_BUGGER = (function () {
                                 $sc_bugger_jq.each(classArray, function (index, item) {
                                     if (item != " " && item != "sc_bugger-popover" && item != "sc_bugger-red-tooltip" && item != "sc_bugger-bgm-error") {
                                         classStrBuilder += "." + item;
-                                    }                                    
+                                    }
                                 });
 
                                 classStrBuilder = (classStrBuilder != ".") ? classStrBuilder : "";
                                 secondLevelSelector = classStrBuilder;
-                               
+
                             }
 
                             //Id check
                             if ($sc_bugger_jq(firstLevelSelector).attr("id") != undefined) {
-                                secondLevelSelector+= "[id='" + $sc_bugger_jq(firstLevelSelector).attr("id") + "']";
+                                secondLevelSelector += "[id='" + $sc_bugger_jq(firstLevelSelector).attr("id") + "']";
                             }
 
                             return firstLevelSelector + secondLevelSelector;
-                        
+
                         }
                     });
                 },
@@ -990,7 +993,7 @@ var SC_BUGGER = (function () {
             }
         },
         SetTimer: {
-            GoToError:null,
+            GoToError: null,
             GoToErrorEnable: function () {
                 if (!SC_BUGGER.GlobalVariables.Element.GoToElementIsUpdated) {
                     if ($sc_bugger_jq(SC_BUGGER.GlobalVariables.Element.GoToElement.Selector).length > 0) {
@@ -1003,13 +1006,13 @@ var SC_BUGGER = (function () {
                     }
                 }
             }
-        }           
+        }
         ,
         ApiMethods: {
             SubmitError: function () {
 
                 //$sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('show');
-                SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog')); 
+                SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog'));
 
                 $sc_bugger_jq.ajax({
                     url: SC_BUGGER.Config.SaveErrorUrl,
@@ -1018,24 +1021,24 @@ var SC_BUGGER = (function () {
                     data: (SC_BUGGER.GlobalVariables.Element.ErrorGlobal),
                     success: function (result) {
                         if (result.IsSuccess) {
-                            SC_BUGGER.EventListeners.AlertEvents.ShowAlert("success", "Successfully saved", "", " Now you can watch the entry in dashboard.");                            
+                            SC_BUGGER.EventListeners.AlertEvents.ShowAlert("success", "Successfully saved", "", " Now you can watch the entry in dashboard.");
                             $sc_bugger_jq("#sc_bugger-save-error-confirm").addClass("sc_bugger-disabled");
                         }
                         else {
-                            SC_BUGGER.EventListeners.AlertEvents.ShowAlert("danger", "Error", "", " Please try again later.");                           
+                            SC_BUGGER.EventListeners.AlertEvents.ShowAlert("danger", "Error", "", " Please try again later.");
                         }
 
                         //$sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog').modal('hide');
-                        SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog')); 
+                        SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog'));
                     },
                     error: function (request, status, error) {
                         SC_BUGGER.EventListeners.AlertEvents.ShowAlert("danger", "Error", "", " Please try again later.");
-                        SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog')); 
+                        SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog'));
                     }
                 });
             },
             LoginBugger: function (inputModel) {
-                SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog')); 
+                SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog'));
                 $sc_bugger_jq.ajax({
                     url: SC_BUGGER.Config.LoginBuggerUrl,
                     type: "post",
@@ -1044,23 +1047,26 @@ var SC_BUGGER = (function () {
                     success: function (result) {
                         var loginModal = $sc_bugger_jq('.sc_bugger-element-modal.sc-bugger-login-modal');
                         if (result != "False") {
-                            SC_BUGGER.EventListeners.ModalEvents.HideModel(loginModal);    
+                            SC_BUGGER.EventListeners.ModalEvents.HideModel(loginModal);
                             $sc_bugger_jq("#invalid-user-alret").addClass("sc_bugger-hide");
-                            SC_BUGGER.EventListeners.AlertEvents.ShowAlert("success", "Login successfull", "Ready to use.", " Now you can use sitecore bugger tool.");
                             SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog'));
-                            window.location.reload();
+                            SC_BUGGER.EventListeners.AlertEvents.ShowAlert("success", "Login successfull & Page is refreshing !!!.", "Page is refreshing !!!.", " Now you can use sitecore bugger tool.");
+                            setInterval(function () {
+                                window.location.reload();
+                            }, 3000);
+
                         }
                         else {
                             SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog'));
-                           SC_BUGGER.EventListeners.ModalEvents.ShowModel(loginModal);                               
+                            SC_BUGGER.EventListeners.ModalEvents.ShowModel(loginModal);
                             $sc_bugger_jq("#invalid-user-alret").removeClass("sc_bugger-hide");
                         }
-                        
+
                     }
                 });
             },
             GetError: function (inputModel) {
-                SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog')); 
+                SC_BUGGER.EventListeners.ModalEvents.ShowModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog'));
                 $sc_bugger_jq.ajax({
                     url: SC_BUGGER.Config.GetErrorUrl,
                     type: "post",
@@ -1075,7 +1081,7 @@ var SC_BUGGER = (function () {
                                 ErrorDetail: response.ErrorDetail
                             };
 
-                            SC_BUGGER.GlobalVariables.Element.GoToElement = errorObj;                         
+                            SC_BUGGER.GlobalVariables.Element.GoToElement = errorObj;
 
                             //If element found and dont wait for setinterval
                             if ($sc_bugger_jq(SC_BUGGER.GlobalVariables.Element.GoToElement.Selector).length > 0) {
@@ -1089,11 +1095,11 @@ var SC_BUGGER = (function () {
                             }
 
                         }
-                        SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog')); 
+                        SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog'));
                     },
                     error: function (response) {
                         console.log(response);
-                        SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog')); 
+                        SC_BUGGER.EventListeners.ModalEvents.HideModel($sc_bugger_jq('.sc_bugger-element #pleaseWaitDialog'));
                     }
 
 

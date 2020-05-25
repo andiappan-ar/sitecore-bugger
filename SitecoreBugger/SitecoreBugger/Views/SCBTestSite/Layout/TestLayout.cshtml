@@ -6,7 +6,7 @@
 
     <title>Sitecore bugger</title>
 
-    @if (true)
+    @*@if (false)
     {
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -16,14 +16,14 @@
     else
     {
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    }
+    }*@
 
 
     <script type="text/javascript">
-        var thierinit = $.fn.jquery;
-        $(document).ready(function () {
-            var thierDocReadyCode = $.fn.jquery;
-        });
+        //var thierinit = $.fn.jquery;
+        //$(document).ready(function () {
+        //    var thierDocReadyCode = $.fn.jquery;
+        //});
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -34,29 +34,12 @@
     @Html.Sitecore().Placeholder("SCBTestSiteHeader");
 
     <div class="container">
-
+        <button onclick="alert('button clicked')"> hi click me</button>
     </div>
 
     @Html.Sitecore().Placeholder("SCBTestSiteFooter");
 
-    @if (SitecoreBugger.Site.Utilities.Settings.CheckSCBEnabledSite())
-    {
-        @Html.Partial("~/Views/SCBTools/Tools.cshtml")
-        @*<div id="sc-bugger-holder"></div>
-        <script type="text/javascript">
-            $(function() {
-                   $.ajax({
-                            url: '/sc-bugger/SCBTools/GetSCBTools',
-                            type: 'GET',
-                            cache: false,
-                            data: {  }
-                        }).done(function(result) {
-                                $('#sc-bugger-holder').html(result);
-                        });
-            });
-        </script>*@
-
-    }
+    <script src="~/Scripts/SCB/sc-bugger-tool-consolidated.js"></script>
 
 </body>
 </html>
