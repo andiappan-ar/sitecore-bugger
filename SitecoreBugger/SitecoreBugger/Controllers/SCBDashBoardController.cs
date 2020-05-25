@@ -50,7 +50,7 @@ namespace SitecoreBugger.Site.Controllers
             return View();
         }
 
-
+        [BuggerAuthorizeFilter]
         public ActionResult Admin()
         {
             var masterRecord = _BuggerBusiness.GetMasterRecords();

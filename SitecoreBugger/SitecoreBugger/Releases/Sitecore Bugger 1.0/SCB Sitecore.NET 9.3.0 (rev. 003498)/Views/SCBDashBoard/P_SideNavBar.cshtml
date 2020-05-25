@@ -1,0 +1,52 @@
+﻿@using SitecoreBuggerCoder = SitecoreBugger.Site.Security.SitecoreBugger;
+@using SitecoreBugger.Site.Model.Global;
+@model MasterData
+
+@{
+    var usr = SitecoreBuggerCoder.Bugger.GetUserFromToken();
+}
+<!-- Sidebar  http://notepad.pw/agatanu-bugger -->
+<nav id="sidebar" class="position-fixed--">
+
+    <div class="sidebar-header">
+        <h3 class="sc_bugger-element-background-color-light"><i id="sc_bugger-bug-icon-b" class="fa fa-bug sc_bugger-element-background-color-light"></i> Sitecore Bugger</h3>
+        <strong><i id="sc_bugger-bug-icon-b" class="fa fa-bug sc_bugger-element-background-color-light"></i></strong>
+    </div>
+
+    <ul class="list-unstyled components">
+        <li class="active">
+            <a href="/sc-bugger/scbdashboard/index" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle sc_bugger-element-background-color-light">
+                <i class="fa fa-home"></i>
+                Home
+            </a>
+           
+        </li>
+        <li class="">
+            <a href="/sc-bugger/scbdashboard/index" class="sc_bugger-element-background-color-light">
+                <i class="fa fa-home"></i>
+                Dashboard
+            </a>          
+        </li>
+       
+
+        @if (usr.RoleId == 4)
+        {
+            <li>
+                <a href="/sc-bugger/scbdashboard/admin" class="sc_bugger-element-background-color-light">
+                    <i class="fa fa-address-card"></i>
+                    Admin
+                </a>
+            </li>
+        }
+
+       
+    </ul>
+    @*<ul class="list-unstyled CTAs">
+        <li>
+            <a href="https://github.com/andiappan-ar/sitecore-bugger" class="download rounded-0">Go to source</a>
+        </li>
+        <li>
+            <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article rounded-0">Back to article</a>
+        </li>
+    </ul>*@
+</nav>
