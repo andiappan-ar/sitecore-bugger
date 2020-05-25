@@ -1,0 +1,74 @@
+@using SitecoreBugger.Site.Model.Global;
+@model MasterData
+
+
+@{
+  
+    Layout = "~/Views/SCBLayout/_AccountAndDashMainLayout.cshtml";
+}
+
+<link href="~/Content/SCB/Styles/sc-bugger-dashboard.css" rel="stylesheet" />
+
+<div class="wrapper">
+    <!--Left side nav bar-->
+    @{
+        Html.RenderPartial("P_SideNavBar");
+        var currentProjId = (Model.currentProject != null) ? Model.currentProject.ProjectId : 0;
+        }
+
+    <div id="content" class="offset-1--">
+        <nav class="navbar navbar-expand-lg sc_bugger-element-background-color">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn sc_bugger-element-primary-button rounded-0">
+                    <i class="fa fa-arrows-h"></i>
+                </button>
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto rounded-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-align-justify"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">
+                                <!--User details-->
+                                <input id="user-info" type="hidden" uid="@Model.user.UserId" rid="@Model.user.RoleId" pid="@currentProjId" a-uid="" cookie-key="@SitecoreBugger.Site.Security.Helper.Constants.SecurityConstants.SCB_JWTAUTH" />
+                                <i class="fa fa-user-circle">
+                                    @Model.user.UserName
+                                </i>
+
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a id="log-out" class="nav-link" href="javascript:void(0)"> <i class="fa fa-power-off" aria-hidden="true"></i></a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        @RenderBody()
+
+    </div>
+  
+
+</div>
+
+<div class="sc_bugger-element">
+    <!--Loader spinning wheel-->
+    <div class="modal hide text-white " id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false" data-html2canvas-ignore="true">
+        <div class="modal-header" data-html2canvas-ignore="true">
+            <h1 data-html2canvas-ignore="true">Please Wait</h1>
+        </div>
+        <div class="modal-body" data-html2canvas-ignore="true">
+            <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status" data-html2canvas-ignore="true">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/SCB/sc-bugger-dashboard.js"></script>
+
+
