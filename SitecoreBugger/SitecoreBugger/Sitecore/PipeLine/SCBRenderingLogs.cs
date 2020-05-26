@@ -12,9 +12,8 @@ namespace SitecoreBugger.Site.Sitecore.PipeLine
         protected override bool Render(Renderer renderer, TextWriter writer, RenderRenderingArgs args)
         {
             if (Settings.CheckSCBEnabledSite())
-            {
-                Guid id = Guid.NewGuid();
-                string dynamicId = "scbugger-log-id-" + id.ToString();
+            {               
+                string dynamicId = "scbugger-log-id-" + Guid.NewGuid().ToString();
 
                 // This will write log information about all renderings
                 writer.WriteLine($"<scbugger-log id=\"{dynamicId}\" rendering=\"{args.Rendering.RenderingItemPath}\" datasource=\"{args.Rendering.DataSource}\" placeholder=\"{args.Rendering.Placeholder}\"  renderer=\"{args.Rendering.Renderer.ToString()}\"></scbugger-log>");

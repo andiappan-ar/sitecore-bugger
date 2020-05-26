@@ -231,6 +231,7 @@
     <Compile Include="Security\AuthServer\Repository\Tester.cs" />
     <Compile Include="Security\SitecoreBugger\Account.cs" />
     <Compile Include="Security\SitecoreBugger\Bugger.cs" />
+    <Compile Include="Sitecore\PipeLine\SCBEnableScript.cs" />
     <Compile Include="Sitecore\PipeLine\SCBRenderingLogs.cs" />
     <Compile Include="Sitecore\PipeLine\SCBRoutes.cs" />
     <Compile Include="Utilities\Helper.cs" />

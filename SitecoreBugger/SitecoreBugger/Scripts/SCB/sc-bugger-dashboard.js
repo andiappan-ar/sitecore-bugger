@@ -87,7 +87,7 @@
                 // Is my item, check event
                 $('#filter-myitems').change(function () {
                     SC_DASHBOARD.GlobalVariables.GlobalFilter.IsMyItem = this.checked;
-                    SC_DASHBOARD.GlobalVariables.GlobalFilter.UserId = $("#user-info").attr("uid");
+                    SC_DASHBOARD.GlobalVariables.GlobalFilter.UserId = (this.checked)?$("#user-info").attr("uid"):null;
                 });
 
                 $('#filter-error-type').on('change', function () {
@@ -367,11 +367,16 @@
                     // Sitecore component details
                     var tempParaSCDetail = [];
                     if (parentCard.attr("sc-component-detail") != "Dashboard") {
-                        $.each(JSON.parse(parentCard.attr("sc-component-detail")), function (name, value) {
-                            if (name != "uaMatch") {
-                                tempParaSCDetail.push($("<p></p>").text(value.name + " : " + value.value + ".\n"));
-                            }
-                        });
+                        try {
+                            $.each(JSON.parse(parentCard.attr("sc-component-detail")), function (name, value) {
+                                if (name != "uaMatch") {
+                                    tempParaSCDetail.push($("<p></p>").text(value.name + " : " + value.value + ".\n"));
+                                }
+                            });
+                        }
+                        catch (ex) {
+                            tempParaSCDetail.push("No Sitecore component details available.");
+                        }
                     }
                     else {
                         tempParaSCDetail.push("No Sitecore component details available. This issue raised in dashboard.");

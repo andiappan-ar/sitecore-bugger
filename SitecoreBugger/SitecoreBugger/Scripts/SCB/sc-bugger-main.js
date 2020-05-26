@@ -218,28 +218,33 @@ var SC_BUGGER = (function () {
 
                             var _scTarget = $sc_bugger_jq("#" + closesparent.attr("scbugger-log-id"));
 
-                            var _scCompDetails = [
-                                {
-                                    "name": "rendering",
-                                    "value": _scTarget.attr("rendering")
-                                },
-                                {
-                                    "name": "datasource",
-                                    "value": _scTarget.attr("datasource")
-                                }
-                                ,
-                                {
-                                    "name": "placeholder",
-                                    "value": _scTarget.attr("placeholder")
-                                }
-                                ,
-                                {
-                                    "name": "renderer",
-                                    "value": _scTarget.attr("renderer")
-                                }
-                            ];
+                            if (_scTarget.length != 0) {
+                                try {
+                                    var _scCompDetails = [
+                                        {
+                                            "name": "rendering",
+                                            "value": _scTarget.attr("rendering")
+                                        },
+                                        {
+                                            "name": "datasource",
+                                            "value": _scTarget.attr("datasource")
+                                        }
+                                        ,
+                                        {
+                                            "name": "placeholder",
+                                            "value": _scTarget.attr("placeholder")
+                                        }
+                                        ,
+                                        {
+                                            "name": "renderer",
+                                            "value": _scTarget.attr("renderer")
+                                        }
+                                    ];
 
-                            SC_BUGGER.GlobalVariables.Element.ErrorGlobal.SitecoreComponentDetails = JSON.stringify(_scCompDetails);
+                                    SC_BUGGER.GlobalVariables.Element.ErrorGlobal.SitecoreComponentDetails = JSON.stringify(_scCompDetails);
+                                }
+                                catch (ex) {}                                
+                            }                           
                         }
 
                     }
@@ -478,7 +483,10 @@ var SC_BUGGER = (function () {
                     //Check user logined
                     var isUserLogined = false;
 
-                    if (SC_BUGGER.UtilityMethods.GetCookie($sc_bugger_jq("#user-info").attr("cookie-key")) != null) {
+                    if (SC_BUGGER.UtilityMethods.GetCookie($sc_bugger_jq("#user-info").attr("cookie-key")) != null
+                    // Cookie should not expire
+                        && $sc_bugger_jq("#user-info").attr("uid") != ""
+                    ) {
                         isUserLogined = true;
                     }
 
