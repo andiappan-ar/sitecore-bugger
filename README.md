@@ -1,6 +1,6 @@
 # Read me documents
 
-Refer ReadMe folder
+Refer ReadMe folder for quick introduction and get started.
 
 
 # Quick introduction
